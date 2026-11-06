@@ -1,0 +1,51 @@
+/* ==========================================================
+   Tasogare : icônes par clé de propriété (snippet facultatif)
+   Une clé listée ici remplace l'icône de son type ; les autres gardent l'icône native.
+   Installation : copier ce fichier dans .obsidian/snippets/ du coffre,
+   puis l'activer dans Réglages → Apparence → Snippets CSS.
+   Pour ajouter une clé : l'ajouter à la liste, puis lui donner un dessin
+   (--tasogare-icone-image), en Lucide (licence ISC, lucide.dev).
+   Fonctionne avec n'importe quel thème ; la taille vient de Tasogare quand il est actif.
+   ========================================================== */
+.metadata-property:is(
+  [data-property-key="statut"],
+  [data-property-key="verdict"],
+  [data-property-key="categories"],
+  [data-property-key="domaine"],
+  [data-property-key="url"],
+  [data-property-key="source"],
+  [data-property-key="cover"]
+) .metadata-property-icon {
+  position: relative;
+  & svg { opacity: 0; }
+  /* Obsidian fixe la largeur de ce pseudo-élément à 4 px : width: auto rend la place au dessin. */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: auto;
+    background-color: currentColor;
+    -webkit-mask: var(--tasogare-icone-image) center / var(--tasogare-taille-icone, 16px) no-repeat;
+  }
+}
+.metadata-property[data-property-key="statut"] {
+  --tasogare-icone-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E %3Ccircle cx='12' cy='12' r='1'/%3E%3C/svg%3E");
+}
+.metadata-property[data-property-key="verdict"] {
+  --tasogare-icone-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z'/%3E %3Cpath d='m9 12 2 2 4-4'/%3E%3C/svg%3E");
+}
+.metadata-property[data-property-key="categories"] {
+  --tasogare-icone-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 10a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1h-2.5a1 1 0 0 1-.8-.4l-.9-1.2A1 1 0 0 0 15 3h-2a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1Z'/%3E %3Cpath d='M20 21a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-2.9a1 1 0 0 1-.88-.55l-.42-.85a1 1 0 0 0-.92-.6H13a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1Z'/%3E %3Cpath d='M3 5a2 2 0 0 0 2 2h3'/%3E %3Cpath d='M3 3v13a2 2 0 0 0 2 2h3'/%3E%3C/svg%3E");
+}
+.metadata-property[data-property-key="domaine"] {
+  --tasogare-icone-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z'/%3E %3Ccircle cx='12' cy='12' r='10'/%3E%3C/svg%3E");
+}
+.metadata-property[data-property-key="url"] {
+  --tasogare-icone-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E %3Cpath d='M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20'/%3E %3Cpath d='M2 12h20'/%3E%3C/svg%3E");
+}
+.metadata-property[data-property-key="source"] {
+  --tasogare-icone-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z'/%3E %3Cpath d='M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z'/%3E%3C/svg%3E");
+}
+.metadata-property[data-property-key="cover"] {
+  --tasogare-icone-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='18' height='18' x='3' y='3' rx='2' ry='2'/%3E %3Ccircle cx='9' cy='9' r='2'/%3E %3Cpath d='m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21'/%3E%3C/svg%3E");
+}

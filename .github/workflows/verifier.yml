@@ -1,0 +1,14 @@
+# Lance outils/verifier.py à chaque envoi et à chaque pull request.
+name: Vérifier le thème
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verifier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Vérifier variables, couleurs, contrastes, docs et journal
+        run: python3 outils/verifier.py

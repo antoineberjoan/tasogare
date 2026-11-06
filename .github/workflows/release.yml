@@ -1,0 +1,44 @@
+# Crée un brouillon de release quand on pousse un tag (par exemple 1.7.0).
+# Le tag doit être identique à la version de manifest.json.
+# Les notes de release viennent de la section du même nom dans CHANGELOG.md.
+name: Release Obsidian theme
+
+on:
+  push:
+    tags:
+      - "*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Vérifier que le tag correspond au manifeste
+        run: |
+          tag="${GITHUB_REF#refs/tags/}"
+          version="$(jq -r .version manifest.json)"
+          test "$tag" = "$version" || { echo "Le tag $tag ne correspond pas à la version $version du manifeste."; exit 1; }
+
+      - name: Vérifier le thème
+        run: python3 outils/verifier.py
+
+      - name: Extraire les notes de CHANGELOG.md
+        run: |
+          tag="${GITHUB_REF#refs/tags/}"
+          awk -v v="## $tag" '$0 == v {dedans=1; next} /^## / {dedans=0} dedans' CHANGELOG.md > notes.md
+          test -s notes.md || { echo "CHANGELOG.md n'a pas de section ## $tag."; exit 1; }
+
+      - name: Créer le brouillon de release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag="${GITHUB_REF#refs/tags/}"
+          gh release create "$tag" \
+            --title="$tag" \
+            --notes-file notes.md \
+            --draft \
+            manifest.json theme.css

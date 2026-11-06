@@ -1,0 +1,1444 @@
+/* ==========================================================
+   Tasogare : thème Obsidian d'Antoine Berjoan
+   Trois couches de tokens :
+   1. primitives : les palettes, l'échelle typographique, les mesures ;
+   2. rôles : les variables d'Obsidian, remplies depuis les primitives ;
+   3. règles : les sélecteurs, qui ne lisent que des rôles et des mesures.
+   Les couleurs et les mesures s'écrivent dans la couche 1 seulement.
+   Une palette remplit les mêmes emplacements (--tasogare-cadre,
+   --tasogare-encre...) ; le reste du thème ne change pas.
+   ========================================================== */
+
+/* @settings
+
+name: Tasogare
+id: tasogare
+settings:
+  -
+    id: tasogare-palette
+    title: Palette
+    description: Les couleurs du thème, en clair comme en sombre.
+    type: class-select
+    allowEmpty: false
+    default: tasogare-crepuscule
+    options:
+      -
+        label: Crépuscule alpin
+        value: tasogare-crepuscule
+      -
+        label: Grès rosé
+        value: tasogare-gres
+      -
+        label: Thé vert
+        value: tasogare-the
+      -
+        label: Lac profond
+        value: tasogare-lac
+      -
+        label: Porte bleue
+        value: tasogare-porte
+      -
+        label: Galet noir
+        value: tasogare-galet
+
+*/
+
+/* ==========================================================
+   Couche 1 : primitives
+   ========================================================== */
+
+/* ---------- Espace et forme (Espace et forme 1.1) ---------- */
+body {
+  /* Échelle d'espace de l'interface, en pixels : des pas de 2 jusqu'à 16, puis plus larges. */
+  --tasogare-espace-2: 2px;
+  --tasogare-espace-4: 4px;
+  --tasogare-espace-6: 6px;
+  --tasogare-espace-8: 8px;
+  --tasogare-espace-10: 10px;
+  --tasogare-espace-14: 14px;
+
+  /* Rôles d'espace */
+  --tasogare-inset: var(--tasogare-espace-10);                  /* l'inset unique du cadre */
+  --tasogare-ecart-icone: var(--tasogare-espace-10);            /* entre l'icône et le nom dans la sidebar */
+  --tasogare-ecart-icone-propriete: var(--tasogare-espace-8);   /* entre l'icône et le nom d'une propriété */
+  --tasogare-ecart-proprietes: var(--tasogare-espace-2);
+  --tasogare-pas-onglet: var(--tasogare-espace-4) var(--tasogare-espace-10);
+  --tasogare-pas-ligne-nav: var(--tasogare-espace-8);           /* marge verticale d'une ligne de la sidebar */
+  --tasogare-pas-proprietes: var(--tasogare-inset) var(--tasogare-espace-14) var(--tasogare-espace-8);
+  --tasogare-pas-propriete: var(--tasogare-espace-4);
+  --tasogare-pas-selecteur-coffre: var(--tasogare-espace-6) var(--tasogare-inset);
+  --tasogare-pas-ligne-reglages: var(--tasogare-pas-ligne-nav) var(--tasogare-espace-10);
+
+  /* Rythme du texte, en em ou rem : il suit la taille du texte. */
+  --tasogare-espace-paragraphe: 0.9rem;
+  --tasogare-espace-avant-titre: 3rem;
+  --tasogare-espace-sous-titre-note: 0.75em;
+  --tasogare-espace-sous-h2: 1rem;
+  --tasogare-espace-sous-h3: 0.75rem;
+  --tasogare-espace-sous-proprietes: 0.75rem;
+  --tasogare-retrait-citation: 1.5rem;
+  --tasogare-pas-tag: 0.45em;
+  --tasogare-pas-surlignage: 0.07em 0.2em;
+  --tasogare-decalage-soulignement: 0.2em;
+
+  /* Rayons : du plus petit objet à la plus grande surface. */
+  --tasogare-rayon-marque: 4px;     /* tags, surlignage, pastilles */
+  --tasogare-rayon-champ: 6px;      /* champs et icônes cliquables */
+  --tasogare-rayon-bloc: 10px;      /* onglets, lignes de la sidebar, callouts, images, menus, cartes de Bases */
+  --tasogare-rayon-fenetre: 14px;   /* fenêtres et invites */
+  --tasogare-rayon-carte: 16px;     /* carte de note, propriétés, réglages */
+
+  /* Filets et élévation */
+  --tasogare-filet: 1px;
+  --tasogare-ombre-forme: 0 1px 2px;   /* niveau 1 : une carte posée (kanban) */
+
+  /* Icônes */
+  --tasogare-taille-icone: 16px;
+  --tasogare-trait-icone: 1.75px;
+  --tasogare-calage-icone-dossier: -3px;   /* aligne l'icône dossier sur le texte */
+
+  /* Dimensions */
+  --tasogare-largeur-lecture: 640px;
+  --tasogare-hauteur-entete: 30px;
+  --tasogare-hauteur-ligne-tableau: 36px;
+  --tasogare-largeur-libelle: 9.5em;
+  --tasogare-defilement-largeur: 11px;
+  --tasogare-defilement-bord: 3px;
+
+  /* Opacités d'état */
+  --tasogare-opacite-lien-survol: 0.6;   /* lien vers la note du jour, au survol */
+}
+
+/* ---------- Mouvement (Mouvement 1.1, d'après Emil Kowalski, licence MIT) ---------- */
+body {
+  --tasogare-duree-rapide: 150ms;      /* survol, changement de couleur, infobulle */
+  --tasogare-courbe-survol: ease;                               /* couleur au survol */
+  --tasogare-courbe-sortie: cubic-bezier(0.23, 1, 0.32, 1);     /* entrée et sortie */
+}
+
+/* ---------- Échelle typographique (Typographie 1.1) ----------
+   Les tailles sont des rapports au texte courant (15 px dans la spécification).
+   Dans Obsidian, 1rem vaut le réglage Apparence → Taille de police :
+   à 15, chaque rôle tombe sur la valeur exacte de la spécification.
+   Le contenu des notes lit ces rapports en em ; l'interface, en rem. */
+body {
+  /* Obsidian embarque Inter (avec ses axes de graisse et de taille optique) sous le nom "Inter".
+     "Inter Variable" est le nom d'une installation locale : il reste en secours. */
+  --tasogare-police: "Inter", "Inter Variable", -apple-system, BlinkMacSystemFont, sans-serif;
+  --tasogare-police-code: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --tasogare-type-title: calc(28 / 15);
+  --tasogare-type-title-phone: calc(26 / 15);
+  --tasogare-type-section: calc(19 / 15);
+  --tasogare-type-subheading: calc(16 / 15);
+  --tasogare-type-heading: 1;
+  --tasogare-type-body: 1;
+  --tasogare-type-label: calc(14 / 15);
+  --tasogare-type-small: calc(13 / 15);
+  --tasogare-type-caption: calc(13 / 15);
+  --tasogare-type-code: calc(13 / 15);
+  --tasogare-type-overline: calc(12 / 15);
+  --tasogare-type-tag: calc(12 / 15);
+  --tasogare-type-micro: calc(11.52 / 15);
+
+  /* Interlignes en rapport : la taille du rôle divise l'interligne de la spécification. */
+  --tasogare-type-title-leading: calc(34 / 28);
+  --tasogare-type-title-phone-leading: calc(34 / 26);
+  --tasogare-type-section-leading: calc(24 / 19);
+  --tasogare-type-subheading-leading: calc(24 / 16);
+  --tasogare-type-heading-leading: calc(20 / 15);
+  --tasogare-type-body-leading: 1.75;
+  --tasogare-type-label-leading: calc(20 / 14);
+  --tasogare-type-overline-leading: calc(18 / 12);
+
+  --tasogare-type-body-weight: 400;
+  --tasogare-type-title-weight: 500;
+  --tasogare-type-section-weight: 500;
+  --tasogare-type-subheading-weight: 500;
+  --tasogare-type-heading-weight: 500;
+  --tasogare-type-label-weight: 500;
+  --tasogare-type-overline-weight: 500;
+  --tasogare-type-emphasis-weight: 600;
+
+  --tasogare-type-title-tracking: -0.02em;
+  --tasogare-type-heading-tracking: 0em;
+  --tasogare-type-section-tracking: -0.01em;
+  --tasogare-type-subheading-tracking: -0.01em;
+  --tasogare-type-label-tracking: -0.01em;
+  --tasogare-type-caption-tracking: 0.01em;
+  --tasogare-type-overline-tracking: 0.05em;
+}
+
+/* ---------- Couleurs sources des palettes ----------
+   Chaque couleur nommée d'une palette s'écrit une seule fois ici ;
+   les emplacements ci-dessous la lisent. Les nuances dérivées restent à leur emplacement. */
+body {
+  --tasogare-blanc: #ffffff;
+
+  /* Crépuscule alpin */
+  --tasogare-cabine-rouge: #9e2b25;       /* Cabine rouge */
+  --tasogare-ciel-lavande: #6e6ba8;       /* Ciel lavande */
+  --tasogare-alpenglow: #e8a3b4;          /* Alpenglow */
+  --tasogare-neige-ombre: #b9b3d6;        /* Neige d'ombre */
+  --tasogare-lueur: #f4c66a;              /* Lueur */
+  --tasogare-cable-acier: #4a4e5c;        /* Câble acier */
+  --tasogare-sapin-nuit: #1f2a3a;         /* Sapin nuit */
+  /* Grès rosé */
+  --tasogare-gres-rose: #b98a72;          /* Grès rosé */
+  --tasogare-chaux: #e6e2da;              /* Chaux */
+  --tasogare-travertin: #d3c7b2;          /* Travertin */
+  --tasogare-olivier-sec: #8c7e5e;        /* Olivier sec */
+  --tasogare-ombre-douce: #b4aea2;        /* Ombre douce */
+  --tasogare-argile-cuite: #7a5443;       /* Argile cuite */
+  --tasogare-encre-taupe: #3f3832;        /* Encre taupe */
+  /* Thé vert */
+  --tasogare-matcha-vif: #8db33a;         /* Matcha vif */
+  --tasogare-noyer-use: #5b3a24;          /* Noyer usé */
+  --tasogare-ceramique-noire: #2a2622;    /* Céramique noire */
+  --tasogare-mousse: #6e7a2c;             /* Mousse */
+  --tasogare-jour-pale: #e9e6dc;          /* Jour pâle */
+  --tasogare-laiton: #c2a25a;             /* Laiton */
+  --tasogare-lin-ardoise: #4a4f55;        /* Lin ardoise */
+  /* Lac profond */
+  --tasogare-bouee-rouge: #d2452b;        /* Bouée rouge */
+  --tasogare-lac-profond: #1f5a5c;        /* Lac profond */
+  --tasogare-turquoise-lac: #3e8a86;      /* Turquoise lac */
+  --tasogare-brume-montagne: #7e9590;     /* Brume montagne */
+  --tasogare-chanvre: #c8ae7e;            /* Chanvre */
+  --tasogare-ecume: #eeeae2;              /* Écume */
+  --tasogare-ponton-gris: #6f685e;        /* Ponton gris */
+  /* Porte bleue */
+  --tasogare-bleu-cobalt: #2347a8;        /* Bleu cobalt */
+  --tasogare-mur-safran: #e6be3a;         /* Mur safran */
+  --tasogare-bougainvillier: #c2287a;     /* Bougainvillier */
+  --tasogare-terracotta: #c0663e;         /* Terracotta */
+  --tasogare-cactus: #5e8b4a;             /* Cactus */
+  --tasogare-zellige: #f0e3be;            /* Zellige */
+  --tasogare-nuit-bleue: #13213f;         /* Nuit bleue */
+  /* Galet noir */
+  --tasogare-galet-noir: #2b2a27;         /* Galet noir */
+  --tasogare-platre: #c9c4ba;             /* Plâtre */
+  --tasogare-lin-avoine: #b3a68f;         /* Lin avoine */
+  --tasogare-porcelaine: #eeebe5;         /* Porcelaine */
+  --tasogare-pierre-grise: #8e8a80;       /* Pierre grise */
+  --tasogare-fumee: #5f5b53;              /* Fumée */
+  --tasogare-mousse-seche: #7d7a5e;       /* Mousse sèche */
+}
+
+/* ---------- Parts de transparence, communes à toutes les palettes ----------
+   Une palette ne redéfinit une part que si sa couleur le demande. */
+.theme-light {
+  --tasogare-part-survol: 5%;
+  --tasogare-part-filet: 8%;
+  --tasogare-part-filet-survol: 16%;
+  --tasogare-part-ombre: 8%;
+  --tasogare-part-surlignage: 42%;
+  --tasogare-part-selection: 55%;
+  --tasogare-part-recherche: 18%;
+  --tasogare-part-defilement: 25%;
+  --tasogare-part-defilement-actif: 45%;
+}
+
+.theme-dark {
+  --tasogare-part-survol: 7%;
+  --tasogare-part-filet: 6%;
+  --tasogare-part-filet-survol: 12%;
+  --tasogare-part-ombre: 50%;
+  --tasogare-part-surlignage: 30%;
+  --tasogare-part-selection: 45%;
+  --tasogare-part-recherche: 10%;
+  --tasogare-part-defilement: 28%;
+  --tasogare-part-defilement-actif: 55%;
+}
+
+/* ---------- Palette Crépuscule alpin (par défaut) ---------- */
+.theme-light {
+  --tasogare-accent-h: 3;
+  --tasogare-accent-s: 62%;
+  --tasogare-accent-l: 38%;
+
+  --tasogare-cadre: #edecf5;            /* Neige lavande */
+  --tasogare-carte: var(--tasogare-blanc);            /* Neige */
+  --tasogare-creux: var(--tasogare-cadre);            /* blocs de code, en-têtes de tableau */
+  --tasogare-filet-tableau: #dcd9eb;
+  --tasogare-filet-fort: var(--tasogare-neige-ombre);
+  --tasogare-voile: var(--tasogare-sapin-nuit);
+  --tasogare-ombre: var(--tasogare-sapin-nuit);
+
+  --tasogare-encre: var(--tasogare-cable-acier);
+  --tasogare-encre-moyenne: #666976;    /* 4,7:1 sur le cadre */
+  --tasogare-encre-pale: #8b8e99;       /* décor, jamais un libellé */
+
+  --tasogare-accent: var(--tasogare-cabine-rouge);
+  --tasogare-accent-survol: #7e211d;
+  --tasogare-action: var(--tasogare-cabine-rouge);
+  --tasogare-action-survol: var(--tasogare-accent-survol);
+  --tasogare-sur-action: var(--tasogare-blanc);
+  --tasogare-coche: var(--tasogare-ciel-lavande);
+  --tasogare-coche-marque: var(--tasogare-blanc);
+
+  --tasogare-surlignage: var(--tasogare-lueur);
+  --tasogare-selection: var(--tasogare-neige-ombre);
+  --tasogare-recherche: var(--tasogare-alpenglow);
+  --tasogare-defilement: var(--tasogare-cable-acier);
+  --tasogare-defilement-actif: var(--tasogare-cabine-rouge);
+
+  --tasogare-rouge: var(--tasogare-cabine-rouge);
+  --tasogare-orange: #c46e28;
+  --tasogare-jaune: #b0801e;
+  --tasogare-vert: #4f7a5a;
+  --tasogare-cyan: #3d7a80;
+  --tasogare-bleu: #4a6096;
+  --tasogare-violet: var(--tasogare-ciel-lavande);
+  --tasogare-rose: #be627c;
+}
+
+.theme-dark {
+  --tasogare-accent-h: 345;
+  --tasogare-accent-s: 60%;
+  --tasogare-accent-l: 77%;
+
+  --tasogare-cadre: var(--tasogare-sapin-nuit);
+  --tasogare-carte: #293546;            /* Sapin soir */
+  --tasogare-creux: #232e3e;
+  --tasogare-filet-tableau: color-mix(in oklch, var(--tasogare-voile) 12%, transparent);
+  --tasogare-filet-fort: color-mix(in oklch, var(--tasogare-voile) 14%, transparent);
+  --tasogare-voile: #e6e4ef;            /* Neige nuit */
+  --tasogare-ombre: var(--tasogare-sapin-nuit);
+
+  --tasogare-encre: var(--tasogare-voile);            /* Neige nuit */
+  --tasogare-encre-moyenne: var(--tasogare-neige-ombre);
+  --tasogare-encre-pale: #9d99b8;       /* 4,5:1 sur la carte */
+
+  --tasogare-accent: var(--tasogare-alpenglow);
+  --tasogare-accent-survol: #f2c0cd;
+  --tasogare-action: var(--tasogare-ciel-lavande);
+  --tasogare-action-survol: #5e5b96;
+  --tasogare-sur-action: var(--tasogare-blanc);
+  --tasogare-coche: var(--tasogare-alpenglow);
+  --tasogare-coche-marque: var(--tasogare-sapin-nuit);
+
+  --tasogare-surlignage: var(--tasogare-lueur);
+  --tasogare-selection: var(--tasogare-ciel-lavande);
+  --tasogare-recherche: var(--tasogare-alpenglow);
+  --tasogare-defilement: var(--tasogare-neige-ombre);
+  --tasogare-defilement-actif: var(--tasogare-alpenglow);
+
+  --tasogare-rouge: #e06e64;
+  --tasogare-orange: #eca064;
+  --tasogare-jaune: var(--tasogare-lueur);
+  --tasogare-vert: #a8cfa0;
+  --tasogare-cyan: #8cc8c8;
+  --tasogare-bleu: #8ca0dc;
+  --tasogare-violet: var(--tasogare-neige-ombre);
+  --tasogare-rose: var(--tasogare-alpenglow);
+}
+
+/* ---------- Palette Grès rosé ---------- */
+.theme-light.tasogare-gres {
+  --tasogare-accent-h: 19;
+  --tasogare-accent-s: 29%;
+  --tasogare-accent-l: 37%;
+
+  --tasogare-cadre: var(--tasogare-chaux);
+  --tasogare-carte: #faf8f4;
+  --tasogare-creux: var(--tasogare-chaux);
+  --tasogare-filet-tableau: #d9d4ca;
+  --tasogare-filet-fort: var(--tasogare-travertin);
+  --tasogare-voile: var(--tasogare-encre-taupe);
+  --tasogare-ombre: var(--tasogare-encre-taupe);
+
+  --tasogare-encre: var(--tasogare-encre-taupe);
+  --tasogare-encre-moyenne: #675e56;
+  --tasogare-encre-pale: #958b81;
+
+  --tasogare-accent: var(--tasogare-argile-cuite);
+  --tasogare-accent-survol: #5f3f31;
+  --tasogare-action: var(--tasogare-argile-cuite);
+  --tasogare-action-survol: var(--tasogare-accent-survol);
+  --tasogare-sur-action: var(--tasogare-blanc);
+  --tasogare-coche: var(--tasogare-olivier-sec);
+  --tasogare-coche-marque: var(--tasogare-blanc);
+
+  --tasogare-surlignage: var(--tasogare-gres-rose);
+  --tasogare-selection: var(--tasogare-gres-rose);
+  --tasogare-recherche: var(--tasogare-olivier-sec);
+  --tasogare-defilement: var(--tasogare-encre-taupe);
+  --tasogare-defilement-actif: var(--tasogare-argile-cuite);
+
+  --tasogare-rouge: #a2483a;
+  --tasogare-orange: #a8622e;
+  --tasogare-jaune: #8f7533;
+  --tasogare-vert: var(--tasogare-olivier-sec);
+  --tasogare-cyan: #4a7a76;
+  --tasogare-bleu: #4f6a8a;
+  --tasogare-violet: #7a6290;
+  --tasogare-rose: #a85d6c;
+
+  --tasogare-part-surlignage: 35%;
+  --tasogare-part-selection: 25%;
+  --tasogare-part-recherche: 20%;
+}
+
+.theme-dark.tasogare-gres {
+  --tasogare-accent-h: 21;
+  --tasogare-accent-s: 43%;
+  --tasogare-accent-l: 70%;
+
+  --tasogare-cadre: #2f2925;
+  --tasogare-carte: var(--tasogare-encre-taupe);
+  --tasogare-creux: #383029;
+  --tasogare-voile: var(--tasogare-chaux);
+  --tasogare-ombre: #1c1815;
+
+  --tasogare-encre: var(--tasogare-chaux);
+  --tasogare-encre-moyenne: var(--tasogare-ombre-douce);
+  --tasogare-encre-pale: #9a9085;
+
+  --tasogare-accent: #d3a790;
+  --tasogare-accent-survol: #e2c0ae;
+  --tasogare-action: var(--tasogare-gres-rose);
+  --tasogare-action-survol: #cfa28b;
+  --tasogare-sur-action: #2a2420;
+  --tasogare-coche: var(--tasogare-gres-rose);
+  --tasogare-coche-marque: var(--tasogare-sur-action);
+
+  --tasogare-surlignage: var(--tasogare-gres-rose);
+  --tasogare-selection: var(--tasogare-olivier-sec);
+  --tasogare-recherche: var(--tasogare-gres-rose);
+  --tasogare-defilement: var(--tasogare-ombre-douce);
+  --tasogare-defilement-actif: var(--tasogare-gres-rose);
+
+  --tasogare-rouge: #e0907e;
+  --tasogare-orange: #e3a774;
+  --tasogare-jaune: #d9c08a;
+  --tasogare-vert: #b7ad86;
+  --tasogare-cyan: #8fc0b8;
+  --tasogare-bleu: #9ab2d0;
+  --tasogare-violet: #c0aad6;
+  --tasogare-rose: #e0a3b2;
+
+  --tasogare-part-selection: 45%;
+  --tasogare-part-recherche: 15%;
+}
+
+/* ---------- Palette Thé vert ---------- */
+.theme-light.tasogare-the {
+  --tasogare-accent-h: 69;
+  --tasogare-accent-s: 48%;
+  --tasogare-accent-l: 29%;
+
+  --tasogare-cadre: var(--tasogare-jour-pale);
+  --tasogare-carte: #fbfaf6;
+  --tasogare-creux: var(--tasogare-jour-pale);
+  --tasogare-filet-tableau: #dcd8cb;
+  --tasogare-filet-fort: #d2c4a0;       /* Laiton éclairci */
+  --tasogare-voile: var(--tasogare-ceramique-noire);
+  --tasogare-ombre: var(--tasogare-ceramique-noire);
+
+  --tasogare-encre: var(--tasogare-lin-ardoise);
+  --tasogare-encre-moyenne: #69665f;
+  --tasogare-encre-pale: #8f8b82;
+
+  --tasogare-accent: #636e27;           /* Mousse, assombrie pour le texte */
+  --tasogare-accent-survol: #4c551d;
+  --tasogare-action: var(--tasogare-mousse);
+  --tasogare-action-survol: var(--tasogare-accent-survol);
+  --tasogare-sur-action: var(--tasogare-blanc);
+  --tasogare-coche: var(--tasogare-noyer-use);
+  --tasogare-coche-marque: var(--tasogare-blanc);
+
+  --tasogare-surlignage: var(--tasogare-laiton);
+  --tasogare-selection: var(--tasogare-matcha-vif);
+  --tasogare-recherche: var(--tasogare-laiton);
+  --tasogare-defilement: var(--tasogare-lin-ardoise);
+  --tasogare-defilement-actif: var(--tasogare-mousse);
+
+  --tasogare-rouge: #a5402f;
+  --tasogare-orange: #a85f26;
+  --tasogare-jaune: #8f7330;
+  --tasogare-vert: #5f6c22;
+  --tasogare-cyan: #3c766c;
+  --tasogare-bleu: #46658a;
+  --tasogare-violet: #6c5a8c;
+  --tasogare-rose: #a2506a;
+
+  --tasogare-part-surlignage: 40%;
+  --tasogare-part-selection: 30%;
+  --tasogare-part-recherche: 25%;
+}
+
+.theme-dark.tasogare-the {
+  --tasogare-accent-h: 79;
+  --tasogare-accent-s: 51%;
+  --tasogare-accent-l: 46%;
+
+  --tasogare-cadre: var(--tasogare-ceramique-noire);
+  --tasogare-carte: #35302b;
+  --tasogare-creux: #2f2b27;
+  --tasogare-voile: var(--tasogare-jour-pale);
+  --tasogare-ombre: #1a1714;
+
+  --tasogare-encre: var(--tasogare-jour-pale);
+  --tasogare-encre-moyenne: #bdb7aa;
+  --tasogare-encre-pale: #a29c90;
+
+  --tasogare-accent: var(--tasogare-matcha-vif);
+  --tasogare-accent-survol: #a9c962;
+  --tasogare-action: var(--tasogare-matcha-vif);
+  --tasogare-action-survol: var(--tasogare-accent-survol);
+  --tasogare-sur-action: var(--tasogare-ceramique-noire);
+  --tasogare-coche: var(--tasogare-matcha-vif);
+  --tasogare-coche-marque: var(--tasogare-ceramique-noire);
+
+  --tasogare-surlignage: var(--tasogare-laiton);
+  --tasogare-selection: var(--tasogare-matcha-vif);
+  --tasogare-recherche: var(--tasogare-laiton);
+  --tasogare-defilement: var(--tasogare-encre-moyenne);
+  --tasogare-defilement-actif: var(--tasogare-matcha-vif);
+
+  --tasogare-rouge: #e07a62;
+  --tasogare-orange: #e0a060;
+  --tasogare-jaune: var(--tasogare-laiton);
+  --tasogare-vert: var(--tasogare-matcha-vif);
+  --tasogare-cyan: #7fc0b2;
+  --tasogare-bleu: #8fadd0;
+  --tasogare-violet: #b3a3d6;
+  --tasogare-rose: #e09ab0;
+
+  --tasogare-part-selection: 25%;
+  --tasogare-part-recherche: 15%;
+}
+
+/* ---------- Palette Lac profond ---------- */
+.theme-light.tasogare-lac {
+  --tasogare-accent-h: 177;
+  --tasogare-accent-s: 43%;
+  --tasogare-accent-l: 32%;
+
+  --tasogare-cadre: var(--tasogare-ecume);
+  --tasogare-carte: #fbfaf7;
+  --tasogare-creux: var(--tasogare-ecume);
+  --tasogare-filet-tableau: #e0dbd0;
+  --tasogare-filet-fort: #bfcbc7;       /* Brume montagne éclaircie */
+  --tasogare-voile: var(--tasogare-lac-profond);
+  --tasogare-ombre: var(--tasogare-lac-profond);
+
+  --tasogare-encre: #2d3a3b;
+  --tasogare-encre-moyenne: #655f55;    /* Ponton gris assombri */
+  --tasogare-encre-pale: var(--tasogare-brume-montagne);
+
+  --tasogare-accent: #2f7672;           /* Turquoise lac, assombrie pour le texte */
+  --tasogare-accent-survol: #245c59;
+  --tasogare-action: var(--tasogare-lac-profond);
+  --tasogare-action-survol: #174547;
+  --tasogare-sur-action: var(--tasogare-blanc);
+  --tasogare-coche: var(--tasogare-turquoise-lac);
+  --tasogare-coche-marque: var(--tasogare-blanc);
+
+  --tasogare-surlignage: var(--tasogare-chanvre);
+  --tasogare-selection: var(--tasogare-turquoise-lac);
+  --tasogare-recherche: var(--tasogare-bouee-rouge);
+  --tasogare-defilement: var(--tasogare-ponton-gris);
+  --tasogare-defilement-actif: var(--tasogare-bouee-rouge);
+
+  --tasogare-rouge: #b83a22;
+  --tasogare-orange: #b0601f;
+  --tasogare-jaune: #8c7238;
+  --tasogare-vert: #4c7a52;
+  --tasogare-cyan: var(--tasogare-accent);
+  --tasogare-bleu: #2f5f8a;
+  --tasogare-violet: #675d8e;
+  --tasogare-rose: #a84d6c;
+
+  --tasogare-part-surlignage: 45%;
+  --tasogare-part-selection: 22%;
+  --tasogare-part-recherche: 15%;
+}
+
+.theme-dark.tasogare-lac {
+  --tasogare-accent-h: 174;
+  --tasogare-accent-s: 38%;
+  --tasogare-accent-l: 63%;
+
+  --tasogare-cadre: #132a2b;            /* Lac profond, de nuit */
+  --tasogare-carte: #1a3536;
+  --tasogare-creux: #163031;
+  --tasogare-voile: var(--tasogare-ecume);
+  --tasogare-ombre: #0b1a1b;
+
+  --tasogare-encre: var(--tasogare-ecume);
+  --tasogare-encre-moyenne: #a6b8b3;
+  --tasogare-encre-pale: #8fa5a0;
+
+  --tasogare-accent: #7cc4bd;           /* Turquoise lac, éclaircie pour le texte */
+  --tasogare-accent-survol: #a3d8d2;
+  --tasogare-action: #2f7672;
+  --tasogare-action-survol: #286662;
+  --tasogare-sur-action: var(--tasogare-blanc);
+  --tasogare-coche: var(--tasogare-turquoise-lac);
+  --tasogare-coche-marque: var(--tasogare-blanc);
+
+  --tasogare-surlignage: var(--tasogare-chanvre);
+  --tasogare-selection: var(--tasogare-turquoise-lac);
+  --tasogare-recherche: var(--tasogare-bouee-rouge);
+  --tasogare-defilement: var(--tasogare-encre-moyenne);
+  --tasogare-defilement-actif: var(--tasogare-accent);
+
+  --tasogare-rouge: #ef7a60;
+  --tasogare-orange: #e8a05e;
+  --tasogare-jaune: var(--tasogare-chanvre);
+  --tasogare-vert: #9cc79a;
+  --tasogare-cyan: var(--tasogare-accent);
+  --tasogare-bleu: #8db4dc;
+  --tasogare-violet: #b4aadb;
+  --tasogare-rose: #e99ab4;
+
+  --tasogare-part-recherche: 15%;
+}
+
+/* ---------- Palette Porte bleue ---------- */
+.theme-light.tasogare-porte {
+  --tasogare-accent-h: 224;
+  --tasogare-accent-s: 66%;
+  --tasogare-accent-l: 40%;
+
+  --tasogare-cadre: #f6eed6;
+  --tasogare-carte: #fffcf3;
+  --tasogare-creux: var(--tasogare-cadre);
+  --tasogare-filet-tableau: #e9dfc3;
+  --tasogare-filet-fort: var(--tasogare-zellige);
+  --tasogare-voile: var(--tasogare-nuit-bleue);
+  --tasogare-ombre: var(--tasogare-nuit-bleue);
+
+  --tasogare-encre: var(--tasogare-nuit-bleue);
+  --tasogare-encre-moyenne: #565e75;
+  --tasogare-encre-pale: #8a8f9f;
+
+  --tasogare-accent: var(--tasogare-bleu-cobalt);
+  --tasogare-accent-survol: #1a3683;
+  --tasogare-action: var(--tasogare-bleu-cobalt);
+  --tasogare-action-survol: var(--tasogare-accent-survol);
+  --tasogare-sur-action: var(--tasogare-blanc);
+  --tasogare-coche: var(--tasogare-bougainvillier);
+  --tasogare-coche-marque: var(--tasogare-blanc);
+
+  --tasogare-surlignage: var(--tasogare-mur-safran);
+  --tasogare-selection: var(--tasogare-bleu-cobalt);
+  --tasogare-recherche: var(--tasogare-bougainvillier);
+  --tasogare-defilement: var(--tasogare-nuit-bleue);
+  --tasogare-defilement-actif: var(--tasogare-bleu-cobalt);
+
+  --tasogare-rouge: #b0302a;
+  --tasogare-orange: var(--tasogare-terracotta);
+  --tasogare-jaune: #957514;
+  --tasogare-vert: var(--tasogare-cactus);
+  --tasogare-cyan: #2a7f86;
+  --tasogare-bleu: var(--tasogare-bleu-cobalt);
+  --tasogare-violet: #6a4aa8;
+  --tasogare-rose: var(--tasogare-bougainvillier);
+
+  --tasogare-part-surlignage: 45%;
+  --tasogare-part-selection: 18%;
+  --tasogare-part-recherche: 15%;
+}
+
+.theme-dark.tasogare-porte {
+  --tasogare-accent-h: 224;
+  --tasogare-accent-s: 72%;
+  --tasogare-accent-l: 74%;
+
+  --tasogare-cadre: var(--tasogare-nuit-bleue);
+  --tasogare-carte: #1b2b50;
+  --tasogare-creux: #172647;
+  --tasogare-voile: var(--tasogare-zellige);
+  --tasogare-ombre: #080f1f;
+
+  --tasogare-encre: var(--tasogare-zellige);
+  --tasogare-encre-moyenne: #c3c0b4;
+  --tasogare-encre-pale: #9aa0b5;
+
+  --tasogare-accent: #8ca6ec;           /* Bleu cobalt, éclairci pour le texte */
+  --tasogare-accent-survol: #b0c3f2;
+  --tasogare-action: var(--tasogare-mur-safran);
+  --tasogare-action-survol: #efd06e;
+  --tasogare-sur-action: var(--tasogare-nuit-bleue);
+  --tasogare-coche: var(--tasogare-mur-safran);
+  --tasogare-coche-marque: var(--tasogare-nuit-bleue);
+
+  --tasogare-surlignage: var(--tasogare-mur-safran);
+  --tasogare-selection: var(--tasogare-bleu-cobalt);
+  --tasogare-recherche: var(--tasogare-bougainvillier);
+  --tasogare-defilement: var(--tasogare-encre-moyenne);
+  --tasogare-defilement-actif: var(--tasogare-mur-safran);
+
+  --tasogare-rouge: #ec7a6e;
+  --tasogare-orange: #e39a6e;
+  --tasogare-jaune: var(--tasogare-mur-safran);
+  --tasogare-vert: #9cc488;
+  --tasogare-cyan: #7cc8cc;
+  --tasogare-bleu: var(--tasogare-accent);
+  --tasogare-violet: #b7a0ec;
+  --tasogare-rose: #ec86b8;
+
+  --tasogare-part-selection: 50%;
+  --tasogare-part-recherche: 18%;
+}
+
+/* ---------- Palette Galet noir ---------- */
+.theme-light.tasogare-galet {
+  --tasogare-accent-h: 54;
+  --tasogare-accent-s: 17%;
+  --tasogare-accent-l: 32%;
+
+  --tasogare-cadre: var(--tasogare-porcelaine);
+  --tasogare-carte: #fbfaf8;
+  --tasogare-creux: var(--tasogare-porcelaine);
+  --tasogare-filet-tableau: #e0dcd4;
+  --tasogare-filet-fort: var(--tasogare-platre);
+  --tasogare-voile: var(--tasogare-galet-noir);
+  --tasogare-ombre: var(--tasogare-galet-noir);
+
+  --tasogare-encre: var(--tasogare-galet-noir);
+  --tasogare-encre-moyenne: var(--tasogare-fumee);
+  --tasogare-encre-pale: var(--tasogare-pierre-grise);
+
+  --tasogare-accent: #5f5c43;
+  --tasogare-accent-survol: #45432f;
+  --tasogare-action: var(--tasogare-galet-noir);
+  --tasogare-action-survol: var(--tasogare-fumee);
+  --tasogare-sur-action: var(--tasogare-blanc);
+  --tasogare-coche: var(--tasogare-galet-noir);
+  --tasogare-coche-marque: var(--tasogare-blanc);
+
+  --tasogare-surlignage: var(--tasogare-lin-avoine);
+  --tasogare-selection: var(--tasogare-pierre-grise);
+  --tasogare-recherche: var(--tasogare-mousse-seche);
+  --tasogare-defilement: var(--tasogare-fumee);
+  --tasogare-defilement-actif: var(--tasogare-galet-noir);
+
+  --tasogare-rouge: #9c4a3e;
+  --tasogare-orange: #9a6233;
+  --tasogare-jaune: #86733a;
+  --tasogare-vert: var(--tasogare-mousse-seche);
+  --tasogare-cyan: #4f7470;
+  --tasogare-bleu: #50667f;
+  --tasogare-violet: #6d6082;
+  --tasogare-rose: #96596a;
+
+  --tasogare-part-surlignage: 45%;
+  --tasogare-part-selection: 30%;
+  --tasogare-part-recherche: 20%;
+}
+
+.theme-dark.tasogare-galet {
+  --tasogare-accent-h: 38;
+  --tasogare-accent-s: 19%;
+  --tasogare-accent-l: 63%;
+
+  --tasogare-cadre: #1f1e1c;
+  --tasogare-carte: var(--tasogare-galet-noir);
+  --tasogare-creux: #252422;
+  --tasogare-voile: var(--tasogare-porcelaine);
+  --tasogare-ombre: #121110;
+
+  --tasogare-encre: var(--tasogare-porcelaine);
+  --tasogare-encre-moyenne: var(--tasogare-platre);
+  --tasogare-encre-pale: #9b978d;
+
+  --tasogare-accent: var(--tasogare-lin-avoine);
+  --tasogare-accent-survol: #c9bfa9;
+  --tasogare-action: var(--tasogare-platre);
+  --tasogare-action-survol: var(--tasogare-porcelaine);
+  --tasogare-sur-action: var(--tasogare-galet-noir);
+  --tasogare-coche: var(--tasogare-lin-avoine);
+  --tasogare-coche-marque: var(--tasogare-galet-noir);
+
+  --tasogare-surlignage: var(--tasogare-lin-avoine);
+  --tasogare-selection: var(--tasogare-pierre-grise);
+  --tasogare-recherche: var(--tasogare-lin-avoine);
+  --tasogare-defilement: var(--tasogare-platre);
+  --tasogare-defilement-actif: var(--tasogare-lin-avoine);
+
+  --tasogare-rouge: #d79a8a;
+  --tasogare-orange: #d8ad80;
+  --tasogare-jaune: #d6c48f;
+  --tasogare-vert: #aeb08a;
+  --tasogare-cyan: #9cc0b8;
+  --tasogare-bleu: #a5b6cb;
+  --tasogare-violet: #bdb0cf;
+  --tasogare-rose: #d6a7b3;
+
+  --tasogare-part-selection: 45%;
+  --tasogare-part-recherche: 15%;
+}
+
+/* ==========================================================
+   Couche 2 : rôles (les variables d'Obsidian)
+   ========================================================== */
+
+/* ---------- Typographie ---------- */
+body {
+  --font-interface-theme: var(--tasogare-police);
+  --font-text-theme: var(--tasogare-police);
+  --font-monospace-theme: var(--tasogare-police-code);
+
+  /* Interface, en rem : suit le réglage de taille de police. */
+  --font-ui-smaller: calc(var(--tasogare-type-tag) * 1rem);
+  --font-ui-small: calc(var(--tasogare-type-small) * 1rem);
+  --font-ui-medium: calc(var(--tasogare-type-body) * 1rem);
+  --font-ui-large: calc(var(--tasogare-type-section) * 1rem);
+  --tab-font-size: calc(var(--tasogare-type-label) * 1rem);
+  --tab-font-weight: var(--tasogare-type-label-weight);
+  --nav-item-size: calc(var(--tasogare-type-small) * 1rem);
+  --nav-item-weight-active: var(--tasogare-type-label-weight);
+  --status-bar-font-size: calc(var(--tasogare-type-micro) * 1rem);
+  --tooltip-font-size: calc(var(--tasogare-type-caption) * 1rem);
+  --vault-profile-font-size: calc(var(--tasogare-type-label) * 1rem);
+  --vault-profile-font-weight: var(--tasogare-type-label-weight);
+  --setting-group-heading-weight: var(--tasogare-type-heading-weight);
+  --bases-table-font-size: calc(var(--tasogare-type-small) * 1rem);
+
+  /* Mouvement : les rares variables d'animation d'Obsidian lisent l'échelle du thème. */
+  --anim-duration-fast: var(--tasogare-duree-rapide);
+  --anim-motion-swing: var(--tasogare-courbe-sortie);
+
+  /* Contenu des notes, en em : suit le texte qui l'entoure. */
+  --line-height-normal: var(--tasogare-type-body-leading);
+  --bold-modifier: calc(var(--tasogare-type-emphasis-weight) - var(--tasogare-type-body-weight));
+  --inline-title-size: calc(var(--tasogare-type-title) * 1em);
+  --inline-title-weight: var(--tasogare-type-title-weight);
+  --inline-title-line-height: var(--tasogare-type-title-leading);
+  --inline-title-color: var(--text-accent);
+  --inline-title-margin-bottom: var(--tasogare-espace-sous-titre-note);
+  --h1-letter-spacing: var(--tasogare-type-title-tracking);
+  --h2-letter-spacing: var(--tasogare-type-section-tracking);
+  --h3-letter-spacing: var(--tasogare-type-subheading-tracking);
+  --h4-letter-spacing: var(--tasogare-type-heading-tracking);
+  --h5-letter-spacing: var(--tasogare-type-label-tracking);
+  --h6-letter-spacing: var(--tasogare-type-overline-tracking);
+  --h1-size: calc(var(--tasogare-type-title) * 1em);
+  --h1-weight: var(--tasogare-type-title-weight);
+  --h1-line-height: var(--tasogare-type-title-leading);
+  --h2-size: calc(var(--tasogare-type-section) * 1em);
+  --h2-weight: var(--tasogare-type-section-weight);
+  --h2-line-height: var(--tasogare-type-section-leading);
+  --h3-size: calc(var(--tasogare-type-subheading) * 1em);
+  --h3-weight: var(--tasogare-type-subheading-weight);
+  --h3-line-height: var(--tasogare-type-subheading-leading);
+  --h4-size: calc(var(--tasogare-type-heading) * 1em);
+  --h4-weight: var(--tasogare-type-heading-weight);
+  --h4-line-height: var(--tasogare-type-heading-leading);
+  --h5-size: calc(var(--tasogare-type-label) * 1em);
+  --h5-weight: var(--tasogare-type-label-weight);
+  --h5-line-height: var(--tasogare-type-label-leading);
+  --h6-size: calc(var(--tasogare-type-overline) * 1em);
+  --h6-weight: var(--tasogare-type-overline-weight);
+  --h6-line-height: var(--tasogare-type-overline-leading);
+  --code-size: calc(var(--tasogare-type-code) * 1em);
+  --tag-size: calc(var(--tasogare-type-tag) * 1em);
+  --table-text-size: calc(var(--tasogare-type-small) * 1em);
+  --metadata-label-font-size: calc(var(--tasogare-type-small) * 1em);
+  --metadata-input-font-size: calc(var(--tasogare-type-small) * 1em);
+}
+
+/* Téléphone : le titre passe à 26 px, comme sous 40rem dans la spécification. */
+.is-phone {
+  --inline-title-size: calc(var(--tasogare-type-title-phone) * 1em);
+  --inline-title-line-height: var(--tasogare-type-title-phone-leading);
+  --h1-size: calc(var(--tasogare-type-title-phone) * 1em);
+  --h1-line-height: var(--tasogare-type-title-phone-leading);
+}
+
+/* ---------- Structure, commune aux deux modes ---------- */
+body {
+  --scrollbar-width: var(--tasogare-defilement-largeur);
+  --scrollbar-height: var(--tasogare-defilement-largeur);
+  --scrollbar-radius: var(--tasogare-defilement-largeur);
+  --scrollbar-border-width: var(--tasogare-defilement-bord);
+  --p-spacing: var(--tasogare-espace-paragraphe);
+  --file-line-width: var(--tasogare-largeur-lecture);
+  --heading-spacing: var(--tasogare-espace-avant-titre);
+  --header-height: var(--tasogare-hauteur-entete);
+  --blockquote-color: var(--text-muted);
+
+  --ribbon-background-collapsed: var(--background-secondary);
+  --status-bar-background: transparent;
+  --status-bar-border-color: transparent;
+  --status-bar-border-width: 0px;
+  --divider-color: transparent;
+  --divider-width: 0px;
+  --tab-outline-color: transparent;
+  --tab-outline-width: 0px;
+  --nav-indentation-guide-color: transparent;
+  --nav-indentation-guide-width: 0px;
+  --nav-item-padding: var(--tasogare-pas-ligne-nav) var(--size-4-2) var(--tasogare-pas-ligne-nav) var(--size-4-6);
+  --nav-item-parent-padding: var(--nav-item-padding);
+  --nav-item-radius: var(--tasogare-rayon-bloc);
+
+  --modal-border-color: var(--background-modifier-border);
+  --prompt-border-color: var(--background-modifier-border);
+  --menu-radius: var(--tasogare-rayon-bloc);
+  --menu-border-color: var(--background-modifier-border);
+  --tooltip-radius: var(--tasogare-rayon-champ);
+  --callout-radius: var(--tasogare-rayon-bloc);
+  --image-radius: var(--tasogare-rayon-bloc);
+
+  --tag-background: transparent;
+  --tag-color: var(--text-muted);
+  --tag-border-width: var(--tasogare-filet);
+  --tag-border-color: var(--background-modifier-border);
+  --tag-radius: var(--tasogare-rayon-marque);
+  --tag-padding-x: var(--tasogare-pas-tag);
+  --tag-padding-y: 0;
+
+  --table-header-weight: var(--tasogare-type-emphasis-weight);
+
+  --metadata-background: var(--background-secondary);
+  --metadata-padding: var(--tasogare-pas-proprietes);
+  --metadata-border-radius: var(--tasogare-rayon-carte);
+  --metadata-property-padding: 0 var(--tasogare-pas-propriete);
+  --metadata-property-radius: var(--tasogare-rayon-champ);
+  --metadata-input-longtext-lines: 1;
+  --metadata-label-width: var(--tasogare-largeur-libelle);
+  --metadata-gap: var(--tasogare-ecart-proprietes);
+  --metadata-property-background-hover: var(--background-modifier-hover);
+  --metadata-label-background-active: transparent;
+  --metadata-input-background-active: transparent;
+
+  --graph-line: var(--text-faint);
+  --graph-node-tag: var(--text-accent);
+  --graph-node-attachment: var(--text-faint);
+  --graph-text: var(--text-muted);
+
+  /* Bases : galerie en cartes du cadre ; kanban en colonnes du cadre et cartes de note */
+  --bases-cards-background: var(--background-secondary);
+  --bases-cards-cover-background: var(--background-secondary);
+  --bases-cards-radius: var(--tasogare-rayon-bloc);
+  --bases-cards-shadow: none;
+  --bases-cards-shadow-hover: 0 0 0 var(--tasogare-filet) var(--background-modifier-border-hover);
+  --bases-kanban-column-background: var(--background-secondary);
+  --bases-kanban-column-radius: var(--tasogare-rayon-bloc);
+  --bases-kanban-card-radius: var(--tasogare-rayon-bloc);
+  --bases-kanban-card-shadow: var(--tasogare-ombre-posee);
+  --bases-kanban-card-shadow-hover: 0 0 0 var(--tasogare-filet) var(--background-modifier-border-hover), var(--tasogare-ombre-posee);
+
+  /* Bases : tableau à la Notion, lignes fines, pas de colonnes tracées */
+  --bases-table-row-height: var(--tasogare-hauteur-ligne-tableau);
+  --bases-table-border-color: var(--background-modifier-border);
+  --bases-table-column-border-width: 0px;
+  --bases-table-group-background: var(--background-primary);
+  --bases-table-header-background: transparent;
+  --bases-table-header-weight: var(--tasogare-type-label-weight);
+  --bases-table-row-background-hover: var(--background-modifier-hover);
+  --bases-group-heading-property-color: var(--text-muted);
+  --bases-group-heading-value-weight: var(--tasogare-type-emphasis-weight);
+}
+
+/* Obsidian redéfinit ces rayons sur .mod-macos : sur ordinateur, le thème les reprend.
+   Le mobile garde ceux d'Obsidian. */
+body:not(.is-mobile) {
+  --input-radius: var(--tasogare-rayon-champ);
+  --clickable-icon-radius: var(--tasogare-rayon-champ);
+  --modal-radius: var(--tasogare-rayon-fenetre);
+}
+
+/* ---------- Couleurs : chaque rôle lit un emplacement de la palette active ---------- */
+.theme-light,
+.theme-dark {
+  --accent-h: var(--tasogare-accent-h);
+  --accent-s: var(--tasogare-accent-s);
+  --accent-l: var(--tasogare-accent-l);
+
+  /* Le rendu lit l'accent de la palette ; --accent-h/s/l servent au sélecteur de couleur d'Obsidian. */
+  --color-accent: var(--tasogare-accent);
+  --color-accent-1: var(--tasogare-accent-survol);
+  --color-accent-2: var(--tasogare-accent-survol);
+
+  --interactive-accent: var(--tasogare-action);
+  --interactive-accent-hover: var(--tasogare-action-survol);
+  --text-on-accent: var(--tasogare-sur-action);
+  --text-on-accent-inverted: var(--tasogare-sur-action);
+
+  --background-primary: var(--tasogare-carte);
+  --background-primary-alt: var(--tasogare-carte);
+  --background-secondary: var(--tasogare-cadre);
+  --background-secondary-alt: var(--tasogare-cadre);
+  --background-modifier-hover: color-mix(in oklch, var(--tasogare-voile) var(--tasogare-part-survol), transparent);
+  --background-modifier-border: color-mix(in oklch, var(--tasogare-voile) var(--tasogare-part-filet), transparent);
+  --background-modifier-border-hover: color-mix(in oklch, var(--tasogare-voile) var(--tasogare-part-filet-survol), transparent);
+  --divider-color-hover: var(--background-modifier-border);
+  --tasogare-ombre-posee: var(--tasogare-ombre-forme) color-mix(in oklch, var(--tasogare-ombre) var(--tasogare-part-ombre), transparent);
+
+  --text-normal: var(--tasogare-encre);
+  --text-muted: var(--tasogare-encre-moyenne);
+  --text-faint: var(--tasogare-encre-pale);
+  --text-accent: var(--tasogare-accent);
+  --text-accent-hover: var(--tasogare-accent-survol);
+  --link-unresolved-color: var(--text-faint);
+
+  --text-highlight-bg: color-mix(in oklch, var(--tasogare-surlignage) var(--tasogare-part-surlignage), transparent);
+  --text-selection: color-mix(in oklch, var(--tasogare-selection) var(--tasogare-part-selection), transparent);
+  --search-result-background: color-mix(in oklch, var(--tasogare-recherche) var(--tasogare-part-recherche), transparent);
+
+  --hr-color: var(--tasogare-filet-fort);
+  --blockquote-border-color: var(--tasogare-filet-fort);
+  --code-background: var(--tasogare-creux);
+  --table-border-color: var(--tasogare-filet-tableau);
+  --table-header-background: var(--tasogare-creux);
+  --checkbox-color: var(--tasogare-coche);
+  --checkbox-marker-color: var(--tasogare-coche-marque);
+
+  --color-red: var(--tasogare-rouge);
+  --color-orange: var(--tasogare-orange);
+  --color-yellow: var(--tasogare-jaune);
+  --color-green: var(--tasogare-vert);
+  --color-cyan: var(--tasogare-cyan);
+  --color-blue: var(--tasogare-bleu);
+  --color-purple: var(--tasogare-violet);
+  --color-pink: var(--tasogare-rose);
+  --callout-quote: var(--text-faint);
+
+  --code-keyword: var(--color-red);
+  --code-function: var(--color-purple);
+  --code-value: var(--color-yellow);
+  --code-property: var(--color-blue);
+  --code-tag: var(--color-pink);
+  --code-operator: var(--text-normal);
+
+  --scrollbar-thumb-bg: color-mix(in oklch, var(--tasogare-defilement) var(--tasogare-part-defilement), transparent);
+  --scrollbar-active-thumb-bg: color-mix(in oklch, var(--tasogare-defilement-actif) var(--tasogare-part-defilement-actif), transparent);
+}
+
+/* ==========================================================
+   Couche 3 : règles
+   Une règle seulement là où Obsidian n'expose pas de variable.
+   « body:not(.is-mobile) » : le téléphone et la tablette gardent la mise en page d'Obsidian.
+   ========================================================== */
+
+/* ---------- Rendu du texte ---------- */
+body {
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "cv11"; /* a simple, plus proche de SF */
+}
+
+/* ---------- Cadre : une seule couleur, partout ---------- */
+.workspace,
+.workspace-split.mod-root,
+.workspace-split.mod-root .workspace-tabs,
+.workspace-split.mod-root .workspace-tab-container {
+  background: var(--background-secondary);
+}
+
+/* ---------- Sidebar nue : ni fond, ni trait ---------- */
+.workspace-tab-header-container,
+.mod-sidedock .workspace-tab-header-container,
+.workspace-ribbon,
+.workspace-split.mod-sidedock,
+.workspace-split.mod-sidedock .workspace-tabs,
+.workspace-split.mod-sidedock .workspace-tab-container,
+.workspace-split.mod-sidedock .workspace-leaf-content,
+.workspace-split.mod-sidedock .view-content,
+.workspace-sidedock-vault-profile,
+.nav-header,
+.nav-files-container {
+  background: transparent;
+}
+
+/* ---------- Aucun séparateur ---------- */
+.workspace-ribbon,
+.workspace-split,
+.workspace-tabs,
+.workspace-tab-header-container,
+.workspace-tab-header-container-inner,
+.workspace-tabs .workspace-leaf,
+.workspace-sidedock-vault-profile,
+.nav-header,
+.view-header,
+.status-bar {
+  border: none;
+  box-shadow: none;
+}
+.workspace-leaf-resize-handle,
+.workspace-split.mod-sidedock > .workspace-leaf-resize-handle {
+  border: none;
+  background: transparent;
+}
+.tree-item-children,
+.nav-folder-children {
+  border: none;
+}
+
+/* ---------- Onglets : une pastille, le même inset au-dessus et au-dessous ----------
+   La barre garde ses marges latérales d'Obsidian (place du bouton de sidebar) ;
+   seules les marges verticales passent à l'inset. */
+body:not(.is-mobile) .workspace-split.mod-root {
+  --tab-inner-background-hover: transparent; /* un seul voile au survol : celui de l'onglet */
+  --tab-container-padding-start: 0; /* la première pastille s'aligne sur le bord de la carte */
+}
+body:not(.is-mobile) .workspace-split.mod-root .workspace-tab-header-container {
+  height: auto;
+  padding-block: var(--tasogare-inset);
+  background: transparent;
+}
+body:not(.is-mobile) .workspace-split.mod-root .workspace-tab-header-container-inner {
+  margin-block: 0;
+  padding-block: 0;
+}
+body:not(.is-mobile) .workspace-split.mod-root .workspace-tab-header {
+  height: var(--tasogare-hauteur-entete);
+  border-radius: var(--tasogare-rayon-bloc);
+  background: transparent;
+  padding: var(--tasogare-pas-onglet);
+}
+body:not(.is-mobile) .workspace-split.mod-root .workspace-tab-header-inner {
+  height: 100%;
+}
+/* Le bouton « + » et le menu des onglets se centrent sur la pastille, sans l'étirer. */
+body:not(.is-mobile) .workspace-split.mod-root :is(.workspace-tab-header-new-tab, .workspace-tab-header-tab-list) {
+  padding-block: 0;
+  align-self: center;
+}
+body:not(.is-mobile) .workspace-split.mod-root .workspace-tab-header.is-active {
+  background: var(--background-primary);
+}
+body:not(.is-mobile) .workspace-split.mod-root .workspace-tab-header:not(.is-active):hover {
+  background: var(--background-modifier-hover);
+}
+body:not(.is-mobile) .workspace-tab-header::before,
+body:not(.is-mobile) .workspace-tab-header::after,
+body:not(.is-mobile) .workspace-tab-header-inner::after {
+  display: none;
+}
+/* L'onglet actif : une pastille de la carte et le texte en encre ; les autres en texte secondaire. */
+body:not(.is-mobile) .workspace-tab-header .workspace-tab-header-inner-title,
+body:not(.is-mobile) .workspace-tab-header .workspace-tab-header-inner-icon {
+  color: var(--text-muted);
+}
+body:not(.is-mobile) .workspace-tab-header.is-active .workspace-tab-header-inner-title,
+body:not(.is-mobile) .workspace-tab-header.is-active .workspace-tab-header-inner-icon {
+  color: var(--text-normal);
+}
+/* Sidebar : l'onglet actif se dit par la couleur de son icône, sans fond. */
+body:not(.is-mobile) .mod-sidedock .workspace-tab-header-container .workspace-tab-header.is-active {
+  background: transparent;
+}
+
+/* ---------- Panneau de note : carte arrondie, inset à droite et en bas ---------- */
+body:not(.is-mobile) .workspace-split.mod-root .workspace-tab-container {
+  padding: 0 var(--tasogare-inset) var(--tasogare-inset) 0;
+}
+body:not(.is-mobile) .workspace-split.mod-root .workspace-leaf {
+  border-radius: var(--tasogare-rayon-carte);
+  overflow: hidden;
+}
+body:not(.is-mobile) .workspace-split.mod-root .workspace-leaf-content,
+body:not(.is-mobile) .workspace-split.mod-root .view-header,
+body:not(.is-mobile) .workspace-split.mod-root .view-content {
+  background: var(--background-primary);
+}
+
+/* ---------- Icônes : sans fond, survol seul, partout ---------- */
+.view-header-nav-buttons button,
+.view-header .view-action,
+.clickable-icon,
+.nav-action-button,
+.side-dock-ribbon-action {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+.clickable-icon:hover,
+.nav-action-button:hover,
+.side-dock-ribbon-action:hover {
+  background: var(--background-modifier-hover);
+}
+
+/* ---------- Infobulle : l'approche du rôle caption (taille et rayon en couche 2) ---------- */
+.tooltip {
+  letter-spacing: var(--tasogare-type-caption-tracking);
+}
+
+/* ---------- Défilement : minimal, il n'apparaît qu'au survol ----------
+   La forme passe par les variables d'Obsidian (couche 2). Obsidian cible
+   body.styled-scrollbars : le thème prend le même sélecteur pour passer après lui. */
+body.styled-scrollbars ::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+body.styled-scrollbars :hover::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb-bg);
+}
+body.styled-scrollbars ::-webkit-scrollbar-thumb:hover,
+body.styled-scrollbars ::-webkit-scrollbar-thumb:active {
+  background-color: var(--scrollbar-active-thumb-bg);
+}
+
+/* ---------- Titres ----------
+   L'approche des h1 à h6 passe par --h1-letter-spacing… (couche 2). Le titre de note
+   a sa propre approche en dur dans Obsidian : cette règle lui rend celle du h1. */
+.inline-title:not([data-level]) {
+  letter-spacing: var(--h1-letter-spacing);
+  text-wrap: balance;
+}
+.markdown-rendered h2 {
+  margin-bottom: var(--tasogare-espace-sous-h2);
+}
+.markdown-rendered h3 {
+  margin-bottom: var(--tasogare-espace-sous-h3);
+}
+
+/* ---------- Citations ---------- */
+.markdown-rendered blockquote {
+  padding-inline-start: var(--tasogare-retrait-citation);
+}
+
+/* ---------- Surlignage ----------
+   La couleur vient de --text-highlight-bg (couche 2) ; Obsidian garde ses surlignages de couleur. */
+.markdown-rendered mark,
+.cm-s-obsidian span.cm-highlight {
+  color: var(--text-normal);
+  border-radius: var(--tasogare-rayon-marque);
+  padding: var(--tasogare-pas-surlignage);
+}
+
+/* ---------- Sélecteur de coffre : au survol, la même pastille que l'onglet actif ---------- */
+body:not(.is-mobile) .workspace-split.mod-primary-split .workspace-sidedock-vault-profile {
+  padding: var(--tasogare-inset);
+  background-color: transparent;
+  border-top: none;
+}
+body:not(.is-mobile) .workspace-split.mod-primary-split .workspace-sidedock-vault-profile .workspace-drawer-vault-switcher {
+  padding: var(--tasogare-pas-selecteur-coffre);
+  border-radius: var(--tasogare-rayon-bloc);
+  transition: background-color var(--tasogare-duree-rapide) var(--tasogare-courbe-survol);
+}
+body:not(.is-mobile) .workspace-split.mod-primary-split .workspace-sidedock-vault-profile .workspace-drawer-vault-switcher:hover,
+body:not(.is-mobile) .workspace-split.mod-primary-split .workspace-sidedock-vault-profile .workspace-drawer-vault-switcher.has-active-menu {
+  background-color: var(--background-primary);
+}
+body:not(.is-mobile) .workspace-split.mod-primary-split .workspace-sidedock-vault-profile .workspace-drawer-vault-name {
+  letter-spacing: var(--tasogare-type-label-tracking);
+}
+
+/* ---------- Sidebar : une icône devant chaque note et chaque dossier ----------
+   Hauteur, rayon et fond des lignes : variables --nav-item-* (couche 2). */
+.nav-file-title,
+.nav-folder-title {
+  align-items: center;
+}
+.nav-file-tag { display: none; }
+.nav-file-title::before {
+  content: "";
+  flex-shrink: 0;
+  width: var(--tasogare-taille-icone);
+  height: var(--tasogare-taille-icone);
+  margin-right: var(--tasogare-ecart-icone);
+  background-color: var(--text-muted);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z'/%3E%3Cpath d='M14 2v4a2 2 0 0 0 2 2h4'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.nav-file-title.is-active::before { background-color: var(--text-accent); }
+.nav-folder-title-content::before {
+  content: "";
+  display: inline-block;
+  vertical-align: var(--tasogare-calage-icone-dossier);
+  width: var(--tasogare-taille-icone);
+  height: var(--tasogare-taille-icone);
+  margin-right: var(--tasogare-ecart-icone);
+  background-color: var(--text-muted);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* ---------- Propriétés : une carte du cadre, une ligne par rangée ----------
+   Fond, marge, rayons et nombre de lignes : variables --metadata-* (couche 2).
+   Le titre « Propriétés » reste visible quand le bloc est replié, pour pouvoir le rouvrir. */
+.metadata-container:not(.is-collapsed) .metadata-properties-heading { display: none; }
+body:not(.is-mobile) .metadata-container {
+  margin-bottom: var(--tasogare-espace-sous-proprietes);
+}
+.metadata-property-key,
+.metadata-property-key-input {
+  font-weight: var(--tasogare-type-body-weight);
+  color: var(--text-muted);
+}
+.metadata-add-button { color: var(--text-muted); }
+/* Une rangée tient sur une ligne ; le trop long se coupe en points de suspension. */
+.metadata-property {
+  white-space: nowrap;
+  overflow: hidden;
+}
+.metadata-property [class*="value"] {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.metadata-property-icon {
+  --icon-size: var(--tasogare-taille-icone);
+  --icon-stroke: var(--tasogare-trait-icone);
+  width: var(--tasogare-taille-icone);
+  flex: 0 0 var(--tasogare-taille-icone);
+  justify-content: center;
+  margin-inline-end: var(--tasogare-ecart-icone-propriete);
+  color: var(--text-faint);
+}
+.metadata-property-value {
+  --link-decoration: none;
+  --link-external-decoration: none;
+  --link-color: var(--text-normal);
+  --link-unresolved-color: var(--text-muted);
+}
+
+/* Liens externes des propriétés et des tableaux de Bases : texte secondaire, sans icône. */
+:is(.metadata-property-value, .bases-table-container) .external-link {
+  color: var(--text-muted);
+  background-image: none;
+  padding-inline-end: 0;
+}
+.metadata-property-value .external-link {
+  text-decoration: underline;
+  text-decoration-color: var(--background-modifier-border-hover);
+  text-underline-offset: var(--tasogare-decalage-soulignement);
+}
+
+/* Pastilles de liste : fond du voile, sans bordure. Les tags gardent l'allure des tags du texte. */
+.metadata-property-value .multi-select-pill {
+  --pill-background: var(--background-modifier-hover);
+  --pill-background-hover: var(--background-modifier-active-hover);
+  --pill-border-width: 0px;
+  --pill-color: var(--text-normal);
+  --pill-color-hover: var(--text-normal);
+  --pill-radius: var(--tasogare-rayon-marque);
+  --pill-padding-x: var(--tasogare-pas-tag);
+}
+/* Sur ordinateur, la croix d'une pastille et le lien vers la note du jour n'apparaissent qu'au survol.
+   Au toucher, sans survol, ils restent visibles. Vaut aussi pour les cellules de Bases. */
+body:not(.is-mobile) .metadata-property-value .multi-select-pill-remove-button {
+  display: none;
+}
+body:not(.is-mobile) .metadata-property-value .multi-select-pill:hover .multi-select-pill-remove-button {
+  display: flex;
+}
+body:not(.is-mobile) .metadata-property-value .clickable-icon { opacity: 0; }
+body:not(.is-mobile) .metadata-property:hover .metadata-property-value .clickable-icon { opacity: var(--tasogare-opacite-lien-survol); }
+
+/* ---------- Invite de commande : le rayon des fenêtres (elle lit --radius-l, pas --modal-radius) ---------- */
+body:not(.is-mobile) .prompt {
+  border-radius: var(--tasogare-rayon-fenetre);
+}
+
+/* ---------- Transclusions et callouts ---------- */
+.markdown-embed { border-radius: var(--tasogare-rayon-bloc); }
+.callout {
+  border: var(--tasogare-filet) solid var(--background-modifier-border);
+}
+
+/* ---------- Lecteur PDF : chrome transparent ---------- */
+.pdf-toolbar,
+.pdf-container,
+.pdf-sidebar-container {
+  background-color: transparent;
+}
+
+/* ---------- Fenêtre de réglages ----------
+   Le cadre autour d'une carte ; chaque groupe de réglages devient une carte du cadre,
+   comme le bloc de propriétés ; la navigation de gauche reprend les lignes de la sidebar. */
+body:not(.is-mobile) .modal.mod-settings {
+  --settings-background: var(--background-secondary);
+  --setting-items-background: var(--background-secondary);
+  --setting-items-radius: var(--tasogare-rayon-carte);
+  border: none;
+  border-radius: var(--tasogare-rayon-carte);
+  padding: var(--tasogare-inset);
+}
+/* Dans sa propre fenêtre (Obsidian 1.15), la fenêtre de réglages remplit tout : ses coins sont ceux
+   de la fenêtre. Pas d'arrondi, et le fond derrière elle prend le cadre, pas la carte. */
+body.is-popout-modal:not(.is-mobile) {
+  background-color: var(--background-secondary);
+}
+body.is-popout-modal:not(.is-mobile) .modal.mod-settings {
+  border-radius: 0;
+}
+body:not(.is-mobile) .modal.mod-settings .modal-content {
+  --settings-background: var(--background-primary); /* barre de titre collante des sous-pages : la couleur de la carte */
+  background: var(--background-primary);
+  border-radius: calc(var(--tasogare-rayon-carte) - var(--tasogare-inset)); /* rayon concentrique */
+  border: none;
+  box-shadow: none;
+}
+body:not(.is-mobile) .modal.mod-settings .vertical-tab-nav-item {
+  padding: var(--tasogare-pas-ligne-reglages);
+  border-radius: var(--tasogare-rayon-bloc);
+}
+body:not(.is-mobile) .modal.mod-settings .vertical-tab-nav-item.is-active {
+  color: var(--text-normal);
+  font-weight: var(--tasogare-type-label-weight);
+}
+
+/* ---------- Bases intégrées : toute la largeur de la vue ----------
+   Le texte garde sa colonne de lecture ; une Base intégrée dans une note ouverte en onglet
+   en sort et se centre sur la vue. Ailleurs (survol, canvas, callout), elle garde la largeur
+   d'Obsidian. --bases-embed-width et --bases-embed-transform sont des variables d'Obsidian. */
+body:not(.is-phone) .workspace-leaf-content[data-type="markdown"] > .view-content { container-type: inline-size; }
+body:not(.is-phone) .workspace-leaf-content[data-type="markdown"] > .view-content :is(.markdown-source-view, .markdown-preview-view).is-readable-line-width {
+  --bases-embed-width: calc(100cqw - 2 * var(--file-margins-x));
+  --bases-embed-transform: translateX(calc((min(var(--file-line-width), 100cqw - 2 * var(--file-margins-x)) - 100cqw + 2 * var(--file-margins-x)) / 2));
+}
+body:not(.is-phone) .workspace-leaf-content[data-type="markdown"] > .view-content .markdown-preview-view.is-readable-line-width .block-language-base {
+  width: var(--bases-embed-width);
+  transform: var(--bases-embed-transform);
+}
+.callout-content {
+  --bases-embed-width: 100%;
+  --bases-embed-transform: none;
+}
+
+/* ---------- Bases : couvertures ----------
+   Un filet sous la couverture : une image blanche ne se fond plus dans la carte. */
+:is(.bases-kanban-card-cover, .bases-cards-cover) {
+  box-shadow: inset 0 calc(var(--tasogare-filet) * -1) 0 var(--background-modifier-border-hover);
+}
+
+/* ---------- Bases : tableau ---------- */
+.bases-table-container {
+  --table-border-color: var(--bases-table-border-color);
+  --link-decoration: none;
+  --link-external-decoration: none;
+}
+.bases-table-container .internal-link {
+  color: var(--text-normal);
+  font-weight: var(--tasogare-type-label-weight);
+}
+.bases-table-container .multi-select-pill {
+  --pill-background: var(--background-secondary);
+}
+
+/* ---------- Bases : titres des cartes ----------
+   Obsidian les met en gras ; Tasogare leur donne le rôle heading (15 / 500), comme un titre de carte. */
+.bases-cards-property.mod-title,
+.bases-kanban-card-property.mod-title {
+  --link-weight: var(--tasogare-type-heading-weight);
+  font-weight: var(--tasogare-type-heading-weight);
+}
+
+/* ---------- Bases : liste ----------
+   Les liens suivent le tableau : la couleur du texte, sans soulignement. */
+.bases-list-container {
+  --link-decoration: none;
+  --link-external-decoration: none;
+  --link-color: var(--text-normal);
+  --link-weight: var(--tasogare-type-label-weight);
+}
+
+/* ---------- Bases : kanban ----------
+   Les variables bases-* (couche 2) font l'essentiel ; ici, les colonnes sans filet. */
+.bases-kanban-column {
+  border: none;
+}
+.bases-kanban-column-header .bases-group-value::first-letter {
+  text-transform: uppercase;
+}
+
+/* ---------- Compatibilité : Style Settings ----------
+   Le plugin trace un filet sous ses titres ; Obsidian 1.15 arrondit chaque bloc de réglage,
+   et le filet suit cet arrondi. Tasogare n'a pas de séparateur : l'espace suffit. */
+.setting-item-heading.style-settings-heading {
+  border-bottom: none;
+}
