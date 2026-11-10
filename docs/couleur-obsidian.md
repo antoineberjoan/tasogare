@@ -32,7 +32,7 @@ Une couleur passe par trois noms. La spécification parle en anglais, pour servi
 
 Les parts de transparence s'appellent `--tasogare-part-*` dans le thème.
 
-Chaque couleur nommée d'une palette (Cabine rouge, Matcha vif, Bleu cobalt…) s'écrit une seule fois, dans le bloc « Couleurs sources des palettes » de `theme.css`. Les emplacements la lisent par son nom (`var(--tasogare-matcha-vif)`) ; seules les nuances dérivées s'écrivent à leur emplacement. Les tableaux ci-dessous montrent les valeurs résolues.
+Chaque couleur d'une palette s'écrit une seule fois, dans le bloc « Couleurs sources des palettes » de `theme.css`. Les couleurs nommées (Cabine rouge, Matcha vif, Bleu cobalt…) ont leur nom ; les nuances dérivées s'appellent `<palette>-<emplacement>-<mode>` (par exemple `gres-carte-clair`). Les emplacements lisent une couleur par son nom (`var(--tasogare-matcha-vif)`) et n'écrivent aucune valeur : changer une couleur source change la palette partout. Les tableaux ci-dessous montrent les valeurs résolues.
 
 ## Choisir une palette
 

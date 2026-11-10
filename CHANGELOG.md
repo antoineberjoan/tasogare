@@ -19,6 +19,7 @@
 - La carte intérieure de la fenêtre de réglages, ouverte dans sa propre fenêtre, prend le rayon de la carte de note (16 px). Dans une fenêtre intégrée, elle garde le rayon concentrique (6 px).
 - Crépuscule alpin n'est plus la palette de base : elle devient une palette à classe (`tasogare-crepuscule`), comme les cinq autres. Sans Style Settings, c'est Graphite qui s'applique.
 - `outils/palettes.py` lit la palette de base dans la constante `BASE`.
+- Les six autres palettes n'écrivent plus aucune couleur dans leurs emplacements : leurs 155 nuances dérivées sont des couleurs sources nommées (`<palette>-<emplacement>-<mode>`), comme celles de Graphite. Les couleurs résolues sont identiques à celles de 1.7.0.
 - `outils/palettes.py --accord` réécrit `--tasogare-accent-h/s/l` depuis l'accent de chaque palette : changer une couleur source suffit.
 - La gouttière de la flèche des dossiers (`--tasogare-gouttiere-nav`) et les parts des filets sombres (`--tasogare-part-filet-tableau`, `--tasogare-part-filet-fort`) ont chacune une seule source.
 
