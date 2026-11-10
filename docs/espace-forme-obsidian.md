@@ -72,9 +72,9 @@ Restent sur mobile : les couleurs des palettes, la typographie (titre de note à
 | --- | ---: | --- |
 | `--tasogare-taille-icone` | 16 px | `--icon-size` |
 | `--tasogare-trait-icone` | 1,75 px | `--icon-stroke` |
-| `--tasogare-taille-bouton-icone` | 28 px | côté du fond de survol d'une icône |
+| `--tasogare-taille-bouton-icone` | 28 px (16 + 2 × 6) | côté du fond de survol d'une icône ; suit `--tasogare-taille-icone` |
 
-Le survol d'une icône est un carré de 28 px, centré sur l'icône, le même pour toutes (icônes cliquables, boutons de la sidebar, ruban, onglets de la sidebar). Obsidian cale la boîte d'une icône sur `--header-height`, que Tasogare fixe à 30 px : cette boîte mesure alors 28 × 14 ou 28 × 16 px. Le thème dessine donc le fond avec `::after`, sans dépendre de la boîte. Sur mobile, le survol d'Obsidian reste.
+Le survol d'une icône est un carré de côté « icône + 6 px de chaque côté » (28 px aujourd'hui), centré sur l'icône, le même pour toutes (icônes cliquables, boutons de la sidebar, ruban, onglets de la sidebar). Obsidian cale la boîte d'une icône sur `--header-height`, que Tasogare fixe à 30 px : cette boîte mesure alors 28 × 14 ou 28 × 16 px. Le thème dessine donc le fond avec `::after`, sans dépendre de la boîte. Sur mobile, le survol d'Obsidian reste.
 
 ## Ce qui change par rapport à Tasogare 1.6
 

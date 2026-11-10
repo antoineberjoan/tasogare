@@ -105,7 +105,7 @@ body {
   /* Dimensions */
   --tasogare-largeur-lecture: 640px;
   --tasogare-hauteur-entete: 30px;
-  --tasogare-taille-bouton-icone: 28px;   /* côté du fond de survol d'une icône */
+  --tasogare-taille-bouton-icone: calc(var(--tasogare-taille-icone) + 2 * var(--tasogare-espace-6));   /* côté du fond de survol : l'icône et 6 px de chaque côté */
   --tasogare-hauteur-ligne-tableau: 36px;
   --tasogare-largeur-libelle: 9.5em;
   --tasogare-defilement-largeur: 11px;

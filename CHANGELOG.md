@@ -12,7 +12,7 @@
 ### Corrections
 
 - Les boutons de sidebar repliée se centrent sur la rangée d'onglets, et leur fond de survol est carré au lieu d'un rectangle plat.
-- Toutes les icônes ont le même survol : un carré de 28 px centré sur l'icône (`--tasogare-taille-bouton-icone`). Avant, les fonds mesuraient 28 × 14, 28 × 16 ou 28 × 24 px selon l'endroit. Ordinateur seulement.
+- Toutes les icônes ont le même survol : un carré centré sur l'icône, de côté « icône + 6 px de chaque côté », donc 28 px (`--tasogare-taille-bouton-icone`, qui suit `--tasogare-taille-icone`). Avant, les fonds mesuraient 28 × 14, 28 × 16 ou 28 × 24 px selon l'endroit. Ordinateur seulement.
 
 ### Changements
 
