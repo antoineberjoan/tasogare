@@ -32,11 +32,11 @@ Une couleur passe par trois noms. La spécification parle en anglais, pour servi
 
 Les parts de transparence s'appellent `--tasogare-part-*` dans le thème.
 
-Chaque couleur nommée d'une palette (Cabine rouge, Matcha vif, Bleu cobalt…) s'écrit une seule fois, dans le bloc « Couleurs sources des palettes » de `theme.css`. Les emplacements la lisent par son nom (`var(--tasogare-matcha-vif)`) ; seules les nuances dérivées s'écrivent à leur emplacement. Les tableaux ci-dessous montrent les valeurs résolues.
+Chaque couleur d'une palette s'écrit une seule fois, dans le bloc « Couleurs sources des palettes » de `theme.css`. Les couleurs nommées (Cabine rouge, Matcha vif, Bleu cobalt…) ont leur nom ; les nuances dérivées s'appellent `<palette>-<emplacement>-<mode>` (par exemple `gres-carte-clair`). Les emplacements lisent une couleur par son nom (`var(--tasogare-matcha-vif)`) et n'écrivent aucune valeur : changer une couleur source change la palette partout. Les tableaux ci-dessous montrent les valeurs résolues.
 
 ## Choisir une palette
 
-Le plugin communautaire **Style Settings** ajoute une liste « Palette » dans Réglages → Style Settings → Tasogare. Il pose une classe sur la page : `tasogare-crepuscule`, `tasogare-gres`, `tasogare-the`, `tasogare-lac`, `tasogare-porte` ou `tasogare-galet`. Sans le plugin, aucune classe n'est posée et Crépuscule alpin s'applique.
+Le plugin communautaire **Style Settings** ajoute une liste « Palette » dans Réglages → Style Settings → Tasogare. Il pose une classe sur la page : `tasogare-graphite`, `tasogare-crepuscule`, `tasogare-gres`, `tasogare-the`, `tasogare-lac`, `tasogare-porte` ou `tasogare-galet`. Sans le plugin, aucune classe n'est posée et Graphite s'applique : ses blocs n'ont pas de classe, et les autres palettes en héritent.
 
 ## Vérifier les contrastes
 
@@ -44,11 +44,40 @@ Le plugin communautaire **Style Settings** ajoute une liste « Palette » dans R
 python3 outils/palettes.py
 ```
 
-L'outil lit les palettes dans `theme.css`, applique les seuils de la spécification et s'arrête en erreur si un seuil échoue. Les tableaux ci-dessous viennent de la même commande, avec `--markdown`.
+L'outil lit les palettes dans `theme.css`, applique les seuils de la spécification et s'arrête en erreur si un seuil échoue. Pour changer l'accent d'une palette, change sa couleur source dans `theme.css`, puis lance `python3 outils/palettes.py --accord` : les trois nombres `--tasogare-accent-h/s/l`, que le CSS ne sait pas calculer, se réécrivent depuis l'accent. Les tableaux ci-dessous viennent de la même commande, avec `--markdown`.
 
 ## Les palettes
 
 <!-- Généré par `python3 outils/palettes.py --markdown`. Ne pas modifier à la main. -->
+
+### Graphite
+
+| Emplacement | Clair | Sombre |
+| --- | --- | --- |
+| `cadre` | `#f2f2f7` | `#1c1c1e` |
+| `carte` | `#ffffff` | `#2c2c2e` |
+| `creux` | `#f2f2f7` | `#242426` |
+| `encre` | `#1c1c1e` | `#f5f5f7` |
+| `encre-moyenne` | `#636366` | `#aeaeb2` |
+| `encre-pale` | `#8e8e93` | `#8e8e93` |
+| `accent` | `#0066cc` | `#4da3ff` |
+| `accent-survol` | `#0050a8` | `#7bbcff` |
+| `action` | `#0071e3` | `#0071e3` |
+| `action-survol` | `#0062c4` | `#0062c4` |
+| `sur-action` | `#ffffff` | `#ffffff` |
+| `coche` | `#0071e3` | `#4da3ff` |
+| `coche-marque` | `#ffffff` | `#1c1c1e` |
+| `surlignage` | `#ffd60a` | `#ffd60a` |
+| `selection` | `#4da3ff` | `#0071e3` |
+| `recherche` | `#ffd60a` | `#ffd60a` |
+| `rouge` | `#d70015` | `#ff6961` |
+| `orange` | `#c93400` | `#ff9f0a` |
+| `jaune` | `#946c00` | `#ffd60a` |
+| `vert` | `#248a3d` | `#32d74b` |
+| `cyan` | `#0a7ea4` | `#64d2ff` |
+| `bleu` | `#0066cc` | `#4da3ff` |
+| `violet` | `#8944ab` | `#bf5af2` |
+| `rose` | `#d30f45` | `#ff6482` |
 
 ### Crépuscule alpin
 

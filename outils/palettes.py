@@ -4,6 +4,7 @@
 Usage :
     python3 outils/palettes.py              # vérifie ; code de sortie 1 au premier défaut
     python3 outils/palettes.py --markdown   # imprime les tableaux pour docs/couleur-obsidian.md
+    python3 outils/palettes.py --accord     # réécrit --accent-h/s/l de chaque palette depuis son accent
 
 theme.css reste la seule source : ce script ne contient aucune couleur.
 Il échoue, avec un message, si une palette de Style Settings n'a pas ses deux modes,
@@ -24,6 +25,8 @@ VARIABLE = re.compile(r"--tasogare-([a-z0-9-]+):\s*([^;]+);")
 # Les noms affichés viennent des options de Style Settings, dans le même fichier.
 OPTION = re.compile(r"label: (.+)\n\s+value: tasogare-([a-z]+)")
 MODES = {"light": "clair", "dark": "sombre"}
+# La palette de base : ses blocs n'ont pas de classe, et les autres palettes en héritent.
+BASE = "graphite"
 
 # (texte, fond, minimum, usage)
 CONTROLES = [
@@ -54,8 +57,8 @@ class Defaut(Exception):
 def lire_noms(texte):
     """Rend {palette: nom affiché}, dans l'ordre des options de Style Settings."""
     noms = {cle: nom.strip() for nom, cle in OPTION.findall(texte)}
-    if "crepuscule" not in noms:
-        raise Defaut("l'option Style Settings « tasogare-crepuscule » manque")
+    if BASE not in noms:
+        raise Defaut(f"l'option Style Settings « tasogare-{BASE} » manque")
     return noms
 
 
@@ -76,18 +79,18 @@ def resoudre(valeur, emplacements, sources, profondeur=0):
 
 
 def lire_palettes(texte, noms):
-    """Rend {(palette, mode): {emplacement: valeur résolue}}, chaque palette héritant de Crépuscule."""
+    """Rend {(palette, mode): {emplacement: valeur résolue}}, chaque palette héritant de la palette de base."""
     sources = dict(re.findall(r"--tasogare-([a-z0-9-]+):\s*(#[0-9a-fA-F]{6});", texte))
     brut = {}
     for mode, palette, corps in BLOC.findall(texte):
-        brut.setdefault((palette or "crepuscule", mode), {}).update(VARIABLE.findall(corps))
+        brut.setdefault((palette or BASE, mode), {}).update(VARIABLE.findall(corps))
     for palette in noms:
         for mode in MODES:
             if (palette, mode) not in brut:
                 raise Defaut(f"la palette « {noms[palette]} » n'a pas de bloc pour le mode {MODES[mode]}")
     palettes = {}
     for (palette, mode), valeurs in brut.items():
-        fusion = {**brut[("crepuscule", mode)], **valeurs}
+        fusion = {**brut[(BASE, mode)], **valeurs}
         palettes[(palette, mode)] = {cle: resoudre(v, fusion, sources) for cle, v in fusion.items()}
     return palettes
 
@@ -142,6 +145,21 @@ def verifier(palettes, noms):
     return echecs
 
 
+def accorder(texte, palettes):
+    """Rend theme.css avec --tasogare-accent-h/s/l recalculés depuis l'accent de chaque palette."""
+    def un(m):
+        corps = m.group(3)
+        if "--tasogare-accent-h:" not in corps:
+            return m.group(0)
+        mode, palette = m.group(1), m.group(2) or BASE
+        h, s, l = teinte(hexa(palettes[(palette, mode)]["accent"], f"{palette} / {MODES[mode]}, accent"))
+        for cle, valeur in (("h", h), ("s", f"{s}%"), ("l", f"{l}%")):
+            corps = re.sub(rf"(--tasogare-accent-{cle}:\s*)[^;]+;", rf"\g<1>{valeur};", corps)
+        debut = m.start(3) - m.start(0)
+        return m.group(0)[:debut] + corps + m.group(0)[debut + len(m.group(3)):]
+    return BLOC.sub(un, texte)
+
+
 def markdown(palettes, noms):
     for palette, nom in noms.items():
         print(f"### {nom}\n")
@@ -159,6 +177,11 @@ def main():
         palettes = lire_palettes(texte, noms)
         if "--markdown" in sys.argv:
             markdown(palettes, noms)
+            return 0
+        if "--accord" in sys.argv:
+            nouveau = accorder(texte, palettes)
+            THEME.write_text(nouveau, encoding="utf-8")
+            print("accent-h/s/l à jour" if nouveau != texte else "accent-h/s/l déjà d'accord")
             return 0
         return 1 if verifier(palettes, noms) else 0
     except Defaut as d:

@@ -20,8 +20,11 @@ settings:
     description: Les couleurs du thème, en clair comme en sombre.
     type: class-select
     allowEmpty: false
-    default: tasogare-crepuscule
+    default: tasogare-graphite
     options:
+      -
+        label: Graphite
+        value: tasogare-graphite
       -
         label: Crépuscule alpin
         value: tasogare-crepuscule
@@ -66,6 +69,9 @@ body {
   --tasogare-pas-ligne-nav: var(--tasogare-espace-8);           /* marge verticale d'une ligne de la sidebar */
   --tasogare-pas-proprietes: var(--tasogare-inset) var(--tasogare-espace-14) var(--tasogare-espace-8);
   --tasogare-pas-propriete: var(--tasogare-espace-4);
+  --tasogare-gouttiere-nav: var(--size-4-6);                    /* à gauche d'une ligne de la sidebar : la place de la flèche des dossiers */
+  --tasogare-retrait-arbre: calc(var(--tasogare-gouttiere-nav) / 2);   /* du bord d'un dossier au trait qui guide ses enfants : le milieu de la gouttière */
+  --tasogare-pas-arbre: var(--tasogare-espace-10);              /* du trait guide au bord d'une ligne enfant */
   --tasogare-pas-selecteur-coffre: var(--tasogare-espace-6) var(--tasogare-inset);
   --tasogare-pas-ligne-reglages: var(--tasogare-pas-ligne-nav) var(--tasogare-espace-10);
 
@@ -100,6 +106,7 @@ body {
   /* Dimensions */
   --tasogare-largeur-lecture: 640px;
   --tasogare-hauteur-entete: 30px;
+  --tasogare-taille-bouton-icone: calc(var(--tasogare-taille-icone) + 2 * var(--tasogare-espace-6));   /* côté du fond de survol : l'icône et 6 px de chaque côté */
   --tasogare-hauteur-ligne-tableau: 36px;
   --tasogare-largeur-libelle: 9.5em;
   --tasogare-defilement-largeur: 11px;
@@ -170,59 +177,247 @@ body {
 }
 
 /* ---------- Couleurs sources des palettes ----------
-   Chaque couleur nommée d'une palette s'écrit une seule fois ici ;
-   les emplacements ci-dessous la lisent. Les nuances dérivées restent à leur emplacement. */
+   Chaque couleur d'une palette s'écrit une seule fois ici, nommée ; les emplacements ci-dessous
+   la lisent par son nom et n'écrivent aucune valeur. Les nuances dérivées s'appellent
+   <palette>-<emplacement>-<mode>. Changer une couleur source change la palette partout. */
 body {
   --tasogare-blanc: #ffffff;
 
+  /* Graphite */
+  --tasogare-graphite: #1c1c1e;             /* Graphite */
+  --tasogare-ardoise: #2c2c2e;              /* Ardoise */
+  --tasogare-ardoise-profonde: #242426;     /* Ardoise profonde */
+  --tasogare-pierre: #636366;               /* Pierre */
+  --tasogare-argent: #8e8e93;               /* Argent */
+  --tasogare-brouillard: #aeaeb2;           /* Brouillard */
+  --tasogare-trait: #d1d1d6;                /* Trait */
+  --tasogare-cendre: #e5e5ea;               /* Cendre */
+  --tasogare-brume: #f2f2f7;                /* Brume */
+  --tasogare-neige-pale: #f5f5f7;           /* Neige pâle */
+  --tasogare-noir: #000000;                 /* Noir */
+  --tasogare-bleu-profond: #0050a8;         /* Bleu profond */
+  --tasogare-bleu-lien: #0066cc;            /* Bleu lien */
+  --tasogare-bleu-action: #0071e3;          /* Bleu action */
+  --tasogare-bleu-presse: #0062c4;          /* Bleu pressé */
+  --tasogare-bleu-ciel: #4da3ff;            /* Bleu ciel */
+  --tasogare-bleu-glace: #7bbcff;           /* Bleu glace */
+  --tasogare-soleil: #ffd60a;               /* Soleil */
+  --tasogare-rouge-feu: #d70015;            /* Rouge feu */
+  --tasogare-orange-braise: #c93400;        /* Orange braise */
+  --tasogare-ocre: #946c00;                 /* Ocre */
+  --tasogare-vert-pre: #248a3d;             /* Vert pré */
+  --tasogare-cyan-lagune: #0a7ea4;          /* Cyan lagune */
+  --tasogare-violet-iris: #8944ab;          /* Violet iris */
+  --tasogare-rose-pivoine: #d30f45;         /* Rose pivoine */
+  --tasogare-corail: #ff6961;               /* Corail */
+  --tasogare-mandarine: #ff9f0a;            /* Mandarine */
+  --tasogare-menthe: #32d74b;               /* Menthe */
+  --tasogare-azur: #64d2ff;                 /* Azur */
+  --tasogare-orchidee: #bf5af2;             /* Orchidée */
+  --tasogare-framboise: #ff6482;            /* Framboise */
   /* Crépuscule alpin */
-  --tasogare-cabine-rouge: #9e2b25;       /* Cabine rouge */
-  --tasogare-ciel-lavande: #6e6ba8;       /* Ciel lavande */
-  --tasogare-alpenglow: #e8a3b4;          /* Alpenglow */
-  --tasogare-neige-ombre: #b9b3d6;        /* Neige d'ombre */
-  --tasogare-lueur: #f4c66a;              /* Lueur */
-  --tasogare-cable-acier: #4a4e5c;        /* Câble acier */
-  --tasogare-sapin-nuit: #1f2a3a;         /* Sapin nuit */
+  --tasogare-cabine-rouge: #9e2b25;         /* Cabine rouge */
+  --tasogare-ciel-lavande: #6e6ba8;         /* Ciel lavande */
+  --tasogare-alpenglow: #e8a3b4;            /* Alpenglow */
+  --tasogare-neige-ombre: #b9b3d6;          /* Neige d'ombre */
+  --tasogare-lueur: #f4c66a;                /* Lueur */
+  --tasogare-cable-acier: #4a4e5c;          /* Câble acier */
+  --tasogare-sapin-nuit: #1f2a3a;           /* Sapin nuit */
+  --tasogare-neige-lavande: #edecf5;        /* Neige lavande */
+  --tasogare-crepuscule-filet-tableau-clair: #dcd9eb;  /* filet-tableau, clair */
+  --tasogare-crepuscule-encre-moyenne-clair: #666976;  /* encre-moyenne, clair */
+  --tasogare-crepuscule-encre-pale-clair: #8b8e99;  /* encre-pale, clair */
+  --tasogare-crepuscule-accent-survol-clair: #7e211d;  /* accent-survol, clair */
+  --tasogare-crepuscule-orange-clair: #c46e28;  /* orange, clair */
+  --tasogare-crepuscule-jaune-clair: #b0801e;  /* jaune, clair */
+  --tasogare-crepuscule-vert-clair: #4f7a5a;  /* vert, clair */
+  --tasogare-crepuscule-cyan-clair: #3d7a80;  /* cyan, clair */
+  --tasogare-crepuscule-bleu-clair: #4a6096;  /* bleu, clair */
+  --tasogare-crepuscule-rose-clair: #be627c;  /* rose, clair */
+  --tasogare-sapin-soir: #293546;           /* Sapin soir */
+  --tasogare-crepuscule-creux-sombre: #232e3e;  /* creux, sombre */
+  --tasogare-neige-nuit: #e6e4ef;           /* Neige nuit */
+  --tasogare-crepuscule-encre-pale-sombre: #9d99b8;  /* encre-pale, sombre */
+  --tasogare-crepuscule-accent-survol-sombre: #f2c0cd;  /* accent-survol, sombre */
+  --tasogare-crepuscule-action-survol-sombre: #5e5b96;  /* action-survol, sombre */
+  --tasogare-crepuscule-rouge-sombre: #e06e64;  /* rouge, sombre */
+  --tasogare-crepuscule-orange-sombre: #eca064;  /* orange, sombre */
+  --tasogare-crepuscule-vert-sombre: #a8cfa0;  /* vert, sombre */
+  --tasogare-crepuscule-cyan-sombre: #8cc8c8;  /* cyan, sombre */
+  --tasogare-crepuscule-bleu-sombre: #8ca0dc;  /* bleu, sombre */
   /* Grès rosé */
-  --tasogare-gres-rose: #b98a72;          /* Grès rosé */
-  --tasogare-chaux: #e6e2da;              /* Chaux */
-  --tasogare-travertin: #d3c7b2;          /* Travertin */
-  --tasogare-olivier-sec: #8c7e5e;        /* Olivier sec */
-  --tasogare-ombre-douce: #b4aea2;        /* Ombre douce */
-  --tasogare-argile-cuite: #7a5443;       /* Argile cuite */
-  --tasogare-encre-taupe: #3f3832;        /* Encre taupe */
+  --tasogare-gres-rose: #b98a72;            /* Grès rosé */
+  --tasogare-chaux: #e6e2da;                /* Chaux */
+  --tasogare-travertin: #d3c7b2;            /* Travertin */
+  --tasogare-olivier-sec: #8c7e5e;          /* Olivier sec */
+  --tasogare-ombre-douce: #b4aea2;          /* Ombre douce */
+  --tasogare-argile-cuite: #7a5443;         /* Argile cuite */
+  --tasogare-encre-taupe: #3f3832;          /* Encre taupe */
+  --tasogare-gres-carte-clair: #faf8f4;     /* carte, clair */
+  --tasogare-gres-filet-tableau-clair: #d9d4ca;  /* filet-tableau, clair */
+  --tasogare-gres-encre-moyenne-clair: #675e56;  /* encre-moyenne, clair */
+  --tasogare-gres-encre-pale-clair: #958b81;  /* encre-pale, clair */
+  --tasogare-gres-accent-survol-clair: #5f3f31;  /* accent-survol, clair */
+  --tasogare-gres-rouge-clair: #a2483a;     /* rouge, clair */
+  --tasogare-gres-orange-clair: #a8622e;    /* orange, clair */
+  --tasogare-gres-jaune-clair: #8f7533;     /* jaune, clair */
+  --tasogare-gres-cyan-clair: #4a7a76;      /* cyan, clair */
+  --tasogare-gres-bleu-clair: #4f6a8a;      /* bleu, clair */
+  --tasogare-gres-violet-clair: #7a6290;    /* violet, clair */
+  --tasogare-gres-rose-clair: #a85d6c;      /* rose, clair */
+  --tasogare-gres-cadre-sombre: #2f2925;    /* cadre, sombre */
+  --tasogare-gres-creux-sombre: #383029;    /* creux, sombre */
+  --tasogare-gres-ombre-sombre: #1c1815;    /* ombre, sombre */
+  --tasogare-gres-encre-pale-sombre: #9a9085;  /* encre-pale, sombre */
+  --tasogare-gres-accent-sombre: #d3a790;   /* accent, sombre */
+  --tasogare-gres-accent-survol-sombre: #e2c0ae;  /* accent-survol, sombre */
+  --tasogare-gres-action-survol-sombre: #cfa28b;  /* action-survol, sombre */
+  --tasogare-gres-sur-action-sombre: #2a2420;  /* sur-action, sombre */
+  --tasogare-gres-rouge-sombre: #e0907e;    /* rouge, sombre */
+  --tasogare-gres-orange-sombre: #e3a774;   /* orange, sombre */
+  --tasogare-gres-jaune-sombre: #d9c08a;    /* jaune, sombre */
+  --tasogare-gres-vert-sombre: #b7ad86;     /* vert, sombre */
+  --tasogare-gres-cyan-sombre: #8fc0b8;     /* cyan, sombre */
+  --tasogare-gres-bleu-sombre: #9ab2d0;     /* bleu, sombre */
+  --tasogare-gres-violet-sombre: #c0aad6;   /* violet, sombre */
+  --tasogare-gres-rose-sombre: #e0a3b2;     /* rose, sombre */
   /* Thé vert */
-  --tasogare-matcha-vif: #8db33a;         /* Matcha vif */
-  --tasogare-noyer-use: #5b3a24;          /* Noyer usé */
-  --tasogare-ceramique-noire: #2a2622;    /* Céramique noire */
-  --tasogare-mousse: #6e7a2c;             /* Mousse */
-  --tasogare-jour-pale: #e9e6dc;          /* Jour pâle */
-  --tasogare-laiton: #c2a25a;             /* Laiton */
-  --tasogare-lin-ardoise: #4a4f55;        /* Lin ardoise */
+  --tasogare-matcha-vif: #8db33a;           /* Matcha vif */
+  --tasogare-noyer-use: #5b3a24;            /* Noyer usé */
+  --tasogare-ceramique-noire: #2a2622;      /* Céramique noire */
+  --tasogare-mousse: #6e7a2c;               /* Mousse */
+  --tasogare-jour-pale: #e9e6dc;            /* Jour pâle */
+  --tasogare-laiton: #c2a25a;               /* Laiton */
+  --tasogare-lin-ardoise: #4a4f55;          /* Lin ardoise */
+  --tasogare-the-carte-clair: #fbfaf6;      /* carte, clair */
+  --tasogare-the-filet-tableau-clair: #dcd8cb;  /* filet-tableau, clair */
+  --tasogare-laiton-eclairci: #d2c4a0;      /* Laiton éclairci */
+  --tasogare-the-encre-moyenne-clair: #69665f;  /* encre-moyenne, clair */
+  --tasogare-the-encre-pale-clair: #8f8b82;  /* encre-pale, clair */
+  --tasogare-the-accent-clair: #636e27;     /* accent, clair */
+  --tasogare-the-accent-survol-clair: #4c551d;  /* accent-survol, clair */
+  --tasogare-the-rouge-clair: #a5402f;      /* rouge, clair */
+  --tasogare-the-orange-clair: #a85f26;     /* orange, clair */
+  --tasogare-the-jaune-clair: #8f7330;      /* jaune, clair */
+  --tasogare-the-vert-clair: #5f6c22;       /* vert, clair */
+  --tasogare-the-cyan-clair: #3c766c;       /* cyan, clair */
+  --tasogare-the-bleu-clair: #46658a;       /* bleu, clair */
+  --tasogare-the-violet-clair: #6c5a8c;     /* violet, clair */
+  --tasogare-the-rose-clair: #a2506a;       /* rose, clair */
+  --tasogare-the-carte-sombre: #35302b;     /* carte, sombre */
+  --tasogare-the-creux-sombre: #2f2b27;     /* creux, sombre */
+  --tasogare-the-ombre-sombre: #1a1714;     /* ombre, sombre */
+  --tasogare-the-encre-moyenne-sombre: #bdb7aa;  /* encre-moyenne, sombre */
+  --tasogare-the-encre-pale-sombre: #a29c90;  /* encre-pale, sombre */
+  --tasogare-the-accent-survol-sombre: #a9c962;  /* accent-survol, sombre */
+  --tasogare-the-rouge-sombre: #e07a62;     /* rouge, sombre */
+  --tasogare-the-orange-sombre: #e0a060;    /* orange, sombre */
+  --tasogare-the-cyan-sombre: #7fc0b2;      /* cyan, sombre */
+  --tasogare-the-bleu-sombre: #8fadd0;      /* bleu, sombre */
+  --tasogare-the-violet-sombre: #b3a3d6;    /* violet, sombre */
+  --tasogare-the-rose-sombre: #e09ab0;      /* rose, sombre */
   /* Lac profond */
-  --tasogare-bouee-rouge: #d2452b;        /* Bouée rouge */
-  --tasogare-lac-profond: #1f5a5c;        /* Lac profond */
-  --tasogare-turquoise-lac: #3e8a86;      /* Turquoise lac */
-  --tasogare-brume-montagne: #7e9590;     /* Brume montagne */
-  --tasogare-chanvre: #c8ae7e;            /* Chanvre */
-  --tasogare-ecume: #eeeae2;              /* Écume */
-  --tasogare-ponton-gris: #6f685e;        /* Ponton gris */
+  --tasogare-bouee-rouge: #d2452b;          /* Bouée rouge */
+  --tasogare-lac-profond: #1f5a5c;          /* Lac profond */
+  --tasogare-turquoise-lac: #3e8a86;        /* Turquoise lac */
+  --tasogare-brume-montagne: #7e9590;       /* Brume montagne */
+  --tasogare-chanvre: #c8ae7e;              /* Chanvre */
+  --tasogare-ecume: #eeeae2;                /* Écume */
+  --tasogare-ponton-gris: #6f685e;          /* Ponton gris */
+  --tasogare-lac-carte-clair: #fbfaf7;      /* carte, clair */
+  --tasogare-lac-filet-tableau-clair: #e0dbd0;  /* filet-tableau, clair */
+  --tasogare-brume-montagne-eclaircie: #bfcbc7;  /* Brume montagne éclaircie */
+  --tasogare-lac-encre-clair: #2d3a3b;      /* encre, clair */
+  --tasogare-ponton-gris-assombri: #655f55;  /* Ponton gris assombri */
+  --tasogare-lac-accent-clair: #2f7672;     /* accent, clair */
+  --tasogare-lac-accent-survol-clair: #245c59;  /* accent-survol, clair */
+  --tasogare-lac-action-survol-clair: #174547;  /* action-survol, clair */
+  --tasogare-lac-rouge-clair: #b83a22;      /* rouge, clair */
+  --tasogare-lac-orange-clair: #b0601f;     /* orange, clair */
+  --tasogare-lac-jaune-clair: #8c7238;      /* jaune, clair */
+  --tasogare-lac-vert-clair: #4c7a52;       /* vert, clair */
+  --tasogare-lac-bleu-clair: #2f5f8a;       /* bleu, clair */
+  --tasogare-lac-violet-clair: #675d8e;     /* violet, clair */
+  --tasogare-lac-rose-clair: #a84d6c;       /* rose, clair */
+  --tasogare-lac-cadre-sombre: #132a2b;     /* cadre, sombre */
+  --tasogare-lac-carte-sombre: #1a3536;     /* carte, sombre */
+  --tasogare-lac-creux-sombre: #163031;     /* creux, sombre */
+  --tasogare-lac-ombre-sombre: #0b1a1b;     /* ombre, sombre */
+  --tasogare-lac-encre-moyenne-sombre: #a6b8b3;  /* encre-moyenne, sombre */
+  --tasogare-lac-encre-pale-sombre: #8fa5a0;  /* encre-pale, sombre */
+  --tasogare-lac-accent-sombre: #7cc4bd;    /* accent, sombre */
+  --tasogare-lac-accent-survol-sombre: #a3d8d2;  /* accent-survol, sombre */
+  --tasogare-lac-action-survol-sombre: #286662;  /* action-survol, sombre */
+  --tasogare-lac-rouge-sombre: #ef7a60;     /* rouge, sombre */
+  --tasogare-lac-orange-sombre: #e8a05e;    /* orange, sombre */
+  --tasogare-lac-vert-sombre: #9cc79a;      /* vert, sombre */
+  --tasogare-lac-bleu-sombre: #8db4dc;      /* bleu, sombre */
+  --tasogare-lac-violet-sombre: #b4aadb;    /* violet, sombre */
+  --tasogare-lac-rose-sombre: #e99ab4;      /* rose, sombre */
   /* Porte bleue */
-  --tasogare-bleu-cobalt: #2347a8;        /* Bleu cobalt */
-  --tasogare-mur-safran: #e6be3a;         /* Mur safran */
-  --tasogare-bougainvillier: #c2287a;     /* Bougainvillier */
-  --tasogare-terracotta: #c0663e;         /* Terracotta */
-  --tasogare-cactus: #5e8b4a;             /* Cactus */
-  --tasogare-zellige: #f0e3be;            /* Zellige */
-  --tasogare-nuit-bleue: #13213f;         /* Nuit bleue */
+  --tasogare-bleu-cobalt: #2347a8;          /* Bleu cobalt */
+  --tasogare-mur-safran: #e6be3a;           /* Mur safran */
+  --tasogare-bougainvillier: #c2287a;       /* Bougainvillier */
+  --tasogare-terracotta: #c0663e;           /* Terracotta */
+  --tasogare-cactus: #5e8b4a;               /* Cactus */
+  --tasogare-zellige: #f0e3be;              /* Zellige */
+  --tasogare-nuit-bleue: #13213f;           /* Nuit bleue */
+  --tasogare-porte-cadre-clair: #f6eed6;    /* cadre, clair */
+  --tasogare-porte-carte-clair: #fffcf3;    /* carte, clair */
+  --tasogare-porte-filet-tableau-clair: #e9dfc3;  /* filet-tableau, clair */
+  --tasogare-porte-encre-moyenne-clair: #565e75;  /* encre-moyenne, clair */
+  --tasogare-porte-encre-pale-clair: #8a8f9f;  /* encre-pale, clair */
+  --tasogare-porte-accent-survol-clair: #1a3683;  /* accent-survol, clair */
+  --tasogare-porte-rouge-clair: #b0302a;    /* rouge, clair */
+  --tasogare-porte-jaune-clair: #957514;    /* jaune, clair */
+  --tasogare-porte-cyan-clair: #2a7f86;     /* cyan, clair */
+  --tasogare-porte-violet-clair: #6a4aa8;   /* violet, clair */
+  --tasogare-porte-carte-sombre: #1b2b50;   /* carte, sombre */
+  --tasogare-porte-creux-sombre: #172647;   /* creux, sombre */
+  --tasogare-porte-ombre-sombre: #080f1f;   /* ombre, sombre */
+  --tasogare-porte-encre-moyenne-sombre: #c3c0b4;  /* encre-moyenne, sombre */
+  --tasogare-porte-encre-pale-sombre: #9aa0b5;  /* encre-pale, sombre */
+  --tasogare-porte-accent-sombre: #8ca6ec;  /* accent, sombre */
+  --tasogare-porte-accent-survol-sombre: #b0c3f2;  /* accent-survol, sombre */
+  --tasogare-porte-action-survol-sombre: #efd06e;  /* action-survol, sombre */
+  --tasogare-porte-rouge-sombre: #ec7a6e;   /* rouge, sombre */
+  --tasogare-porte-orange-sombre: #e39a6e;  /* orange, sombre */
+  --tasogare-porte-vert-sombre: #9cc488;    /* vert, sombre */
+  --tasogare-porte-cyan-sombre: #7cc8cc;    /* cyan, sombre */
+  --tasogare-porte-violet-sombre: #b7a0ec;  /* violet, sombre */
+  --tasogare-porte-rose-sombre: #ec86b8;    /* rose, sombre */
   /* Galet noir */
-  --tasogare-galet-noir: #2b2a27;         /* Galet noir */
-  --tasogare-platre: #c9c4ba;             /* Plâtre */
-  --tasogare-lin-avoine: #b3a68f;         /* Lin avoine */
-  --tasogare-porcelaine: #eeebe5;         /* Porcelaine */
-  --tasogare-pierre-grise: #8e8a80;       /* Pierre grise */
-  --tasogare-fumee: #5f5b53;              /* Fumée */
-  --tasogare-mousse-seche: #7d7a5e;       /* Mousse sèche */
+  --tasogare-galet-noir: #2b2a27;           /* Galet noir */
+  --tasogare-platre: #c9c4ba;               /* Plâtre */
+  --tasogare-lin-avoine: #b3a68f;           /* Lin avoine */
+  --tasogare-porcelaine: #eeebe5;           /* Porcelaine */
+  --tasogare-pierre-grise: #8e8a80;         /* Pierre grise */
+  --tasogare-fumee: #5f5b53;                /* Fumée */
+  --tasogare-mousse-seche: #7d7a5e;         /* Mousse sèche */
+  --tasogare-galet-carte-clair: #fbfaf8;    /* carte, clair */
+  --tasogare-galet-filet-tableau-clair: #e0dcd4;  /* filet-tableau, clair */
+  --tasogare-galet-accent-clair: #5f5c43;   /* accent, clair */
+  --tasogare-galet-accent-survol-clair: #45432f;  /* accent-survol, clair */
+  --tasogare-galet-rouge-clair: #9c4a3e;    /* rouge, clair */
+  --tasogare-galet-orange-clair: #9a6233;   /* orange, clair */
+  --tasogare-galet-jaune-clair: #86733a;    /* jaune, clair */
+  --tasogare-galet-cyan-clair: #4f7470;     /* cyan, clair */
+  --tasogare-galet-bleu-clair: #50667f;     /* bleu, clair */
+  --tasogare-galet-violet-clair: #6d6082;   /* violet, clair */
+  --tasogare-galet-rose-clair: #96596a;     /* rose, clair */
+  --tasogare-galet-cadre-sombre: #1f1e1c;   /* cadre, sombre */
+  --tasogare-galet-creux-sombre: #252422;   /* creux, sombre */
+  --tasogare-galet-ombre-sombre: #121110;   /* ombre, sombre */
+  --tasogare-galet-encre-pale-sombre: #9b978d;  /* encre-pale, sombre */
+  --tasogare-galet-accent-survol-sombre: #c9bfa9;  /* accent-survol, sombre */
+  --tasogare-galet-rouge-sombre: #d79a8a;   /* rouge, sombre */
+  --tasogare-galet-orange-sombre: #d8ad80;  /* orange, sombre */
+  --tasogare-galet-jaune-sombre: #d6c48f;   /* jaune, sombre */
+  --tasogare-galet-vert-sombre: #aeb08a;    /* vert, sombre */
+  --tasogare-galet-cyan-sombre: #9cc0b8;    /* cyan, sombre */
+  --tasogare-galet-bleu-sombre: #a5b6cb;    /* bleu, sombre */
+  --tasogare-galet-violet-sombre: #bdb0cf;  /* violet, sombre */
+  --tasogare-galet-rose-sombre: #d6a7b3;    /* rose, sombre */
 }
 
 /* ---------- Parts de transparence, communes à toutes les palettes ----------
@@ -243,6 +438,8 @@ body {
   --tasogare-part-survol: 7%;
   --tasogare-part-filet: 6%;
   --tasogare-part-filet-survol: 12%;
+  --tasogare-part-filet-tableau: 12%;
+  --tasogare-part-filet-fort: 14%;
   --tasogare-part-ombre: 50%;
   --tasogare-part-surlignage: 30%;
   --tasogare-part-selection: 45%;
@@ -251,26 +448,111 @@ body {
   --tasogare-part-defilement-actif: 55%;
 }
 
-/* ---------- Palette Crépuscule alpin (par défaut) ---------- */
+/* ---------- Palette Graphite (par défaut) ----------
+   Des gris neutres, un seul bleu pour l'accent. Aucune couleur écrite ici : chaque emplacement lit une couleur source.
+   Changer une couleur source change la palette. Les autres palettes héritent des emplacements de Graphite. */
 .theme-light {
+  --tasogare-accent-h: 210;
+  --tasogare-accent-s: 100%;
+  --tasogare-accent-l: 40%;
+
+  --tasogare-cadre: var(--tasogare-brume);
+  --tasogare-carte: var(--tasogare-blanc);
+  --tasogare-creux: var(--tasogare-cadre);            /* blocs de code, en-têtes de tableau */
+  --tasogare-filet-tableau: var(--tasogare-cendre);
+  --tasogare-filet-fort: var(--tasogare-trait);
+  --tasogare-voile: var(--tasogare-graphite);
+  --tasogare-ombre: var(--tasogare-graphite);
+
+  --tasogare-encre: var(--tasogare-graphite);
+  --tasogare-encre-moyenne: var(--tasogare-pierre);   /* 5,4:1 sur le cadre */
+  --tasogare-encre-pale: var(--tasogare-argent);      /* décor, jamais un libellé */
+
+  --tasogare-accent: var(--tasogare-bleu-lien);
+  --tasogare-accent-survol: var(--tasogare-bleu-profond);
+  --tasogare-action: var(--tasogare-bleu-action);
+  --tasogare-action-survol: var(--tasogare-bleu-presse);
+  --tasogare-sur-action: var(--tasogare-blanc);
+  --tasogare-coche: var(--tasogare-bleu-action);
+  --tasogare-coche-marque: var(--tasogare-blanc);
+
+  --tasogare-surlignage: var(--tasogare-soleil);
+  --tasogare-selection: var(--tasogare-bleu-ciel);
+  --tasogare-recherche: var(--tasogare-soleil);
+  --tasogare-defilement: var(--tasogare-argent);
+  --tasogare-defilement-actif: var(--tasogare-bleu-action);
+
+  --tasogare-rouge: var(--tasogare-rouge-feu);
+  --tasogare-orange: var(--tasogare-orange-braise);
+  --tasogare-jaune: var(--tasogare-ocre);
+  --tasogare-vert: var(--tasogare-vert-pre);
+  --tasogare-cyan: var(--tasogare-cyan-lagune);
+  --tasogare-bleu: var(--tasogare-bleu-lien);
+  --tasogare-violet: var(--tasogare-violet-iris);
+  --tasogare-rose: var(--tasogare-rose-pivoine);
+}
+
+.theme-dark {
+  --tasogare-accent-h: 211;
+  --tasogare-accent-s: 100%;
+  --tasogare-accent-l: 65%;
+
+  --tasogare-cadre: var(--tasogare-graphite);
+  --tasogare-carte: var(--tasogare-ardoise);
+  --tasogare-creux: var(--tasogare-ardoise-profonde);
+  --tasogare-filet-tableau: color-mix(in oklch, var(--tasogare-voile) var(--tasogare-part-filet-tableau), transparent);
+  --tasogare-filet-fort: color-mix(in oklch, var(--tasogare-voile) var(--tasogare-part-filet-fort), transparent);
+  --tasogare-voile: var(--tasogare-brume);
+  --tasogare-ombre: var(--tasogare-noir);
+
+  --tasogare-encre: var(--tasogare-neige-pale);
+  --tasogare-encre-moyenne: var(--tasogare-brouillard);
+  --tasogare-encre-pale: var(--tasogare-argent);      /* 4,3:1 sur la carte */
+
+  --tasogare-accent: var(--tasogare-bleu-ciel);
+  --tasogare-accent-survol: var(--tasogare-bleu-glace);
+  --tasogare-action: var(--tasogare-bleu-action);
+  --tasogare-action-survol: var(--tasogare-bleu-presse);
+  --tasogare-sur-action: var(--tasogare-blanc);
+  --tasogare-coche: var(--tasogare-bleu-ciel);
+  --tasogare-coche-marque: var(--tasogare-graphite);
+
+  --tasogare-surlignage: var(--tasogare-soleil);
+  --tasogare-selection: var(--tasogare-bleu-action);
+  --tasogare-recherche: var(--tasogare-soleil);
+  --tasogare-defilement: var(--tasogare-argent);
+  --tasogare-defilement-actif: var(--tasogare-bleu-ciel);
+
+  --tasogare-rouge: var(--tasogare-corail);
+  --tasogare-orange: var(--tasogare-mandarine);
+  --tasogare-jaune: var(--tasogare-soleil);
+  --tasogare-vert: var(--tasogare-menthe);
+  --tasogare-cyan: var(--tasogare-azur);
+  --tasogare-bleu: var(--tasogare-bleu-ciel);
+  --tasogare-violet: var(--tasogare-orchidee);
+  --tasogare-rose: var(--tasogare-framboise);
+}
+
+/* ---------- Palette Crépuscule alpin ---------- */
+.theme-light.tasogare-crepuscule {
   --tasogare-accent-h: 3;
   --tasogare-accent-s: 62%;
   --tasogare-accent-l: 38%;
 
-  --tasogare-cadre: #edecf5;            /* Neige lavande */
+  --tasogare-cadre: var(--tasogare-neige-lavande);
   --tasogare-carte: var(--tasogare-blanc);            /* Neige */
   --tasogare-creux: var(--tasogare-cadre);            /* blocs de code, en-têtes de tableau */
-  --tasogare-filet-tableau: #dcd9eb;
+  --tasogare-filet-tableau: var(--tasogare-crepuscule-filet-tableau-clair);
   --tasogare-filet-fort: var(--tasogare-neige-ombre);
   --tasogare-voile: var(--tasogare-sapin-nuit);
   --tasogare-ombre: var(--tasogare-sapin-nuit);
 
   --tasogare-encre: var(--tasogare-cable-acier);
-  --tasogare-encre-moyenne: #666976;    /* 4,7:1 sur le cadre */
-  --tasogare-encre-pale: #8b8e99;       /* décor, jamais un libellé */
+  --tasogare-encre-moyenne: var(--tasogare-crepuscule-encre-moyenne-clair);   /* 4,7:1 sur le cadre */
+  --tasogare-encre-pale: var(--tasogare-crepuscule-encre-pale-clair);   /* décor, jamais un libellé */
 
   --tasogare-accent: var(--tasogare-cabine-rouge);
-  --tasogare-accent-survol: #7e211d;
+  --tasogare-accent-survol: var(--tasogare-crepuscule-accent-survol-clair);
   --tasogare-action: var(--tasogare-cabine-rouge);
   --tasogare-action-survol: var(--tasogare-accent-survol);
   --tasogare-sur-action: var(--tasogare-blanc);
@@ -284,36 +566,36 @@ body {
   --tasogare-defilement-actif: var(--tasogare-cabine-rouge);
 
   --tasogare-rouge: var(--tasogare-cabine-rouge);
-  --tasogare-orange: #c46e28;
-  --tasogare-jaune: #b0801e;
-  --tasogare-vert: #4f7a5a;
-  --tasogare-cyan: #3d7a80;
-  --tasogare-bleu: #4a6096;
+  --tasogare-orange: var(--tasogare-crepuscule-orange-clair);
+  --tasogare-jaune: var(--tasogare-crepuscule-jaune-clair);
+  --tasogare-vert: var(--tasogare-crepuscule-vert-clair);
+  --tasogare-cyan: var(--tasogare-crepuscule-cyan-clair);
+  --tasogare-bleu: var(--tasogare-crepuscule-bleu-clair);
   --tasogare-violet: var(--tasogare-ciel-lavande);
-  --tasogare-rose: #be627c;
+  --tasogare-rose: var(--tasogare-crepuscule-rose-clair);
 }
 
-.theme-dark {
+.theme-dark.tasogare-crepuscule {
   --tasogare-accent-h: 345;
   --tasogare-accent-s: 60%;
   --tasogare-accent-l: 77%;
 
   --tasogare-cadre: var(--tasogare-sapin-nuit);
-  --tasogare-carte: #293546;            /* Sapin soir */
-  --tasogare-creux: #232e3e;
-  --tasogare-filet-tableau: color-mix(in oklch, var(--tasogare-voile) 12%, transparent);
-  --tasogare-filet-fort: color-mix(in oklch, var(--tasogare-voile) 14%, transparent);
-  --tasogare-voile: #e6e4ef;            /* Neige nuit */
+  --tasogare-carte: var(--tasogare-sapin-soir);
+  --tasogare-creux: var(--tasogare-crepuscule-creux-sombre);
+  --tasogare-filet-tableau: color-mix(in oklch, var(--tasogare-voile) var(--tasogare-part-filet-tableau), transparent);
+  --tasogare-filet-fort: color-mix(in oklch, var(--tasogare-voile) var(--tasogare-part-filet-fort), transparent);
+  --tasogare-voile: var(--tasogare-neige-nuit);
   --tasogare-ombre: var(--tasogare-sapin-nuit);
 
   --tasogare-encre: var(--tasogare-voile);            /* Neige nuit */
   --tasogare-encre-moyenne: var(--tasogare-neige-ombre);
-  --tasogare-encre-pale: #9d99b8;       /* 4,5:1 sur la carte */
+  --tasogare-encre-pale: var(--tasogare-crepuscule-encre-pale-sombre);   /* 4,5:1 sur la carte */
 
   --tasogare-accent: var(--tasogare-alpenglow);
-  --tasogare-accent-survol: #f2c0cd;
+  --tasogare-accent-survol: var(--tasogare-crepuscule-accent-survol-sombre);
   --tasogare-action: var(--tasogare-ciel-lavande);
-  --tasogare-action-survol: #5e5b96;
+  --tasogare-action-survol: var(--tasogare-crepuscule-action-survol-sombre);
   --tasogare-sur-action: var(--tasogare-blanc);
   --tasogare-coche: var(--tasogare-alpenglow);
   --tasogare-coche-marque: var(--tasogare-sapin-nuit);
@@ -324,12 +606,12 @@ body {
   --tasogare-defilement: var(--tasogare-neige-ombre);
   --tasogare-defilement-actif: var(--tasogare-alpenglow);
 
-  --tasogare-rouge: #e06e64;
-  --tasogare-orange: #eca064;
+  --tasogare-rouge: var(--tasogare-crepuscule-rouge-sombre);
+  --tasogare-orange: var(--tasogare-crepuscule-orange-sombre);
   --tasogare-jaune: var(--tasogare-lueur);
-  --tasogare-vert: #a8cfa0;
-  --tasogare-cyan: #8cc8c8;
-  --tasogare-bleu: #8ca0dc;
+  --tasogare-vert: var(--tasogare-crepuscule-vert-sombre);
+  --tasogare-cyan: var(--tasogare-crepuscule-cyan-sombre);
+  --tasogare-bleu: var(--tasogare-crepuscule-bleu-sombre);
   --tasogare-violet: var(--tasogare-neige-ombre);
   --tasogare-rose: var(--tasogare-alpenglow);
 }
@@ -341,19 +623,19 @@ body {
   --tasogare-accent-l: 37%;
 
   --tasogare-cadre: var(--tasogare-chaux);
-  --tasogare-carte: #faf8f4;
+  --tasogare-carte: var(--tasogare-gres-carte-clair);
   --tasogare-creux: var(--tasogare-chaux);
-  --tasogare-filet-tableau: #d9d4ca;
+  --tasogare-filet-tableau: var(--tasogare-gres-filet-tableau-clair);
   --tasogare-filet-fort: var(--tasogare-travertin);
   --tasogare-voile: var(--tasogare-encre-taupe);
   --tasogare-ombre: var(--tasogare-encre-taupe);
 
   --tasogare-encre: var(--tasogare-encre-taupe);
-  --tasogare-encre-moyenne: #675e56;
-  --tasogare-encre-pale: #958b81;
+  --tasogare-encre-moyenne: var(--tasogare-gres-encre-moyenne-clair);
+  --tasogare-encre-pale: var(--tasogare-gres-encre-pale-clair);
 
   --tasogare-accent: var(--tasogare-argile-cuite);
-  --tasogare-accent-survol: #5f3f31;
+  --tasogare-accent-survol: var(--tasogare-gres-accent-survol-clair);
   --tasogare-action: var(--tasogare-argile-cuite);
   --tasogare-action-survol: var(--tasogare-accent-survol);
   --tasogare-sur-action: var(--tasogare-blanc);
@@ -366,14 +648,14 @@ body {
   --tasogare-defilement: var(--tasogare-encre-taupe);
   --tasogare-defilement-actif: var(--tasogare-argile-cuite);
 
-  --tasogare-rouge: #a2483a;
-  --tasogare-orange: #a8622e;
-  --tasogare-jaune: #8f7533;
+  --tasogare-rouge: var(--tasogare-gres-rouge-clair);
+  --tasogare-orange: var(--tasogare-gres-orange-clair);
+  --tasogare-jaune: var(--tasogare-gres-jaune-clair);
   --tasogare-vert: var(--tasogare-olivier-sec);
-  --tasogare-cyan: #4a7a76;
-  --tasogare-bleu: #4f6a8a;
-  --tasogare-violet: #7a6290;
-  --tasogare-rose: #a85d6c;
+  --tasogare-cyan: var(--tasogare-gres-cyan-clair);
+  --tasogare-bleu: var(--tasogare-gres-bleu-clair);
+  --tasogare-violet: var(--tasogare-gres-violet-clair);
+  --tasogare-rose: var(--tasogare-gres-rose-clair);
 
   --tasogare-part-surlignage: 35%;
   --tasogare-part-selection: 25%;
@@ -385,21 +667,21 @@ body {
   --tasogare-accent-s: 43%;
   --tasogare-accent-l: 70%;
 
-  --tasogare-cadre: #2f2925;
+  --tasogare-cadre: var(--tasogare-gres-cadre-sombre);
   --tasogare-carte: var(--tasogare-encre-taupe);
-  --tasogare-creux: #383029;
+  --tasogare-creux: var(--tasogare-gres-creux-sombre);
   --tasogare-voile: var(--tasogare-chaux);
-  --tasogare-ombre: #1c1815;
+  --tasogare-ombre: var(--tasogare-gres-ombre-sombre);
 
   --tasogare-encre: var(--tasogare-chaux);
   --tasogare-encre-moyenne: var(--tasogare-ombre-douce);
-  --tasogare-encre-pale: #9a9085;
+  --tasogare-encre-pale: var(--tasogare-gres-encre-pale-sombre);
 
-  --tasogare-accent: #d3a790;
-  --tasogare-accent-survol: #e2c0ae;
+  --tasogare-accent: var(--tasogare-gres-accent-sombre);
+  --tasogare-accent-survol: var(--tasogare-gres-accent-survol-sombre);
   --tasogare-action: var(--tasogare-gres-rose);
-  --tasogare-action-survol: #cfa28b;
-  --tasogare-sur-action: #2a2420;
+  --tasogare-action-survol: var(--tasogare-gres-action-survol-sombre);
+  --tasogare-sur-action: var(--tasogare-gres-sur-action-sombre);
   --tasogare-coche: var(--tasogare-gres-rose);
   --tasogare-coche-marque: var(--tasogare-sur-action);
 
@@ -409,14 +691,14 @@ body {
   --tasogare-defilement: var(--tasogare-ombre-douce);
   --tasogare-defilement-actif: var(--tasogare-gres-rose);
 
-  --tasogare-rouge: #e0907e;
-  --tasogare-orange: #e3a774;
-  --tasogare-jaune: #d9c08a;
-  --tasogare-vert: #b7ad86;
-  --tasogare-cyan: #8fc0b8;
-  --tasogare-bleu: #9ab2d0;
-  --tasogare-violet: #c0aad6;
-  --tasogare-rose: #e0a3b2;
+  --tasogare-rouge: var(--tasogare-gres-rouge-sombre);
+  --tasogare-orange: var(--tasogare-gres-orange-sombre);
+  --tasogare-jaune: var(--tasogare-gres-jaune-sombre);
+  --tasogare-vert: var(--tasogare-gres-vert-sombre);
+  --tasogare-cyan: var(--tasogare-gres-cyan-sombre);
+  --tasogare-bleu: var(--tasogare-gres-bleu-sombre);
+  --tasogare-violet: var(--tasogare-gres-violet-sombre);
+  --tasogare-rose: var(--tasogare-gres-rose-sombre);
 
   --tasogare-part-selection: 45%;
   --tasogare-part-recherche: 15%;
@@ -429,19 +711,19 @@ body {
   --tasogare-accent-l: 29%;
 
   --tasogare-cadre: var(--tasogare-jour-pale);
-  --tasogare-carte: #fbfaf6;
+  --tasogare-carte: var(--tasogare-the-carte-clair);
   --tasogare-creux: var(--tasogare-jour-pale);
-  --tasogare-filet-tableau: #dcd8cb;
-  --tasogare-filet-fort: #d2c4a0;       /* Laiton éclairci */
+  --tasogare-filet-tableau: var(--tasogare-the-filet-tableau-clair);
+  --tasogare-filet-fort: var(--tasogare-laiton-eclairci);
   --tasogare-voile: var(--tasogare-ceramique-noire);
   --tasogare-ombre: var(--tasogare-ceramique-noire);
 
   --tasogare-encre: var(--tasogare-lin-ardoise);
-  --tasogare-encre-moyenne: #69665f;
-  --tasogare-encre-pale: #8f8b82;
+  --tasogare-encre-moyenne: var(--tasogare-the-encre-moyenne-clair);
+  --tasogare-encre-pale: var(--tasogare-the-encre-pale-clair);
 
-  --tasogare-accent: #636e27;           /* Mousse, assombrie pour le texte */
-  --tasogare-accent-survol: #4c551d;
+  --tasogare-accent: var(--tasogare-the-accent-clair);   /* Mousse, assombrie pour le texte */
+  --tasogare-accent-survol: var(--tasogare-the-accent-survol-clair);
   --tasogare-action: var(--tasogare-mousse);
   --tasogare-action-survol: var(--tasogare-accent-survol);
   --tasogare-sur-action: var(--tasogare-blanc);
@@ -454,14 +736,14 @@ body {
   --tasogare-defilement: var(--tasogare-lin-ardoise);
   --tasogare-defilement-actif: var(--tasogare-mousse);
 
-  --tasogare-rouge: #a5402f;
-  --tasogare-orange: #a85f26;
-  --tasogare-jaune: #8f7330;
-  --tasogare-vert: #5f6c22;
-  --tasogare-cyan: #3c766c;
-  --tasogare-bleu: #46658a;
-  --tasogare-violet: #6c5a8c;
-  --tasogare-rose: #a2506a;
+  --tasogare-rouge: var(--tasogare-the-rouge-clair);
+  --tasogare-orange: var(--tasogare-the-orange-clair);
+  --tasogare-jaune: var(--tasogare-the-jaune-clair);
+  --tasogare-vert: var(--tasogare-the-vert-clair);
+  --tasogare-cyan: var(--tasogare-the-cyan-clair);
+  --tasogare-bleu: var(--tasogare-the-bleu-clair);
+  --tasogare-violet: var(--tasogare-the-violet-clair);
+  --tasogare-rose: var(--tasogare-the-rose-clair);
 
   --tasogare-part-surlignage: 40%;
   --tasogare-part-selection: 30%;
@@ -474,17 +756,17 @@ body {
   --tasogare-accent-l: 46%;
 
   --tasogare-cadre: var(--tasogare-ceramique-noire);
-  --tasogare-carte: #35302b;
-  --tasogare-creux: #2f2b27;
+  --tasogare-carte: var(--tasogare-the-carte-sombre);
+  --tasogare-creux: var(--tasogare-the-creux-sombre);
   --tasogare-voile: var(--tasogare-jour-pale);
-  --tasogare-ombre: #1a1714;
+  --tasogare-ombre: var(--tasogare-the-ombre-sombre);
 
   --tasogare-encre: var(--tasogare-jour-pale);
-  --tasogare-encre-moyenne: #bdb7aa;
-  --tasogare-encre-pale: #a29c90;
+  --tasogare-encre-moyenne: var(--tasogare-the-encre-moyenne-sombre);
+  --tasogare-encre-pale: var(--tasogare-the-encre-pale-sombre);
 
   --tasogare-accent: var(--tasogare-matcha-vif);
-  --tasogare-accent-survol: #a9c962;
+  --tasogare-accent-survol: var(--tasogare-the-accent-survol-sombre);
   --tasogare-action: var(--tasogare-matcha-vif);
   --tasogare-action-survol: var(--tasogare-accent-survol);
   --tasogare-sur-action: var(--tasogare-ceramique-noire);
@@ -497,14 +779,14 @@ body {
   --tasogare-defilement: var(--tasogare-encre-moyenne);
   --tasogare-defilement-actif: var(--tasogare-matcha-vif);
 
-  --tasogare-rouge: #e07a62;
-  --tasogare-orange: #e0a060;
+  --tasogare-rouge: var(--tasogare-the-rouge-sombre);
+  --tasogare-orange: var(--tasogare-the-orange-sombre);
   --tasogare-jaune: var(--tasogare-laiton);
   --tasogare-vert: var(--tasogare-matcha-vif);
-  --tasogare-cyan: #7fc0b2;
-  --tasogare-bleu: #8fadd0;
-  --tasogare-violet: #b3a3d6;
-  --tasogare-rose: #e09ab0;
+  --tasogare-cyan: var(--tasogare-the-cyan-sombre);
+  --tasogare-bleu: var(--tasogare-the-bleu-sombre);
+  --tasogare-violet: var(--tasogare-the-violet-sombre);
+  --tasogare-rose: var(--tasogare-the-rose-sombre);
 
   --tasogare-part-selection: 25%;
   --tasogare-part-recherche: 15%;
@@ -517,21 +799,21 @@ body {
   --tasogare-accent-l: 32%;
 
   --tasogare-cadre: var(--tasogare-ecume);
-  --tasogare-carte: #fbfaf7;
+  --tasogare-carte: var(--tasogare-lac-carte-clair);
   --tasogare-creux: var(--tasogare-ecume);
-  --tasogare-filet-tableau: #e0dbd0;
-  --tasogare-filet-fort: #bfcbc7;       /* Brume montagne éclaircie */
+  --tasogare-filet-tableau: var(--tasogare-lac-filet-tableau-clair);
+  --tasogare-filet-fort: var(--tasogare-brume-montagne-eclaircie);
   --tasogare-voile: var(--tasogare-lac-profond);
   --tasogare-ombre: var(--tasogare-lac-profond);
 
-  --tasogare-encre: #2d3a3b;
-  --tasogare-encre-moyenne: #655f55;    /* Ponton gris assombri */
+  --tasogare-encre: var(--tasogare-lac-encre-clair);
+  --tasogare-encre-moyenne: var(--tasogare-ponton-gris-assombri);
   --tasogare-encre-pale: var(--tasogare-brume-montagne);
 
-  --tasogare-accent: #2f7672;           /* Turquoise lac, assombrie pour le texte */
-  --tasogare-accent-survol: #245c59;
+  --tasogare-accent: var(--tasogare-lac-accent-clair);   /* Turquoise lac, assombrie pour le texte */
+  --tasogare-accent-survol: var(--tasogare-lac-accent-survol-clair);
   --tasogare-action: var(--tasogare-lac-profond);
-  --tasogare-action-survol: #174547;
+  --tasogare-action-survol: var(--tasogare-lac-action-survol-clair);
   --tasogare-sur-action: var(--tasogare-blanc);
   --tasogare-coche: var(--tasogare-turquoise-lac);
   --tasogare-coche-marque: var(--tasogare-blanc);
@@ -542,14 +824,14 @@ body {
   --tasogare-defilement: var(--tasogare-ponton-gris);
   --tasogare-defilement-actif: var(--tasogare-bouee-rouge);
 
-  --tasogare-rouge: #b83a22;
-  --tasogare-orange: #b0601f;
-  --tasogare-jaune: #8c7238;
-  --tasogare-vert: #4c7a52;
+  --tasogare-rouge: var(--tasogare-lac-rouge-clair);
+  --tasogare-orange: var(--tasogare-lac-orange-clair);
+  --tasogare-jaune: var(--tasogare-lac-jaune-clair);
+  --tasogare-vert: var(--tasogare-lac-vert-clair);
   --tasogare-cyan: var(--tasogare-accent);
-  --tasogare-bleu: #2f5f8a;
-  --tasogare-violet: #675d8e;
-  --tasogare-rose: #a84d6c;
+  --tasogare-bleu: var(--tasogare-lac-bleu-clair);
+  --tasogare-violet: var(--tasogare-lac-violet-clair);
+  --tasogare-rose: var(--tasogare-lac-rose-clair);
 
   --tasogare-part-surlignage: 45%;
   --tasogare-part-selection: 22%;
@@ -561,20 +843,20 @@ body {
   --tasogare-accent-s: 38%;
   --tasogare-accent-l: 63%;
 
-  --tasogare-cadre: #132a2b;            /* Lac profond, de nuit */
-  --tasogare-carte: #1a3536;
-  --tasogare-creux: #163031;
+  --tasogare-cadre: var(--tasogare-lac-cadre-sombre);   /* Lac profond, de nuit */
+  --tasogare-carte: var(--tasogare-lac-carte-sombre);
+  --tasogare-creux: var(--tasogare-lac-creux-sombre);
   --tasogare-voile: var(--tasogare-ecume);
-  --tasogare-ombre: #0b1a1b;
+  --tasogare-ombre: var(--tasogare-lac-ombre-sombre);
 
   --tasogare-encre: var(--tasogare-ecume);
-  --tasogare-encre-moyenne: #a6b8b3;
-  --tasogare-encre-pale: #8fa5a0;
+  --tasogare-encre-moyenne: var(--tasogare-lac-encre-moyenne-sombre);
+  --tasogare-encre-pale: var(--tasogare-lac-encre-pale-sombre);
 
-  --tasogare-accent: #7cc4bd;           /* Turquoise lac, éclaircie pour le texte */
-  --tasogare-accent-survol: #a3d8d2;
-  --tasogare-action: #2f7672;
-  --tasogare-action-survol: #286662;
+  --tasogare-accent: var(--tasogare-lac-accent-sombre);   /* Turquoise lac, éclaircie pour le texte */
+  --tasogare-accent-survol: var(--tasogare-lac-accent-survol-sombre);
+  --tasogare-action: var(--tasogare-lac-accent-clair);
+  --tasogare-action-survol: var(--tasogare-lac-action-survol-sombre);
   --tasogare-sur-action: var(--tasogare-blanc);
   --tasogare-coche: var(--tasogare-turquoise-lac);
   --tasogare-coche-marque: var(--tasogare-blanc);
@@ -585,14 +867,14 @@ body {
   --tasogare-defilement: var(--tasogare-encre-moyenne);
   --tasogare-defilement-actif: var(--tasogare-accent);
 
-  --tasogare-rouge: #ef7a60;
-  --tasogare-orange: #e8a05e;
+  --tasogare-rouge: var(--tasogare-lac-rouge-sombre);
+  --tasogare-orange: var(--tasogare-lac-orange-sombre);
   --tasogare-jaune: var(--tasogare-chanvre);
-  --tasogare-vert: #9cc79a;
+  --tasogare-vert: var(--tasogare-lac-vert-sombre);
   --tasogare-cyan: var(--tasogare-accent);
-  --tasogare-bleu: #8db4dc;
-  --tasogare-violet: #b4aadb;
-  --tasogare-rose: #e99ab4;
+  --tasogare-bleu: var(--tasogare-lac-bleu-sombre);
+  --tasogare-violet: var(--tasogare-lac-violet-sombre);
+  --tasogare-rose: var(--tasogare-lac-rose-sombre);
 
   --tasogare-part-recherche: 15%;
 }
@@ -603,20 +885,20 @@ body {
   --tasogare-accent-s: 66%;
   --tasogare-accent-l: 40%;
 
-  --tasogare-cadre: #f6eed6;
-  --tasogare-carte: #fffcf3;
+  --tasogare-cadre: var(--tasogare-porte-cadre-clair);
+  --tasogare-carte: var(--tasogare-porte-carte-clair);
   --tasogare-creux: var(--tasogare-cadre);
-  --tasogare-filet-tableau: #e9dfc3;
+  --tasogare-filet-tableau: var(--tasogare-porte-filet-tableau-clair);
   --tasogare-filet-fort: var(--tasogare-zellige);
   --tasogare-voile: var(--tasogare-nuit-bleue);
   --tasogare-ombre: var(--tasogare-nuit-bleue);
 
   --tasogare-encre: var(--tasogare-nuit-bleue);
-  --tasogare-encre-moyenne: #565e75;
-  --tasogare-encre-pale: #8a8f9f;
+  --tasogare-encre-moyenne: var(--tasogare-porte-encre-moyenne-clair);
+  --tasogare-encre-pale: var(--tasogare-porte-encre-pale-clair);
 
   --tasogare-accent: var(--tasogare-bleu-cobalt);
-  --tasogare-accent-survol: #1a3683;
+  --tasogare-accent-survol: var(--tasogare-porte-accent-survol-clair);
   --tasogare-action: var(--tasogare-bleu-cobalt);
   --tasogare-action-survol: var(--tasogare-accent-survol);
   --tasogare-sur-action: var(--tasogare-blanc);
@@ -629,13 +911,13 @@ body {
   --tasogare-defilement: var(--tasogare-nuit-bleue);
   --tasogare-defilement-actif: var(--tasogare-bleu-cobalt);
 
-  --tasogare-rouge: #b0302a;
+  --tasogare-rouge: var(--tasogare-porte-rouge-clair);
   --tasogare-orange: var(--tasogare-terracotta);
-  --tasogare-jaune: #957514;
+  --tasogare-jaune: var(--tasogare-porte-jaune-clair);
   --tasogare-vert: var(--tasogare-cactus);
-  --tasogare-cyan: #2a7f86;
+  --tasogare-cyan: var(--tasogare-porte-cyan-clair);
   --tasogare-bleu: var(--tasogare-bleu-cobalt);
-  --tasogare-violet: #6a4aa8;
+  --tasogare-violet: var(--tasogare-porte-violet-clair);
   --tasogare-rose: var(--tasogare-bougainvillier);
 
   --tasogare-part-surlignage: 45%;
@@ -649,19 +931,19 @@ body {
   --tasogare-accent-l: 74%;
 
   --tasogare-cadre: var(--tasogare-nuit-bleue);
-  --tasogare-carte: #1b2b50;
-  --tasogare-creux: #172647;
+  --tasogare-carte: var(--tasogare-porte-carte-sombre);
+  --tasogare-creux: var(--tasogare-porte-creux-sombre);
   --tasogare-voile: var(--tasogare-zellige);
-  --tasogare-ombre: #080f1f;
+  --tasogare-ombre: var(--tasogare-porte-ombre-sombre);
 
   --tasogare-encre: var(--tasogare-zellige);
-  --tasogare-encre-moyenne: #c3c0b4;
-  --tasogare-encre-pale: #9aa0b5;
+  --tasogare-encre-moyenne: var(--tasogare-porte-encre-moyenne-sombre);
+  --tasogare-encre-pale: var(--tasogare-porte-encre-pale-sombre);
 
-  --tasogare-accent: #8ca6ec;           /* Bleu cobalt, éclairci pour le texte */
-  --tasogare-accent-survol: #b0c3f2;
+  --tasogare-accent: var(--tasogare-porte-accent-sombre);   /* Bleu cobalt, éclairci pour le texte */
+  --tasogare-accent-survol: var(--tasogare-porte-accent-survol-sombre);
   --tasogare-action: var(--tasogare-mur-safran);
-  --tasogare-action-survol: #efd06e;
+  --tasogare-action-survol: var(--tasogare-porte-action-survol-sombre);
   --tasogare-sur-action: var(--tasogare-nuit-bleue);
   --tasogare-coche: var(--tasogare-mur-safran);
   --tasogare-coche-marque: var(--tasogare-nuit-bleue);
@@ -672,14 +954,14 @@ body {
   --tasogare-defilement: var(--tasogare-encre-moyenne);
   --tasogare-defilement-actif: var(--tasogare-mur-safran);
 
-  --tasogare-rouge: #ec7a6e;
-  --tasogare-orange: #e39a6e;
+  --tasogare-rouge: var(--tasogare-porte-rouge-sombre);
+  --tasogare-orange: var(--tasogare-porte-orange-sombre);
   --tasogare-jaune: var(--tasogare-mur-safran);
-  --tasogare-vert: #9cc488;
-  --tasogare-cyan: #7cc8cc;
+  --tasogare-vert: var(--tasogare-porte-vert-sombre);
+  --tasogare-cyan: var(--tasogare-porte-cyan-sombre);
   --tasogare-bleu: var(--tasogare-accent);
-  --tasogare-violet: #b7a0ec;
-  --tasogare-rose: #ec86b8;
+  --tasogare-violet: var(--tasogare-porte-violet-sombre);
+  --tasogare-rose: var(--tasogare-porte-rose-sombre);
 
   --tasogare-part-selection: 50%;
   --tasogare-part-recherche: 18%;
@@ -692,9 +974,9 @@ body {
   --tasogare-accent-l: 32%;
 
   --tasogare-cadre: var(--tasogare-porcelaine);
-  --tasogare-carte: #fbfaf8;
+  --tasogare-carte: var(--tasogare-galet-carte-clair);
   --tasogare-creux: var(--tasogare-porcelaine);
-  --tasogare-filet-tableau: #e0dcd4;
+  --tasogare-filet-tableau: var(--tasogare-galet-filet-tableau-clair);
   --tasogare-filet-fort: var(--tasogare-platre);
   --tasogare-voile: var(--tasogare-galet-noir);
   --tasogare-ombre: var(--tasogare-galet-noir);
@@ -703,8 +985,8 @@ body {
   --tasogare-encre-moyenne: var(--tasogare-fumee);
   --tasogare-encre-pale: var(--tasogare-pierre-grise);
 
-  --tasogare-accent: #5f5c43;
-  --tasogare-accent-survol: #45432f;
+  --tasogare-accent: var(--tasogare-galet-accent-clair);
+  --tasogare-accent-survol: var(--tasogare-galet-accent-survol-clair);
   --tasogare-action: var(--tasogare-galet-noir);
   --tasogare-action-survol: var(--tasogare-fumee);
   --tasogare-sur-action: var(--tasogare-blanc);
@@ -717,14 +999,14 @@ body {
   --tasogare-defilement: var(--tasogare-fumee);
   --tasogare-defilement-actif: var(--tasogare-galet-noir);
 
-  --tasogare-rouge: #9c4a3e;
-  --tasogare-orange: #9a6233;
-  --tasogare-jaune: #86733a;
+  --tasogare-rouge: var(--tasogare-galet-rouge-clair);
+  --tasogare-orange: var(--tasogare-galet-orange-clair);
+  --tasogare-jaune: var(--tasogare-galet-jaune-clair);
   --tasogare-vert: var(--tasogare-mousse-seche);
-  --tasogare-cyan: #4f7470;
-  --tasogare-bleu: #50667f;
-  --tasogare-violet: #6d6082;
-  --tasogare-rose: #96596a;
+  --tasogare-cyan: var(--tasogare-galet-cyan-clair);
+  --tasogare-bleu: var(--tasogare-galet-bleu-clair);
+  --tasogare-violet: var(--tasogare-galet-violet-clair);
+  --tasogare-rose: var(--tasogare-galet-rose-clair);
 
   --tasogare-part-surlignage: 45%;
   --tasogare-part-selection: 30%;
@@ -736,18 +1018,18 @@ body {
   --tasogare-accent-s: 19%;
   --tasogare-accent-l: 63%;
 
-  --tasogare-cadre: #1f1e1c;
+  --tasogare-cadre: var(--tasogare-galet-cadre-sombre);
   --tasogare-carte: var(--tasogare-galet-noir);
-  --tasogare-creux: #252422;
+  --tasogare-creux: var(--tasogare-galet-creux-sombre);
   --tasogare-voile: var(--tasogare-porcelaine);
-  --tasogare-ombre: #121110;
+  --tasogare-ombre: var(--tasogare-galet-ombre-sombre);
 
   --tasogare-encre: var(--tasogare-porcelaine);
   --tasogare-encre-moyenne: var(--tasogare-platre);
-  --tasogare-encre-pale: #9b978d;
+  --tasogare-encre-pale: var(--tasogare-galet-encre-pale-sombre);
 
   --tasogare-accent: var(--tasogare-lin-avoine);
-  --tasogare-accent-survol: #c9bfa9;
+  --tasogare-accent-survol: var(--tasogare-galet-accent-survol-sombre);
   --tasogare-action: var(--tasogare-platre);
   --tasogare-action-survol: var(--tasogare-porcelaine);
   --tasogare-sur-action: var(--tasogare-galet-noir);
@@ -760,14 +1042,14 @@ body {
   --tasogare-defilement: var(--tasogare-platre);
   --tasogare-defilement-actif: var(--tasogare-lin-avoine);
 
-  --tasogare-rouge: #d79a8a;
-  --tasogare-orange: #d8ad80;
-  --tasogare-jaune: #d6c48f;
-  --tasogare-vert: #aeb08a;
-  --tasogare-cyan: #9cc0b8;
-  --tasogare-bleu: #a5b6cb;
-  --tasogare-violet: #bdb0cf;
-  --tasogare-rose: #d6a7b3;
+  --tasogare-rouge: var(--tasogare-galet-rouge-sombre);
+  --tasogare-orange: var(--tasogare-galet-orange-sombre);
+  --tasogare-jaune: var(--tasogare-galet-jaune-sombre);
+  --tasogare-vert: var(--tasogare-galet-vert-sombre);
+  --tasogare-cyan: var(--tasogare-galet-cyan-sombre);
+  --tasogare-bleu: var(--tasogare-galet-bleu-sombre);
+  --tasogare-violet: var(--tasogare-galet-violet-sombre);
+  --tasogare-rose: var(--tasogare-galet-rose-sombre);
 
   --tasogare-part-selection: 45%;
   --tasogare-part-recherche: 15%;
@@ -870,9 +1152,12 @@ body {
   --divider-width: 0px;
   --tab-outline-color: transparent;
   --tab-outline-width: 0px;
-  --nav-indentation-guide-color: transparent;
-  --nav-indentation-guide-width: 0px;
-  --nav-item-padding: var(--tasogare-pas-ligne-nav) var(--size-4-2) var(--tasogare-pas-ligne-nav) var(--size-4-6);
+  --nav-indentation-guide-color: var(--background-modifier-border-hover);
+  --nav-indentation-guide-width: var(--tasogare-filet);
+  --nav-item-children-margin-left: var(--tasogare-retrait-arbre);
+  --nav-item-children-padding-left: var(--tasogare-pas-arbre);
+  --nav-item-background-active: var(--background-primary);
+  --nav-item-padding: var(--tasogare-pas-ligne-nav) var(--size-4-2) var(--tasogare-pas-ligne-nav) var(--tasogare-gouttiere-nav);
   --nav-item-parent-padding: var(--nav-item-padding);
   --nav-item-radius: var(--tasogare-rayon-bloc);
 
@@ -1094,6 +1379,19 @@ body:not(.is-mobile) .workspace-split.mod-root .workspace-tab-header {
 body:not(.is-mobile) .workspace-split.mod-root .workspace-tab-header-inner {
   height: 100%;
 }
+/* Les boutons de sidebar repliée (dans la barre d'onglets) prennent la hauteur de la rangée : l'icône se centre
+   sur les pastilles. Obsidian les cale sur --header-height ; à 30 px, leur fond de survol devenait un rectangle plat. */
+body:not(.is-mobile) .workspace-split.mod-root .sidebar-toggle-button {
+  height: calc(var(--tasogare-hauteur-entete) + 2 * var(--tasogare-inset));
+  padding-block: 0;
+  display: flex;
+  align-items: center;
+}
+body:not(.is-mobile) .workspace-split.mod-root .sidebar-toggle-button .clickable-icon {
+  height: auto;
+  aspect-ratio: 1;
+  align-self: center;
+}
 /* Le bouton « + » et le menu des onglets se centrent sur la pastille, sans l'étirer. */
 body:not(.is-mobile) .workspace-split.mod-root :is(.workspace-tab-header-new-tab, .workspace-tab-header-tab-list) {
   padding-block: 0;
@@ -1151,6 +1449,35 @@ body:not(.is-mobile) .workspace-split.mod-root .view-content {
 .clickable-icon:hover,
 .nav-action-button:hover,
 .side-dock-ribbon-action:hover {
+  background: var(--background-modifier-hover);
+}
+/* Un seul survol pour toutes les icônes. Obsidian cale la boîte d'une icône sur --header-height, que le thème
+   réduit à 30 px : les fonds de survol devenaient des rectangles plats, de formats différents (28 × 14, 28 × 16…).
+   Ici le fond est un carré dessiné par ::after, centré sur l'icône, du même côté partout.
+   Ordinateur seulement : le mobile garde le survol d'Obsidian. */
+body:not(.is-mobile) :is(.clickable-icon, .nav-action-button, .side-dock-ribbon-action, .workspace-split.mod-sidedock .workspace-tab-header) {
+  position: relative;
+  isolation: isolate;
+}
+body:not(.is-mobile) :is(.clickable-icon, .nav-action-button, .side-dock-ribbon-action, .workspace-split.mod-sidedock .workspace-tab-header):is(:hover, .has-active-menu) {
+  background: transparent;
+}
+body:not(.is-mobile) :is(.clickable-icon, .nav-action-button, .side-dock-ribbon-action, .workspace-split.mod-sidedock .workspace-tab-header)::after {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  width: var(--tasogare-taille-bouton-icone);
+  height: var(--tasogare-taille-bouton-icone);
+  translate: -50% -50%;
+  border-radius: var(--clickable-icon-radius);
+  background: transparent;
+  pointer-events: none;
+  transition: background-color var(--tasogare-duree-rapide) var(--tasogare-courbe-survol);
+}
+body:not(.is-mobile) :is(.clickable-icon, .nav-action-button, .side-dock-ribbon-action, .workspace-split.mod-sidedock .workspace-tab-header):is(:hover, .has-active-menu)::after {
   background: var(--background-modifier-hover);
 }
 
@@ -1221,6 +1548,7 @@ body:not(.is-mobile) .workspace-split.mod-primary-split .workspace-sidedock-vaul
 }
 
 /* ---------- Sidebar : une icône devant chaque note et chaque dossier ----------
+   Les dessins viennent de Hugeicons (licence MIT, hugeicons.com), en trait de 1,5.
    Hauteur, rayon et fond des lignes : variables --nav-item-* (couche 2). */
 .nav-file-title,
 .nav-folder-title {
@@ -1234,9 +1562,12 @@ body:not(.is-mobile) .workspace-split.mod-primary-split .workspace-sidedock-vaul
   height: var(--tasogare-taille-icone);
   margin-right: var(--tasogare-ecart-icone);
   background-color: var(--text-muted);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z'/%3E%3Cpath d='M14 2v4a2 2 0 0 0 2 2h4'/%3E%3C/svg%3E") center / contain no-repeat;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 7L16 7'/%3E%3Cpath d='M8 11L12 11'/%3E%3Cpath d='M13 21.5V21C13 18.1716 13 16.7574 13.8787 15.8787C14.7574 15 16.1716 15 19 15H19.5M20 13.3431V10C20 6.22876 20 4.34315 18.8284 3.17157C17.6569 2 15.7712 2 12 2C8.22877 2 6.34315 2 5.17157 3.17157C4 4.34314 4 6.22876 4 10L4 14.5442C4 17.7892 4 19.4117 4.88607 20.5107C5.06508 20.7327 5.26731 20.9349 5.48933 21.1139C6.58831 22 8.21082 22 11.4558 22C12.1614 22 12.5141 22 12.8372 21.886C12.9044 21.8623 12.9702 21.835 13.0345 21.8043C13.3436 21.6564 13.593 21.407 14.0919 20.9081L18.8284 16.1716C19.4065 15.5935 19.6955 15.3045 19.8478 14.9369C20 14.5694 20 14.1606 20 13.3431Z'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 .nav-file-title.is-active::before { background-color: var(--text-accent); }
+.nav-folder:not(.is-collapsed) > .nav-folder-title .nav-folder-title-content::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.93802 21H14.9395C17.1335 21 18.2305 21 19.0351 20.3884C19.8398 19.7768 20.1334 18.7198 20.7206 16.6059L21.9197 12.289C21.973 12.0972 22 11.8991 22 11.7001C22 10.485 21.015 9.5 19.7999 9.5H12.5634C10.5123 9.5 9.48671 9.5 8.71918 10.0273C8.59312 10.1139 8.47387 10.21 8.36246 10.3148C7.68418 10.9528 7.46632 11.9549 7.03061 13.9592L5.83181 19.4737C5.63814 20.3646 4.84972 21 3.93802 21ZM3.93802 21C2.86768 21 2 20.1323 2 19.062V7.76613C2 5.53633 2 4.42144 2.68424 3.72186C2.69664 3.70918 2.70918 3.69664 2.72186 3.68424C3.42144 3 4.53633 3 6.76613 3C7.37053 3 7.67273 3 7.94502 3.11102C7.95015 3.11311 7.95527 3.11523 7.96038 3.11738C8.23142 3.23142 8.4451 3.4451 8.87248 3.87248L9.62132 4.62132C10.0549 5.05487 10.2716 5.27164 10.5473 5.38582C10.823 5.5 11.1295 5.5 11.7426 5.5H16.5C17.5245 5.5 18.0367 5.5 18.4454 5.65383C19.0922 5.89728 19.6027 6.40776 19.8462 7.0546C20 7.46331 20 7.97554 20 9'/%3E%3C/svg%3E");
+}
 .nav-folder-title-content::before {
   content: "";
   display: inline-block;
@@ -1245,7 +1576,29 @@ body:not(.is-mobile) .workspace-split.mod-primary-split .workspace-sidedock-vaul
   height: var(--tasogare-taille-icone);
   margin-right: var(--tasogare-ecart-icone);
   background-color: var(--text-muted);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z'/%3E%3C/svg%3E") center / contain no-repeat;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M13.6656 6.49446H16C18.8284 6.49446 20.2426 6.49446 21.1213 7.37314C22 8.25182 22 9.66603 22 12.4945V14.5C22 17.3284 22 18.7426 21.1213 19.6213C20.2426 20.5 18.8284 20.5 16 20.5H8C5.17157 20.5 3.75736 20.5 2.87868 19.6213C2 18.7426 2 17.3284 2 14.5V8.99183C2 6.65409 2 5.48521 2.61604 4.67881C2.7778 4.46706 2.96706 4.2778 3.17881 4.11604C3.98521 3.5 5.15409 3.5 7.49183 3.5C8.16633 3.5 8.50358 3.5 8.81392 3.60442C8.8976 3.63257 8.97932 3.66623 9.05854 3.70518C9.35239 3.84965 9.59179 4.08719 10.0706 4.56227L10.8483 5.33389C11.4254 5.9066 11.714 6.19295 12.08 6.3437C12.446 6.49446 12.8525 6.49446 13.6656 6.49446Z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* ---------- Sidebar : la ligne active est une pastille posée, un trait guide les enfants ----------
+   La pastille reprend l'onglet actif et la carte : fond de la carte, ombre de niveau 1.
+   Le trait est la bordure du conteneur des enfants (variables --nav-indentation-guide-*, couche 2).
+   Obsidian donne à chaque ligne toute la largeur de la sidebar : la pastille passe sur le trait.
+   La racine du coffre n'a ni trait ni retrait. */
+body:not(.is-mobile) :is(.nav-file-title, .nav-folder-title) {
+  position: relative;
+  transition: background-color var(--tasogare-duree-rapide) var(--tasogare-courbe-survol),
+    box-shadow var(--tasogare-duree-rapide) var(--tasogare-courbe-survol);
+}
+body:not(.is-mobile) :is(.nav-file-title, .nav-folder-title).is-active {
+  box-shadow: var(--tasogare-ombre-posee);
+}
+body:not(.is-mobile) .nav-folder.mod-root > .nav-folder-children {
+  margin-inline-start: 0;
+  padding-inline-start: 0;
+  border-inline-start: none;
+}
+body:not(.is-mobile) .nav-folder:not(.mod-root) > .nav-folder-children {
+  border-inline-start: var(--nav-indentation-guide-width) solid var(--nav-indentation-guide-color);
 }
 
 /* ---------- Propriétés : une carte du cadre, une ligne par rangée ----------
@@ -1362,6 +1715,11 @@ body:not(.is-mobile) .modal.mod-settings .modal-content {
   border-radius: calc(var(--tasogare-rayon-carte) - var(--tasogare-inset)); /* rayon concentrique */
   border: none;
   box-shadow: none;
+}
+/* Dans sa propre fenêtre, rien n'entoure la carte : le rayon concentrique n'a plus de forme extérieure
+   à suivre. La carte reprend le rayon de la carte de note. */
+body.is-popout-modal:not(.is-mobile) .modal.mod-settings .modal-content {
+  border-radius: var(--tasogare-rayon-carte);
 }
 body:not(.is-mobile) .modal.mod-settings .vertical-tab-nav-item {
   padding: var(--tasogare-pas-ligne-reglages);

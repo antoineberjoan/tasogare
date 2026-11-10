@@ -40,7 +40,7 @@ Tasogare n'utilise que six marches de l'échelle : 2, 4, 6, 8, 10 et 14 px.
 
 Sur macOS, Obsidian redéfinit `--input-radius`, `--clickable-icon-radius` et `--modal-radius` sur `.mod-macos`. Tasogare les reprend sur ordinateur (`body:not(.is-mobile)`) ; le mobile garde ceux d'Obsidian.
 
-Rayon concentrique : la carte intérieure de la fenêtre de réglages prend `16 − 10 = 6 px`.
+Rayon concentrique : la carte intérieure de la fenêtre de réglages prend `16 − 10 = 6 px` quand la fenêtre est intégrée à Obsidian. Dans sa propre fenêtre (Obsidian 1.15), aucune forme ne l'entoure : elle prend le rayon de la carte de note, 16 px.
 
 ## Filets et élévation
 
@@ -72,6 +72,9 @@ Restent sur mobile : les couleurs des palettes, la typographie (titre de note à
 | --- | ---: | --- |
 | `--tasogare-taille-icone` | 16 px | `--icon-size` |
 | `--tasogare-trait-icone` | 1,75 px | `--icon-stroke` |
+| `--tasogare-taille-bouton-icone` | 28 px (16 + 2 × 6) | côté du fond de survol d'une icône ; suit `--tasogare-taille-icone` |
+
+Le survol d'une icône est un carré de côté « icône + 6 px de chaque côté » (28 px aujourd'hui), centré sur l'icône, le même pour toutes (icônes cliquables, boutons de la sidebar, ruban, onglets de la sidebar). Obsidian cale la boîte d'une icône sur `--header-height`, que Tasogare fixe à 30 px : cette boîte mesure alors 28 × 14 ou 28 × 16 px. Le thème dessine donc le fond avec `::after`, sans dépendre de la boîte. Sur mobile, le survol d'Obsidian reste.
 
 ## Ce qui change par rapport à Tasogare 1.6
 
