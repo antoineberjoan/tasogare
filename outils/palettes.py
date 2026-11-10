@@ -24,6 +24,8 @@ VARIABLE = re.compile(r"--tasogare-([a-z0-9-]+):\s*([^;]+);")
 # Les noms affichés viennent des options de Style Settings, dans le même fichier.
 OPTION = re.compile(r"label: (.+)\n\s+value: tasogare-([a-z]+)")
 MODES = {"light": "clair", "dark": "sombre"}
+# La palette de base : ses blocs n'ont pas de classe, et les autres palettes en héritent.
+BASE = "graphite"
 
 # (texte, fond, minimum, usage)
 CONTROLES = [
@@ -54,8 +56,8 @@ class Defaut(Exception):
 def lire_noms(texte):
     """Rend {palette: nom affiché}, dans l'ordre des options de Style Settings."""
     noms = {cle: nom.strip() for nom, cle in OPTION.findall(texte)}
-    if "crepuscule" not in noms:
-        raise Defaut("l'option Style Settings « tasogare-crepuscule » manque")
+    if BASE not in noms:
+        raise Defaut(f"l'option Style Settings « tasogare-{BASE} » manque")
     return noms
 
 
@@ -76,18 +78,18 @@ def resoudre(valeur, emplacements, sources, profondeur=0):
 
 
 def lire_palettes(texte, noms):
-    """Rend {(palette, mode): {emplacement: valeur résolue}}, chaque palette héritant de Crépuscule."""
+    """Rend {(palette, mode): {emplacement: valeur résolue}}, chaque palette héritant de la palette de base."""
     sources = dict(re.findall(r"--tasogare-([a-z0-9-]+):\s*(#[0-9a-fA-F]{6});", texte))
     brut = {}
     for mode, palette, corps in BLOC.findall(texte):
-        brut.setdefault((palette or "crepuscule", mode), {}).update(VARIABLE.findall(corps))
+        brut.setdefault((palette or BASE, mode), {}).update(VARIABLE.findall(corps))
     for palette in noms:
         for mode in MODES:
             if (palette, mode) not in brut:
                 raise Defaut(f"la palette « {noms[palette]} » n'a pas de bloc pour le mode {MODES[mode]}")
     palettes = {}
     for (palette, mode), valeurs in brut.items():
-        fusion = {**brut[("crepuscule", mode)], **valeurs}
+        fusion = {**brut[(BASE, mode)], **valeurs}
         palettes[(palette, mode)] = {cle: resoudre(v, fusion, sources) for cle, v in fusion.items()}
     return palettes
 

@@ -20,8 +20,11 @@ settings:
     description: Les couleurs du thème, en clair comme en sombre.
     type: class-select
     allowEmpty: false
-    default: tasogare-crepuscule
+    default: tasogare-graphite
     options:
+      -
+        label: Graphite
+        value: tasogare-graphite
       -
         label: Crépuscule alpin
         value: tasogare-crepuscule
@@ -66,6 +69,8 @@ body {
   --tasogare-pas-ligne-nav: var(--tasogare-espace-8);           /* marge verticale d'une ligne de la sidebar */
   --tasogare-pas-proprietes: var(--tasogare-inset) var(--tasogare-espace-14) var(--tasogare-espace-8);
   --tasogare-pas-propriete: var(--tasogare-espace-4);
+  --tasogare-retrait-arbre: 12px;                               /* du bord d'un dossier au trait qui guide ses enfants */
+  --tasogare-pas-arbre: var(--tasogare-espace-10);              /* du trait guide au bord d'une ligne enfant */
   --tasogare-pas-selecteur-coffre: var(--tasogare-espace-6) var(--tasogare-inset);
   --tasogare-pas-ligne-reglages: var(--tasogare-pas-ligne-nav) var(--tasogare-espace-10);
 
@@ -175,6 +180,16 @@ body {
 body {
   --tasogare-blanc: #ffffff;
 
+  /* Graphite */
+  --tasogare-graphite: #1c1c1e;           /* Graphite */
+  --tasogare-brume: #f2f2f7;              /* Brume */
+  --tasogare-pierre: #636366;             /* Pierre */
+  --tasogare-argent: #8e8e93;             /* Argent */
+  --tasogare-trait: #d1d1d6;              /* Trait */
+  --tasogare-bleu-lien: #0066cc;          /* Bleu lien */
+  --tasogare-bleu-action: #0071e3;        /* Bleu action */
+  --tasogare-bleu-ciel: #4da3ff;          /* Bleu ciel */
+
   /* Crépuscule alpin */
   --tasogare-cabine-rouge: #9e2b25;       /* Cabine rouge */
   --tasogare-ciel-lavande: #6e6ba8;       /* Ciel lavande */
@@ -251,8 +266,92 @@ body {
   --tasogare-part-defilement-actif: 55%;
 }
 
-/* ---------- Palette Crépuscule alpin (par défaut) ---------- */
+/* ---------- Palette Graphite (par défaut) ----------
+   Des gris neutres, un seul bleu pour l'accent. Les autres palettes héritent de ses emplacements. */
 .theme-light {
+  --tasogare-accent-h: 210;
+  --tasogare-accent-s: 100%;
+  --tasogare-accent-l: 40%;
+
+  --tasogare-cadre: var(--tasogare-brume);
+  --tasogare-carte: var(--tasogare-blanc);
+  --tasogare-creux: var(--tasogare-cadre);            /* blocs de code, en-têtes de tableau */
+  --tasogare-filet-tableau: #e5e5ea;
+  --tasogare-filet-fort: var(--tasogare-trait);
+  --tasogare-voile: var(--tasogare-graphite);
+  --tasogare-ombre: var(--tasogare-graphite);
+
+  --tasogare-encre: var(--tasogare-graphite);
+  --tasogare-encre-moyenne: var(--tasogare-pierre);   /* 5,4:1 sur le cadre */
+  --tasogare-encre-pale: var(--tasogare-argent);      /* décor, jamais un libellé */
+
+  --tasogare-accent: var(--tasogare-bleu-lien);
+  --tasogare-accent-survol: #0050a8;
+  --tasogare-action: var(--tasogare-bleu-action);
+  --tasogare-action-survol: #0062c4;
+  --tasogare-sur-action: var(--tasogare-blanc);
+  --tasogare-coche: var(--tasogare-bleu-action);
+  --tasogare-coche-marque: var(--tasogare-blanc);
+
+  --tasogare-surlignage: #ffd60a;
+  --tasogare-selection: var(--tasogare-bleu-ciel);
+  --tasogare-recherche: #ffd60a;
+  --tasogare-defilement: var(--tasogare-argent);
+  --tasogare-defilement-actif: var(--tasogare-bleu-action);
+
+  --tasogare-rouge: #d70015;
+  --tasogare-orange: #c93400;
+  --tasogare-jaune: #946c00;
+  --tasogare-vert: #248a3d;
+  --tasogare-cyan: #0a7ea4;
+  --tasogare-bleu: var(--tasogare-bleu-lien);
+  --tasogare-violet: #8944ab;
+  --tasogare-rose: #d30f45;
+}
+
+.theme-dark {
+  --tasogare-accent-h: 211;
+  --tasogare-accent-s: 100%;
+  --tasogare-accent-l: 65%;
+
+  --tasogare-cadre: var(--tasogare-graphite);
+  --tasogare-carte: #2c2c2e;
+  --tasogare-creux: #242426;
+  --tasogare-filet-tableau: color-mix(in oklch, var(--tasogare-voile) 12%, transparent);
+  --tasogare-filet-fort: color-mix(in oklch, var(--tasogare-voile) 14%, transparent);
+  --tasogare-voile: var(--tasogare-brume);
+  --tasogare-ombre: #000000;
+
+  --tasogare-encre: #f5f5f7;
+  --tasogare-encre-moyenne: #aeaeb2;
+  --tasogare-encre-pale: var(--tasogare-argent);      /* 4,3:1 sur la carte */
+
+  --tasogare-accent: var(--tasogare-bleu-ciel);
+  --tasogare-accent-survol: #7bbcff;
+  --tasogare-action: var(--tasogare-bleu-action);
+  --tasogare-action-survol: #0062c4;
+  --tasogare-sur-action: var(--tasogare-blanc);
+  --tasogare-coche: var(--tasogare-bleu-ciel);
+  --tasogare-coche-marque: var(--tasogare-graphite);
+
+  --tasogare-surlignage: #ffd60a;
+  --tasogare-selection: var(--tasogare-bleu-action);
+  --tasogare-recherche: #ffd60a;
+  --tasogare-defilement: var(--tasogare-argent);
+  --tasogare-defilement-actif: var(--tasogare-bleu-ciel);
+
+  --tasogare-rouge: #ff6961;
+  --tasogare-orange: #ff9f0a;
+  --tasogare-jaune: #ffd60a;
+  --tasogare-vert: #32d74b;
+  --tasogare-cyan: #64d2ff;
+  --tasogare-bleu: var(--tasogare-bleu-ciel);
+  --tasogare-violet: #bf5af2;
+  --tasogare-rose: #ff6482;
+}
+
+/* ---------- Palette Crépuscule alpin ---------- */
+.theme-light.tasogare-crepuscule {
   --tasogare-accent-h: 3;
   --tasogare-accent-s: 62%;
   --tasogare-accent-l: 38%;
@@ -293,7 +392,7 @@ body {
   --tasogare-rose: #be627c;
 }
 
-.theme-dark {
+.theme-dark.tasogare-crepuscule {
   --tasogare-accent-h: 345;
   --tasogare-accent-s: 60%;
   --tasogare-accent-l: 77%;
@@ -870,8 +969,11 @@ body {
   --divider-width: 0px;
   --tab-outline-color: transparent;
   --tab-outline-width: 0px;
-  --nav-indentation-guide-color: transparent;
-  --nav-indentation-guide-width: 0px;
+  --nav-indentation-guide-color: var(--background-modifier-border-hover);
+  --nav-indentation-guide-width: var(--tasogare-filet);
+  --nav-item-children-margin-left: var(--tasogare-retrait-arbre);
+  --nav-item-children-padding-left: var(--tasogare-pas-arbre);
+  --nav-item-background-active: var(--background-primary);
   --nav-item-padding: var(--tasogare-pas-ligne-nav) var(--size-4-2) var(--tasogare-pas-ligne-nav) var(--size-4-6);
   --nav-item-parent-padding: var(--nav-item-padding);
   --nav-item-radius: var(--tasogare-rayon-bloc);
@@ -1221,6 +1323,7 @@ body:not(.is-mobile) .workspace-split.mod-primary-split .workspace-sidedock-vaul
 }
 
 /* ---------- Sidebar : une icône devant chaque note et chaque dossier ----------
+   Les dessins viennent de Hugeicons (licence MIT, hugeicons.com), en trait de 1,5.
    Hauteur, rayon et fond des lignes : variables --nav-item-* (couche 2). */
 .nav-file-title,
 .nav-folder-title {
@@ -1234,9 +1337,12 @@ body:not(.is-mobile) .workspace-split.mod-primary-split .workspace-sidedock-vaul
   height: var(--tasogare-taille-icone);
   margin-right: var(--tasogare-ecart-icone);
   background-color: var(--text-muted);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z'/%3E%3Cpath d='M14 2v4a2 2 0 0 0 2 2h4'/%3E%3C/svg%3E") center / contain no-repeat;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 7L16 7'/%3E%3Cpath d='M8 11L12 11'/%3E%3Cpath d='M13 21.5V21C13 18.1716 13 16.7574 13.8787 15.8787C14.7574 15 16.1716 15 19 15H19.5M20 13.3431V10C20 6.22876 20 4.34315 18.8284 3.17157C17.6569 2 15.7712 2 12 2C8.22877 2 6.34315 2 5.17157 3.17157C4 4.34314 4 6.22876 4 10L4 14.5442C4 17.7892 4 19.4117 4.88607 20.5107C5.06508 20.7327 5.26731 20.9349 5.48933 21.1139C6.58831 22 8.21082 22 11.4558 22C12.1614 22 12.5141 22 12.8372 21.886C12.9044 21.8623 12.9702 21.835 13.0345 21.8043C13.3436 21.6564 13.593 21.407 14.0919 20.9081L18.8284 16.1716C19.4065 15.5935 19.6955 15.3045 19.8478 14.9369C20 14.5694 20 14.1606 20 13.3431Z'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 .nav-file-title.is-active::before { background-color: var(--text-accent); }
+.nav-folder:not(.is-collapsed) > .nav-folder-title .nav-folder-title-content::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.93802 21H14.9395C17.1335 21 18.2305 21 19.0351 20.3884C19.8398 19.7768 20.1334 18.7198 20.7206 16.6059L21.9197 12.289C21.973 12.0972 22 11.8991 22 11.7001C22 10.485 21.015 9.5 19.7999 9.5H12.5634C10.5123 9.5 9.48671 9.5 8.71918 10.0273C8.59312 10.1139 8.47387 10.21 8.36246 10.3148C7.68418 10.9528 7.46632 11.9549 7.03061 13.9592L5.83181 19.4737C5.63814 20.3646 4.84972 21 3.93802 21ZM3.93802 21C2.86768 21 2 20.1323 2 19.062V7.76613C2 5.53633 2 4.42144 2.68424 3.72186C2.69664 3.70918 2.70918 3.69664 2.72186 3.68424C3.42144 3 4.53633 3 6.76613 3C7.37053 3 7.67273 3 7.94502 3.11102C7.95015 3.11311 7.95527 3.11523 7.96038 3.11738C8.23142 3.23142 8.4451 3.4451 8.87248 3.87248L9.62132 4.62132C10.0549 5.05487 10.2716 5.27164 10.5473 5.38582C10.823 5.5 11.1295 5.5 11.7426 5.5H16.5C17.5245 5.5 18.0367 5.5 18.4454 5.65383C19.0922 5.89728 19.6027 6.40776 19.8462 7.0546C20 7.46331 20 7.97554 20 9'/%3E%3C/svg%3E");
+}
 .nav-folder-title-content::before {
   content: "";
   display: inline-block;
@@ -1245,7 +1351,39 @@ body:not(.is-mobile) .workspace-split.mod-primary-split .workspace-sidedock-vaul
   height: var(--tasogare-taille-icone);
   margin-right: var(--tasogare-ecart-icone);
   background-color: var(--text-muted);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z'/%3E%3C/svg%3E") center / contain no-repeat;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M13.6656 6.49446H16C18.8284 6.49446 20.2426 6.49446 21.1213 7.37314C22 8.25182 22 9.66603 22 12.4945V14.5C22 17.3284 22 18.7426 21.1213 19.6213C20.2426 20.5 18.8284 20.5 16 20.5H8C5.17157 20.5 3.75736 20.5 2.87868 19.6213C2 18.7426 2 17.3284 2 14.5V8.99183C2 6.65409 2 5.48521 2.61604 4.67881C2.7778 4.46706 2.96706 4.2778 3.17881 4.11604C3.98521 3.5 5.15409 3.5 7.49183 3.5C8.16633 3.5 8.50358 3.5 8.81392 3.60442C8.8976 3.63257 8.97932 3.66623 9.05854 3.70518C9.35239 3.84965 9.59179 4.08719 10.0706 4.56227L10.8483 5.33389C11.4254 5.9066 11.714 6.19295 12.08 6.3437C12.446 6.49446 12.8525 6.49446 13.6656 6.49446Z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* ---------- Sidebar : la ligne active est une pastille posée, un trait guide les enfants ----------
+   La pastille reprend l'onglet actif et la carte : fond de la carte, ombre de niveau 1.
+   Le trait est la bordure du conteneur des enfants (variables --nav-indentation-guide-*, couche 2) ;
+   un coude le relie à la ligne active. La racine du coffre n'a ni trait ni retrait. */
+body:not(.is-mobile) :is(.nav-file-title, .nav-folder-title) {
+  position: relative;
+  transition: background-color var(--tasogare-duree-rapide) var(--tasogare-courbe-survol),
+    box-shadow var(--tasogare-duree-rapide) var(--tasogare-courbe-survol);
+}
+body:not(.is-mobile) :is(.nav-file-title, .nav-folder-title).is-active {
+  box-shadow: var(--tasogare-ombre-posee);
+}
+body:not(.is-mobile) .nav-folder.mod-root > .nav-folder-children {
+  margin-inline-start: 0;
+  padding-inline-start: 0;
+  border-inline-start: none;
+}
+body:not(.is-mobile) .nav-folder:not(.mod-root) > .nav-folder-children {
+  border-inline-start: var(--nav-indentation-guide-width) solid var(--nav-indentation-guide-color);
+}
+body:not(.is-mobile) .nav-folder:not(.mod-root) > .nav-folder-children > :is(.nav-file, .nav-folder) > :is(.nav-file-title, .nav-folder-title).is-active::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  height: 50%;
+  inset-inline-start: calc(-1 * (var(--nav-item-children-padding-left) + var(--nav-indentation-guide-width)));
+  width: calc(var(--nav-item-children-padding-left) + var(--nav-indentation-guide-width));
+  border-inline-start: var(--nav-indentation-guide-width) solid var(--nav-indentation-guide-color);
+  border-bottom: var(--nav-indentation-guide-width) solid var(--nav-indentation-guide-color);
+  border-end-start-radius: var(--tasogare-rayon-champ);
 }
 
 /* ---------- Propriétés : une carte du cadre, une ligne par rangée ----------

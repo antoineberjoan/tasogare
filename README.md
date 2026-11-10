@@ -13,9 +13,10 @@
 
 ## Palettes
 
-Six palettes, chacune en clair et en sombre. Elles font le tour du cercle des couleurs : une palette par famille, pour qu'aucune ne double une autre.
+Sept palettes, chacune en clair et en sombre. Graphite, neutre avec un accent bleu, sert de base. Les six autres font le tour du cercle des couleurs : une palette par famille, pour qu'aucune ne double une autre.
 
-- **Crépuscule alpin** (par défaut, violet et rouge) : Cabine rouge `#9E2B25`, Ciel lavande `#6E6BA8`, Alpenglow `#E8A3B4`, Neige d'ombre `#B9B3D6`, Lueur `#F4C66A`, Câble acier `#4A4E5C`, Sapin nuit `#1F2A3A`.
+- **Graphite** (par défaut, gris neutres et bleu) : Graphite `#1C1C1E`, Brume `#F2F2F7`, Pierre `#636366`, Argent `#8E8E93`, Trait `#D1D1D6`, Bleu lien `#0066CC`, Bleu action `#0071E3`, Bleu ciel `#4DA3FF`.
+- **Crépuscule alpin** (violet et rouge) : Cabine rouge `#9E2B25`, Ciel lavande `#6E6BA8`, Alpenglow `#E8A3B4`, Neige d'ombre `#B9B3D6`, Lueur `#F4C66A`, Câble acier `#4A4E5C`, Sapin nuit `#1F2A3A`.
 - **Grès rosé** (terre) : Grès rosé `#B98A72`, Chaux `#E6E2DA`, Travertin `#D3C7B2`, Olivier sec `#8C7E5E`, Ombre douce `#B4AEA2`, Argile cuite `#7A5443`, Encre taupe `#3F3832`.
 - **Thé vert** (vert) : Matcha vif `#8DB33A`, Noyer usé `#5B3A24`, Céramique noire `#2A2622`, Mousse `#6E7A2C`, Jour pâle `#E9E6DC`, Laiton `#C2A25A`, Lin ardoise `#4A4F55`.
 - **Lac profond** (bleu-vert) : Bouée rouge `#D2452B`, Lac profond `#1F5A5C`, Turquoise lac `#3E8A86`, Brume montagne `#7E9590`, Chanvre `#C8AE7E`, Écume `#EEEAE2`, Ponton gris `#6F685E`.
@@ -24,7 +25,7 @@ Six palettes, chacune en clair et en sombre. Elles font le tour du cercle des co
 
 Chaque palette garde un fond neutre ; sa couleur forte va à l'accent, aux boutons et aux signaux. Le titre et les liens portent la couleur de la famille ; quand elle est trop claire ou trop sombre pour du texte, elle est assombrie ou éclaircie à cet emplacement, sans changer de teinte.
 
-Le choix se fait dans Réglages → Style Settings → Tasogare → Palette. Sans le plugin, le thème reste complet, avec Crépuscule alpin.
+Le choix se fait dans Réglages → Style Settings → Tasogare → Palette. Sans le plugin, le thème reste complet, avec Graphite.
 
 Chaque palette passe les seuils de contraste WCAG AA (4,5:1 pour les liens et le texte secondaire), et son texte courant atteint au moins 7:1.
 
