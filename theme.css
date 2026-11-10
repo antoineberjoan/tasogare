@@ -105,6 +105,7 @@ body {
   /* Dimensions */
   --tasogare-largeur-lecture: 640px;
   --tasogare-hauteur-entete: 30px;
+  --tasogare-taille-bouton-icone: 28px;   /* côté du fond de survol d'une icône */
   --tasogare-hauteur-ligne-tableau: 36px;
   --tasogare-largeur-libelle: 9.5em;
   --tasogare-defilement-largeur: 11px;
@@ -1266,6 +1267,35 @@ body:not(.is-mobile) .workspace-split.mod-root .view-content {
 .clickable-icon:hover,
 .nav-action-button:hover,
 .side-dock-ribbon-action:hover {
+  background: var(--background-modifier-hover);
+}
+/* Un seul survol pour toutes les icônes. Obsidian cale la boîte d'une icône sur --header-height, que le thème
+   réduit à 30 px : les fonds de survol devenaient des rectangles plats, de formats différents (28 × 14, 28 × 16…).
+   Ici le fond est un carré dessiné par ::after, centré sur l'icône, du même côté partout.
+   Ordinateur seulement : le mobile garde le survol d'Obsidian. */
+body:not(.is-mobile) :is(.clickable-icon, .nav-action-button, .side-dock-ribbon-action, .workspace-split.mod-sidedock .workspace-tab-header) {
+  position: relative;
+  isolation: isolate;
+}
+body:not(.is-mobile) :is(.clickable-icon, .nav-action-button, .side-dock-ribbon-action, .workspace-split.mod-sidedock .workspace-tab-header):is(:hover, .has-active-menu) {
+  background: transparent;
+}
+body:not(.is-mobile) :is(.clickable-icon, .nav-action-button, .side-dock-ribbon-action, .workspace-split.mod-sidedock .workspace-tab-header)::after {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  width: var(--tasogare-taille-bouton-icone);
+  height: var(--tasogare-taille-bouton-icone);
+  translate: -50% -50%;
+  border-radius: var(--clickable-icon-radius);
+  background: transparent;
+  pointer-events: none;
+  transition: background-color var(--tasogare-duree-rapide) var(--tasogare-courbe-survol);
+}
+body:not(.is-mobile) :is(.clickable-icon, .nav-action-button, .side-dock-ribbon-action, .workspace-split.mod-sidedock .workspace-tab-header):is(:hover, .has-active-menu)::after {
   background: var(--background-modifier-hover);
 }
 
