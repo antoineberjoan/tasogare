@@ -1356,8 +1356,9 @@ body:not(.is-mobile) .workspace-split.mod-primary-split .workspace-sidedock-vaul
 
 /* ---------- Sidebar : la ligne active est une pastille posée, un trait guide les enfants ----------
    La pastille reprend l'onglet actif et la carte : fond de la carte, ombre de niveau 1.
-   Le trait est la bordure du conteneur des enfants (variables --nav-indentation-guide-*, couche 2) ;
-   un coude le relie à la ligne active. La racine du coffre n'a ni trait ni retrait. */
+   Le trait est la bordure du conteneur des enfants (variables --nav-indentation-guide-*, couche 2).
+   Obsidian donne à chaque ligne toute la largeur de la sidebar : la pastille passe sur le trait.
+   La racine du coffre n'a ni trait ni retrait. */
 body:not(.is-mobile) :is(.nav-file-title, .nav-folder-title) {
   position: relative;
   transition: background-color var(--tasogare-duree-rapide) var(--tasogare-courbe-survol),
@@ -1373,17 +1374,6 @@ body:not(.is-mobile) .nav-folder.mod-root > .nav-folder-children {
 }
 body:not(.is-mobile) .nav-folder:not(.mod-root) > .nav-folder-children {
   border-inline-start: var(--nav-indentation-guide-width) solid var(--nav-indentation-guide-color);
-}
-body:not(.is-mobile) .nav-folder:not(.mod-root) > .nav-folder-children > :is(.nav-file, .nav-folder) > :is(.nav-file-title, .nav-folder-title).is-active::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  height: 50%;
-  inset-inline-start: calc(-1 * (var(--nav-item-children-padding-left) + var(--nav-indentation-guide-width)));
-  width: calc(var(--nav-item-children-padding-left) + var(--nav-indentation-guide-width));
-  border-inline-start: var(--nav-indentation-guide-width) solid var(--nav-indentation-guide-color);
-  border-bottom: var(--nav-indentation-guide-width) solid var(--nav-indentation-guide-color);
-  border-end-start-radius: var(--tasogare-rayon-champ);
 }
 
 /* ---------- Propriétés : une carte du cadre, une ligne par rangée ----------
@@ -1500,6 +1490,11 @@ body:not(.is-mobile) .modal.mod-settings .modal-content {
   border-radius: calc(var(--tasogare-rayon-carte) - var(--tasogare-inset)); /* rayon concentrique */
   border: none;
   box-shadow: none;
+}
+/* Dans sa propre fenêtre, rien n'entoure la carte : le rayon concentrique n'a plus de forme extérieure
+   à suivre. La carte reprend le rayon de la carte de note. */
+body.is-popout-modal:not(.is-mobile) .modal.mod-settings .modal-content {
+  border-radius: var(--tasogare-rayon-carte);
 }
 body:not(.is-mobile) .modal.mod-settings .vertical-tab-nav-item {
   padding: var(--tasogare-pas-ligne-reglages);

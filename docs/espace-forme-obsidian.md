@@ -40,7 +40,7 @@ Tasogare n'utilise que six marches de l'échelle : 2, 4, 6, 8, 10 et 14 px.
 
 Sur macOS, Obsidian redéfinit `--input-radius`, `--clickable-icon-radius` et `--modal-radius` sur `.mod-macos`. Tasogare les reprend sur ordinateur (`body:not(.is-mobile)`) ; le mobile garde ceux d'Obsidian.
 
-Rayon concentrique : la carte intérieure de la fenêtre de réglages prend `16 − 10 = 6 px`.
+Rayon concentrique : la carte intérieure de la fenêtre de réglages prend `16 − 10 = 6 px` quand la fenêtre est intégrée à Obsidian. Dans sa propre fenêtre (Obsidian 1.15), aucune forme ne l'entoure : elle prend le rayon de la carte de note, 16 px.
 
 ## Filets et élévation
 

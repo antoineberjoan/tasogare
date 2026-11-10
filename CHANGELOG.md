@@ -7,10 +7,11 @@
 - Palette **Graphite**, par défaut : des gris neutres (cadre `#F2F2F7`, carte blanche, encre `#1C1C1E`) et un seul bleu pour l'accent. Clair et sombre, avec les seuils de contraste WCAG AA. Les six autres palettes restent au choix dans Style Settings.
 - Sidebar : les icônes des notes et des dossiers viennent de Hugeicons (licence MIT, trait de 1,5). Un dossier ouvert montre un dossier ouvert.
 - Sidebar : la ligne active devient une pastille posée (fond de la carte, ombre de niveau 1), comme l'onglet actif.
-- Sidebar : un trait guide les enfants d'un dossier, et un coude le relie à la ligne active. La racine du coffre n'a ni trait ni retrait.
+- Sidebar : un trait guide les enfants d'un dossier. La racine du coffre n'a ni trait ni retrait.
 
 ### Changements
 
+- La carte intérieure de la fenêtre de réglages, ouverte dans sa propre fenêtre, prend le rayon de la carte de note (16 px). Dans une fenêtre intégrée, elle garde le rayon concentrique (6 px).
 - Crépuscule alpin n'est plus la palette de base : elle devient une palette à classe (`tasogare-crepuscule`), comme les cinq autres. Sans Style Settings, c'est Graphite qui s'applique.
 - `outils/palettes.py` lit la palette de base dans la constante `BASE`.
 
