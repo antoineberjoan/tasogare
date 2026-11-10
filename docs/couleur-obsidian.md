@@ -44,7 +44,7 @@ Le plugin communautaire **Style Settings** ajoute une liste « Palette » dans R
 python3 outils/palettes.py
 ```
 
-L'outil lit les palettes dans `theme.css`, applique les seuils de la spécification et s'arrête en erreur si un seuil échoue. Les tableaux ci-dessous viennent de la même commande, avec `--markdown`.
+L'outil lit les palettes dans `theme.css`, applique les seuils de la spécification et s'arrête en erreur si un seuil échoue. Pour changer l'accent d'une palette, change sa couleur source dans `theme.css`, puis lance `python3 outils/palettes.py --accord` : les trois nombres `--tasogare-accent-h/s/l`, que le CSS ne sait pas calculer, se réécrivent depuis l'accent. Les tableaux ci-dessous viennent de la même commande, avec `--markdown`.
 
 ## Les palettes
 

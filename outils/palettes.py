@@ -4,6 +4,7 @@
 Usage :
     python3 outils/palettes.py              # vérifie ; code de sortie 1 au premier défaut
     python3 outils/palettes.py --markdown   # imprime les tableaux pour docs/couleur-obsidian.md
+    python3 outils/palettes.py --accord     # réécrit --accent-h/s/l de chaque palette depuis son accent
 
 theme.css reste la seule source : ce script ne contient aucune couleur.
 Il échoue, avec un message, si une palette de Style Settings n'a pas ses deux modes,
@@ -144,6 +145,21 @@ def verifier(palettes, noms):
     return echecs
 
 
+def accorder(texte, palettes):
+    """Rend theme.css avec --tasogare-accent-h/s/l recalculés depuis l'accent de chaque palette."""
+    def un(m):
+        corps = m.group(3)
+        if "--tasogare-accent-h:" not in corps:
+            return m.group(0)
+        mode, palette = m.group(1), m.group(2) or BASE
+        h, s, l = teinte(hexa(palettes[(palette, mode)]["accent"], f"{palette} / {MODES[mode]}, accent"))
+        for cle, valeur in (("h", h), ("s", f"{s}%"), ("l", f"{l}%")):
+            corps = re.sub(rf"(--tasogare-accent-{cle}:\s*)[^;]+;", rf"\g<1>{valeur};", corps)
+        debut = m.start(3) - m.start(0)
+        return m.group(0)[:debut] + corps + m.group(0)[debut + len(m.group(3)):]
+    return BLOC.sub(un, texte)
+
+
 def markdown(palettes, noms):
     for palette, nom in noms.items():
         print(f"### {nom}\n")
@@ -161,6 +177,11 @@ def main():
         palettes = lire_palettes(texte, noms)
         if "--markdown" in sys.argv:
             markdown(palettes, noms)
+            return 0
+        if "--accord" in sys.argv:
+            nouveau = accorder(texte, palettes)
+            THEME.write_text(nouveau, encoding="utf-8")
+            print("accent-h/s/l à jour" if nouveau != texte else "accent-h/s/l déjà d'accord")
             return 0
         return 1 if verifier(palettes, noms) else 0
     except Defaut as d:

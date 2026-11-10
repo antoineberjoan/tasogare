@@ -69,7 +69,8 @@ body {
   --tasogare-pas-ligne-nav: var(--tasogare-espace-8);           /* marge verticale d'une ligne de la sidebar */
   --tasogare-pas-proprietes: var(--tasogare-inset) var(--tasogare-espace-14) var(--tasogare-espace-8);
   --tasogare-pas-propriete: var(--tasogare-espace-4);
-  --tasogare-retrait-arbre: calc(var(--size-4-6) / 2);          /* du bord d'un dossier au trait qui guide ses enfants : le milieu de la gouttière de la flèche */
+  --tasogare-gouttiere-nav: var(--size-4-6);                    /* à gauche d'une ligne de la sidebar : la place de la flèche des dossiers */
+  --tasogare-retrait-arbre: calc(var(--tasogare-gouttiere-nav) / 2);   /* du bord d'un dossier au trait qui guide ses enfants : le milieu de la gouttière */
   --tasogare-pas-arbre: var(--tasogare-espace-10);              /* du trait guide au bord d'une ligne enfant */
   --tasogare-pas-selecteur-coffre: var(--tasogare-espace-6) var(--tasogare-inset);
   --tasogare-pas-ligne-reglages: var(--tasogare-pas-ligne-nav) var(--tasogare-espace-10);
@@ -281,6 +282,8 @@ body {
   --tasogare-part-survol: 7%;
   --tasogare-part-filet: 6%;
   --tasogare-part-filet-survol: 12%;
+  --tasogare-part-filet-tableau: 12%;
+  --tasogare-part-filet-fort: 14%;
   --tasogare-part-ombre: 50%;
   --tasogare-part-surlignage: 30%;
   --tasogare-part-selection: 45%;
@@ -341,8 +344,8 @@ body {
   --tasogare-cadre: var(--tasogare-graphite);
   --tasogare-carte: var(--tasogare-ardoise);
   --tasogare-creux: var(--tasogare-ardoise-profonde);
-  --tasogare-filet-tableau: color-mix(in oklch, var(--tasogare-voile) 12%, transparent);
-  --tasogare-filet-fort: color-mix(in oklch, var(--tasogare-voile) 14%, transparent);
+  --tasogare-filet-tableau: color-mix(in oklch, var(--tasogare-voile) var(--tasogare-part-filet-tableau), transparent);
+  --tasogare-filet-fort: color-mix(in oklch, var(--tasogare-voile) var(--tasogare-part-filet-fort), transparent);
   --tasogare-voile: var(--tasogare-brume);
   --tasogare-ombre: var(--tasogare-noir);
 
@@ -424,8 +427,8 @@ body {
   --tasogare-cadre: var(--tasogare-sapin-nuit);
   --tasogare-carte: #293546;            /* Sapin soir */
   --tasogare-creux: #232e3e;
-  --tasogare-filet-tableau: color-mix(in oklch, var(--tasogare-voile) 12%, transparent);
-  --tasogare-filet-fort: color-mix(in oklch, var(--tasogare-voile) 14%, transparent);
+  --tasogare-filet-tableau: color-mix(in oklch, var(--tasogare-voile) var(--tasogare-part-filet-tableau), transparent);
+  --tasogare-filet-fort: color-mix(in oklch, var(--tasogare-voile) var(--tasogare-part-filet-fort), transparent);
   --tasogare-voile: #e6e4ef;            /* Neige nuit */
   --tasogare-ombre: var(--tasogare-sapin-nuit);
 
@@ -998,7 +1001,7 @@ body {
   --nav-item-children-margin-left: var(--tasogare-retrait-arbre);
   --nav-item-children-padding-left: var(--tasogare-pas-arbre);
   --nav-item-background-active: var(--background-primary);
-  --nav-item-padding: var(--tasogare-pas-ligne-nav) var(--size-4-2) var(--tasogare-pas-ligne-nav) var(--size-4-6);
+  --nav-item-padding: var(--tasogare-pas-ligne-nav) var(--size-4-2) var(--tasogare-pas-ligne-nav) var(--tasogare-gouttiere-nav);
   --nav-item-parent-padding: var(--nav-item-padding);
   --nav-item-radius: var(--tasogare-rayon-bloc);
 
