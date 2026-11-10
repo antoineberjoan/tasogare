@@ -1196,6 +1196,19 @@ body:not(.is-mobile) .workspace-split.mod-root .workspace-tab-header {
 body:not(.is-mobile) .workspace-split.mod-root .workspace-tab-header-inner {
   height: 100%;
 }
+/* Les boutons de sidebar repliée (dans la barre d'onglets) prennent la hauteur de la rangée : l'icône se centre
+   sur les pastilles. Obsidian les cale sur --header-height ; à 30 px, leur fond de survol devenait un rectangle plat. */
+body:not(.is-mobile) .workspace-split.mod-root .sidebar-toggle-button {
+  height: calc(var(--tasogare-hauteur-entete) + 2 * var(--tasogare-inset));
+  padding-block: 0;
+  display: flex;
+  align-items: center;
+}
+body:not(.is-mobile) .workspace-split.mod-root .sidebar-toggle-button .clickable-icon {
+  height: auto;
+  aspect-ratio: 1;
+  align-self: center;
+}
 /* Le bouton « + » et le menu des onglets se centrent sur la pastille, sans l'étirer. */
 body:not(.is-mobile) .workspace-split.mod-root :is(.workspace-tab-header-new-tab, .workspace-tab-header-tab-list) {
   padding-block: 0;

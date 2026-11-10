@@ -9,6 +9,10 @@
 - Sidebar : la ligne active devient une pastille posée (fond de la carte, ombre de niveau 1), comme l'onglet actif.
 - Sidebar : un trait guide les enfants d'un dossier. La racine du coffre n'a ni trait ni retrait.
 
+### Corrections
+
+- Les boutons de sidebar repliée se centrent sur la rangée d'onglets, et leur fond de survol est carré au lieu d'un rectangle plat.
+
 ### Changements
 
 - La carte intérieure de la fenêtre de réglages, ouverte dans sa propre fenêtre, prend le rayon de la carte de note (16 px). Dans une fenêtre intégrée, elle garde le rayon concentrique (6 px).
