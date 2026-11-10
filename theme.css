@@ -69,7 +69,7 @@ body {
   --tasogare-pas-ligne-nav: var(--tasogare-espace-8);           /* marge verticale d'une ligne de la sidebar */
   --tasogare-pas-proprietes: var(--tasogare-inset) var(--tasogare-espace-14) var(--tasogare-espace-8);
   --tasogare-pas-propriete: var(--tasogare-espace-4);
-  --tasogare-retrait-arbre: 12px;                               /* du bord d'un dossier au trait qui guide ses enfants */
+  --tasogare-retrait-arbre: calc(var(--size-4-6) / 2);          /* du bord d'un dossier au trait qui guide ses enfants : le milieu de la gouttière de la flèche */
   --tasogare-pas-arbre: var(--tasogare-espace-10);              /* du trait guide au bord d'une ligne enfant */
   --tasogare-pas-selecteur-coffre: var(--tasogare-espace-6) var(--tasogare-inset);
   --tasogare-pas-ligne-reglages: var(--tasogare-pas-ligne-nav) var(--tasogare-espace-10);
@@ -183,14 +183,36 @@ body {
 
   /* Graphite */
   --tasogare-graphite: #1c1c1e;           /* Graphite */
-  --tasogare-brume: #f2f2f7;              /* Brume */
+  --tasogare-ardoise: #2c2c2e;            /* Ardoise */
+  --tasogare-ardoise-profonde: #242426;   /* Ardoise profonde */
   --tasogare-pierre: #636366;             /* Pierre */
   --tasogare-argent: #8e8e93;             /* Argent */
+  --tasogare-brouillard: #aeaeb2;         /* Brouillard */
   --tasogare-trait: #d1d1d6;              /* Trait */
+  --tasogare-cendre: #e5e5ea;             /* Cendre */
+  --tasogare-brume: #f2f2f7;              /* Brume */
+  --tasogare-neige-pale: #f5f5f7;         /* Neige pâle */
+  --tasogare-noir: #000000;               /* Noir */
+  --tasogare-bleu-profond: #0050a8;       /* Bleu profond */
   --tasogare-bleu-lien: #0066cc;          /* Bleu lien */
   --tasogare-bleu-action: #0071e3;        /* Bleu action */
+  --tasogare-bleu-presse: #0062c4;        /* Bleu pressé */
   --tasogare-bleu-ciel: #4da3ff;          /* Bleu ciel */
-
+  --tasogare-bleu-glace: #7bbcff;         /* Bleu glace */
+  --tasogare-soleil: #ffd60a;             /* Soleil */
+  --tasogare-rouge-feu: #d70015;          /* Rouge feu */
+  --tasogare-orange-braise: #c93400;      /* Orange braise */
+  --tasogare-ocre: #946c00;               /* Ocre */
+  --tasogare-vert-pre: #248a3d;           /* Vert pré */
+  --tasogare-cyan-lagune: #0a7ea4;        /* Cyan lagune */
+  --tasogare-violet-iris: #8944ab;        /* Violet iris */
+  --tasogare-rose-pivoine: #d30f45;       /* Rose pivoine */
+  --tasogare-corail: #ff6961;             /* Corail */
+  --tasogare-mandarine: #ff9f0a;          /* Mandarine */
+  --tasogare-menthe: #32d74b;             /* Menthe */
+  --tasogare-azur: #64d2ff;               /* Azur */
+  --tasogare-orchidee: #bf5af2;           /* Orchidée */
+  --tasogare-framboise: #ff6482;          /* Framboise */
   /* Crépuscule alpin */
   --tasogare-cabine-rouge: #9e2b25;       /* Cabine rouge */
   --tasogare-ciel-lavande: #6e6ba8;       /* Ciel lavande */
@@ -268,7 +290,8 @@ body {
 }
 
 /* ---------- Palette Graphite (par défaut) ----------
-   Des gris neutres, un seul bleu pour l'accent. Les autres palettes héritent de ses emplacements. */
+   Des gris neutres, un seul bleu pour l'accent. Aucune couleur écrite ici : chaque emplacement lit une couleur source.
+   Changer une couleur source change la palette. Les autres palettes héritent des emplacements de Graphite. */
 .theme-light {
   --tasogare-accent-h: 210;
   --tasogare-accent-s: 100%;
@@ -277,7 +300,7 @@ body {
   --tasogare-cadre: var(--tasogare-brume);
   --tasogare-carte: var(--tasogare-blanc);
   --tasogare-creux: var(--tasogare-cadre);            /* blocs de code, en-têtes de tableau */
-  --tasogare-filet-tableau: #e5e5ea;
+  --tasogare-filet-tableau: var(--tasogare-cendre);
   --tasogare-filet-fort: var(--tasogare-trait);
   --tasogare-voile: var(--tasogare-graphite);
   --tasogare-ombre: var(--tasogare-graphite);
@@ -287,27 +310,27 @@ body {
   --tasogare-encre-pale: var(--tasogare-argent);      /* décor, jamais un libellé */
 
   --tasogare-accent: var(--tasogare-bleu-lien);
-  --tasogare-accent-survol: #0050a8;
+  --tasogare-accent-survol: var(--tasogare-bleu-profond);
   --tasogare-action: var(--tasogare-bleu-action);
-  --tasogare-action-survol: #0062c4;
+  --tasogare-action-survol: var(--tasogare-bleu-presse);
   --tasogare-sur-action: var(--tasogare-blanc);
   --tasogare-coche: var(--tasogare-bleu-action);
   --tasogare-coche-marque: var(--tasogare-blanc);
 
-  --tasogare-surlignage: #ffd60a;
+  --tasogare-surlignage: var(--tasogare-soleil);
   --tasogare-selection: var(--tasogare-bleu-ciel);
-  --tasogare-recherche: #ffd60a;
+  --tasogare-recherche: var(--tasogare-soleil);
   --tasogare-defilement: var(--tasogare-argent);
   --tasogare-defilement-actif: var(--tasogare-bleu-action);
 
-  --tasogare-rouge: #d70015;
-  --tasogare-orange: #c93400;
-  --tasogare-jaune: #946c00;
-  --tasogare-vert: #248a3d;
-  --tasogare-cyan: #0a7ea4;
+  --tasogare-rouge: var(--tasogare-rouge-feu);
+  --tasogare-orange: var(--tasogare-orange-braise);
+  --tasogare-jaune: var(--tasogare-ocre);
+  --tasogare-vert: var(--tasogare-vert-pre);
+  --tasogare-cyan: var(--tasogare-cyan-lagune);
   --tasogare-bleu: var(--tasogare-bleu-lien);
-  --tasogare-violet: #8944ab;
-  --tasogare-rose: #d30f45;
+  --tasogare-violet: var(--tasogare-violet-iris);
+  --tasogare-rose: var(--tasogare-rose-pivoine);
 }
 
 .theme-dark {
@@ -316,39 +339,39 @@ body {
   --tasogare-accent-l: 65%;
 
   --tasogare-cadre: var(--tasogare-graphite);
-  --tasogare-carte: #2c2c2e;
-  --tasogare-creux: #242426;
+  --tasogare-carte: var(--tasogare-ardoise);
+  --tasogare-creux: var(--tasogare-ardoise-profonde);
   --tasogare-filet-tableau: color-mix(in oklch, var(--tasogare-voile) 12%, transparent);
   --tasogare-filet-fort: color-mix(in oklch, var(--tasogare-voile) 14%, transparent);
   --tasogare-voile: var(--tasogare-brume);
-  --tasogare-ombre: #000000;
+  --tasogare-ombre: var(--tasogare-noir);
 
-  --tasogare-encre: #f5f5f7;
-  --tasogare-encre-moyenne: #aeaeb2;
+  --tasogare-encre: var(--tasogare-neige-pale);
+  --tasogare-encre-moyenne: var(--tasogare-brouillard);
   --tasogare-encre-pale: var(--tasogare-argent);      /* 4,3:1 sur la carte */
 
   --tasogare-accent: var(--tasogare-bleu-ciel);
-  --tasogare-accent-survol: #7bbcff;
+  --tasogare-accent-survol: var(--tasogare-bleu-glace);
   --tasogare-action: var(--tasogare-bleu-action);
-  --tasogare-action-survol: #0062c4;
+  --tasogare-action-survol: var(--tasogare-bleu-presse);
   --tasogare-sur-action: var(--tasogare-blanc);
   --tasogare-coche: var(--tasogare-bleu-ciel);
   --tasogare-coche-marque: var(--tasogare-graphite);
 
-  --tasogare-surlignage: #ffd60a;
+  --tasogare-surlignage: var(--tasogare-soleil);
   --tasogare-selection: var(--tasogare-bleu-action);
-  --tasogare-recherche: #ffd60a;
+  --tasogare-recherche: var(--tasogare-soleil);
   --tasogare-defilement: var(--tasogare-argent);
   --tasogare-defilement-actif: var(--tasogare-bleu-ciel);
 
-  --tasogare-rouge: #ff6961;
-  --tasogare-orange: #ff9f0a;
-  --tasogare-jaune: #ffd60a;
-  --tasogare-vert: #32d74b;
-  --tasogare-cyan: #64d2ff;
+  --tasogare-rouge: var(--tasogare-corail);
+  --tasogare-orange: var(--tasogare-mandarine);
+  --tasogare-jaune: var(--tasogare-soleil);
+  --tasogare-vert: var(--tasogare-menthe);
+  --tasogare-cyan: var(--tasogare-azur);
   --tasogare-bleu: var(--tasogare-bleu-ciel);
-  --tasogare-violet: #bf5af2;
-  --tasogare-rose: #ff6482;
+  --tasogare-violet: var(--tasogare-orchidee);
+  --tasogare-rose: var(--tasogare-framboise);
 }
 
 /* ---------- Palette Crépuscule alpin ---------- */
