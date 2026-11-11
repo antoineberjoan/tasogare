@@ -61,7 +61,9 @@ Tasogare suit le principe « pas de filet dur » : aucun séparateur entre la si
 
 Un tableau forme une surface groupée dans la note : fond de la carte, contour `--background-modifier-border`, rayon de bloc et ombre posée. Ce traitement est commun aux tableaux Markdown en lecture et en aperçu actif, et au conteneur des tableaux de Bases. Les sept palettes fournissent les couleurs, en clair comme en sombre.
 
-Les cellules Markdown gardent des séparations horizontales, sans quadrillage vertical. Leur marge intérieure lit `--tasogare-espace-8` et `--tasogare-espace-14` ; les coins des cellules extérieures prennent le rayon du bloc moins l’épaisseur du filet. Les chiffres utilisent des figures tabulaires et l’alignement reste celui écrit dans la note. Les lignes de Bases conservent leur hauteur et leur fonctionnement natifs.
+Les cellules Markdown gardent des séparations horizontales, sans quadrillage vertical. Leur marge intérieure lit `--tasogare-espace-8` et `--tasogare-espace-14` ; `--tasogare-rayon-cellule-tableau` calcule une seule fois le rayon du bloc moins l’épaisseur du contour, au niveau du tableau pour suivre les réglages locaux. Les chiffres utilisent des figures tabulaires et l’alignement reste celui écrit dans la note. Les lignes de Bases conservent leur hauteur et leur fonctionnement natifs.
+
+Les filets lisent les variables natives `--table-border-width`, `--table-header-border-width` et `--table-row-last-border-width`. Les sélecteurs restent assez légers pour laisser les états de sélection et les réglages de ces variables prendre le dessus. Cette séparation entre paramètres communs et règles ciblées rejoint l’approche de [Minimal](https://github.com/kepano/obsidian-minimal/blob/master/src/scss/content/tables.scss) ; Tasogare conserve ses propres jetons et surfaces.
 
 Le thème n’ajoute aucun masquage du contenu débordant ni aucune largeur minimale : Obsidian garde le défilement, les poignées et les outils d’édition. Aucun fragment propre à un coffre n’est nécessaire.
 

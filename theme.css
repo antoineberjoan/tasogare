@@ -1181,6 +1181,7 @@ body {
   --table-background: var(--background-primary);
   --table-border-width: var(--tasogare-filet);
   --table-header-border-width: var(--tasogare-filet);
+  --table-row-last-border-width: 0;
   --table-header-color: var(--text-muted);
   --table-header-background-hover: var(--table-header-background);
   --table-cell-padding: var(--tasogare-espace-8) var(--tasogare-espace-14);
@@ -1764,37 +1765,41 @@ body:not(.is-phone) .workspace-leaf-content[data-type="markdown"] > .view-conten
    Les coins des cellules suivent le contour intérieur du tableau.
    Aucun overflow ajouté : les outils de cellule et le défilement restent ceux d'Obsidian.
    Une Base intégrée garde son propre conteneur, sans second cadre sur son tableau interne. */
-:is(.markdown-rendered, .markdown-source-view.mod-cm6 .cm-table-widget) table:not(.bases-table-container *) {
+:is(.markdown-rendered, .cm-table-widget) table:not(:where(.bases-table-container *)) {
+  /* Résolu ici : une note peut modifier l'épaisseur sans figer le rayon hérité de body. */
+  --tasogare-rayon-cellule-tableau: calc(var(--tasogare-rayon-bloc) - var(--table-border-width));
   border-collapse: separate;
   border-spacing: 0;
-  border: var(--tasogare-filet) solid var(--background-modifier-border);
+  border: var(--table-border-width) solid var(--background-modifier-border);
   border-radius: var(--tasogare-rayon-bloc);
   background: var(--table-background);
   box-shadow: var(--tasogare-ombre-posee);
   font-variant-numeric: tabular-nums;
 }
-:is(.markdown-rendered, .markdown-source-view.mod-cm6 .cm-table-widget) table:not(.bases-table-container *) :is(th, td) {
-  border: 0;
-  border-bottom: var(--tasogare-filet) solid var(--table-border-color);
+:is(.markdown-rendered, .cm-table-widget) table:not(:where(.bases-table-container *)) :is(th, td) {
+  border-inline-width: 0;
+  border-top-width: 0;
+  border-bottom: var(--table-border-width) solid var(--table-border-color);
   vertical-align: top;
 }
-:is(.markdown-rendered, .markdown-source-view.mod-cm6 .cm-table-widget) table:not(.bases-table-container *) th {
+:is(.markdown-rendered, .cm-table-widget) table:not(:where(.bases-table-container *)) th {
   background-color: var(--table-header-background);
+  border-bottom-width: var(--table-header-border-width);
 }
-:is(.markdown-rendered, .markdown-source-view.mod-cm6 .cm-table-widget) table:not(.bases-table-container *) thead tr:first-child th:first-child {
-  border-top-left-radius: calc(var(--tasogare-rayon-bloc) - var(--tasogare-filet));
+:is(.markdown-rendered, .cm-table-widget) table:not(:where(.bases-table-container *)) :where(thead tr:first-child) th:where(:first-child) {
+  border-top-left-radius: var(--tasogare-rayon-cellule-tableau);
 }
-:is(.markdown-rendered, .markdown-source-view.mod-cm6 .cm-table-widget) table:not(.bases-table-container *) thead tr:first-child th:last-child {
-  border-top-right-radius: calc(var(--tasogare-rayon-bloc) - var(--tasogare-filet));
+:is(.markdown-rendered, .cm-table-widget) table:not(:where(.bases-table-container *)) :where(thead tr:first-child) th:where(:last-child) {
+  border-top-right-radius: var(--tasogare-rayon-cellule-tableau);
 }
-:is(.markdown-rendered, .markdown-source-view.mod-cm6 .cm-table-widget) table:not(.bases-table-container *) tbody tr:last-child td {
-  border-bottom: 0;
+:is(.markdown-rendered, .cm-table-widget) table:not(:where(.bases-table-container *)) :where(tbody tr:last-child) td {
+  border-bottom-width: var(--table-row-last-border-width);
 }
-:is(.markdown-rendered, .markdown-source-view.mod-cm6 .cm-table-widget) table:not(.bases-table-container *) tbody tr:last-child td:first-child {
-  border-bottom-left-radius: calc(var(--tasogare-rayon-bloc) - var(--tasogare-filet));
+:is(.markdown-rendered, .cm-table-widget) table:not(:where(.bases-table-container *)) :where(tbody tr:last-child) td:where(:first-child) {
+  border-bottom-left-radius: var(--tasogare-rayon-cellule-tableau);
 }
-:is(.markdown-rendered, .markdown-source-view.mod-cm6 .cm-table-widget) table:not(.bases-table-container *) tbody tr:last-child td:last-child {
-  border-bottom-right-radius: calc(var(--tasogare-rayon-bloc) - var(--tasogare-filet));
+:is(.markdown-rendered, .cm-table-widget) table:not(:where(.bases-table-container *)) :where(tbody tr:last-child) td:where(:last-child) {
+  border-bottom-right-radius: var(--tasogare-rayon-cellule-tableau);
 }
 
 /* ---------- Bases : le même contour, sans modifier la grille ni ses contrôles ---------- */
