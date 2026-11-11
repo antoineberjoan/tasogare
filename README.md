@@ -41,6 +41,8 @@ Le thème repose sur quatre fondations : couleur, typographie, espace et forme, 
 
 Les tableaux Markdown et ceux de Bases reprennent les surfaces du thème : rayon de bloc, contour discret et ombre posée. Les tableaux des notes gardent des séparations horizontales et les alignements écrits en Markdown. Le défilement et les contrôles d’édition restent gérés par Obsidian.
 
+Sur ordinateur, la barre d’état reste dans le cadre, sous les panneaux. Elle réserve sa hauteur naturelle et ne recouvre ni la carte de note ni son inset, que les sidebars soient ouvertes ou fermées.
+
 Pour vérifier le thème après un changement (variables, couleurs, contrastes, docs) :
 
 ```bash

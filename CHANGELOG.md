@@ -2,6 +2,7 @@
 
 ## À publier
 
+- Barre d’état sur ordinateur : placée dans le flux natif sous les panneaux, elle réserve sa hauteur et ne chevauche plus la carte de note ni son inset. Aucun décalage lié aux dimensions de la fenêtre ou des sidebars.
 - Tableaux Markdown, en lecture et en aperçu actif : contour discret, rayon de bloc et ombre posée, depuis les jetons existants du thème. Les cellules gardent des séparations horizontales, des chiffres tabulaires et l’alignement de la note.
 - Tableaux de Bases : même surface et même contour ; grille, défilement et contrôles conservés.
 - Marges des cellules Markdown reliées à l’échelle d’espace, sans couleur ni mesure supplémentaire propre aux tableaux.

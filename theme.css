@@ -1227,12 +1227,16 @@ body {
   --bases-group-heading-value-weight: var(--tasogare-type-emphasis-weight);
 }
 
-/* Obsidian redéfinit ces rayons sur .mod-macos : sur ordinateur, le thème les reprend.
-   Le mobile garde ceux d'Obsidian. */
+/* Structure sur ordinateur ; le mobile garde celle d'Obsidian.
+   Obsidian redéfinit ces rayons sur .mod-macos : le thème les reprend.
+   La barre d'état occupe sa place dans le flux, sous les panneaux : sa hauteur
+   native réserve l'espace nécessaire, sans mesurer les sidebars ni déplacer l'inset. */
 body:not(.is-mobile) {
   --input-radius: var(--tasogare-rayon-champ);
   --clickable-icon-radius: var(--tasogare-rayon-champ);
   --modal-radius: var(--tasogare-rayon-fenetre);
+  --status-bar-position: static;
+  --status-bar-background: var(--background-secondary);
 }
 
 /* ---------- Couleurs : chaque rôle lit un emplacement de la palette active ---------- */
