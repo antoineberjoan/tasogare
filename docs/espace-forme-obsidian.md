@@ -34,7 +34,7 @@ Tasogare n'utilise que six marches de l'échelle : 2, 4, 6, 8, 10 et 14 px.
 | --- | ---: | --- | --- |
 | `--tasogare-rayon-marque` | 4 px | `--radius-mark` | `--tag-radius`, pastilles, surlignage |
 | `--tasogare-rayon-champ` | 6 px | `--radius-control` | `--input-radius`, `--clickable-icon-radius`, `--tooltip-radius`, `--metadata-property-radius` |
-| `--tasogare-rayon-bloc` | 10 px | `--radius-block` | `--callout-radius`, `--image-radius`, `--menu-radius`, onglets, lignes de la sidebar, cartes de Bases |
+| `--tasogare-rayon-bloc` | 10 px | `--radius-block` | `--callout-radius`, `--image-radius`, `--menu-radius`, onglets, lignes de la sidebar, cartes de Bases, tableaux Markdown et de Bases |
 | `--tasogare-rayon-fenetre` | 14 px | `--radius-window` | `--modal-radius`, règle sur `.prompt` |
 | `--tasogare-rayon-carte` | 16 px | `--radius-card` | Carte de note, bloc de propriétés, fenêtre de réglages |
 
@@ -49,13 +49,21 @@ Rayon concentrique : la carte intérieure de la fenêtre de réglages prend `16 
 | `--border-width` | `--tasogare-filet` (1 px) : tags, callouts, fenêtres, menus |
 | `--focus-width` | L'anneau de focus d'Obsidian, inchangé |
 | Niveau 0, plat | Cadre, carte de note, sidebar, galerie de Bases |
-| Niveau 1, posé | `--tasogare-ombre-posee` : cartes du kanban de Bases |
+| Niveau 1, posé | `--tasogare-ombre-posee` : cartes du kanban de Bases, tableaux Markdown et de Bases |
 | Niveau 2, flottant | Les ombres d'Obsidian (`--shadow-s`), inchangées |
 | Niveau 3, fenêtre | Les ombres d'Obsidian (`--shadow-l`), inchangées |
 
 Les niveaux 2 et 3 restent ceux d'Obsidian pour l'instant : leurs ombres sont noires et non teintées par la palette. Une version suivante pourra les teinter avec `--tasogare-ombre`, après un essai en clair et en sombre.
 
 Tasogare suit le principe « pas de filet dur » : aucun séparateur entre la sidebar, les onglets et la note. Le cadre et l'inset de 10 px séparent les zones.
+
+## Tableaux
+
+Un tableau forme une surface groupée dans la note : fond de la carte, contour `--background-modifier-border`, rayon de bloc et ombre posée. Ce traitement est commun aux tableaux Markdown en lecture et en aperçu actif, et au conteneur des tableaux de Bases. Les sept palettes fournissent les couleurs, en clair comme en sombre.
+
+Les cellules Markdown gardent des séparations horizontales, sans quadrillage vertical. Leur marge intérieure lit `--tasogare-espace-8` et `--tasogare-espace-14` ; les coins des cellules extérieures prennent le rayon du bloc moins l’épaisseur du filet. Les chiffres utilisent des figures tabulaires et l’alignement reste celui écrit dans la note. Les lignes de Bases conservent leur hauteur et leur fonctionnement natifs.
+
+Le thème n’ajoute aucun masquage du contenu débordant ni aucune largeur minimale : Obsidian garde le défilement, les poignées et les outils d’édition. Aucun fragment propre à un coffre n’est nécessaire.
 
 ## Sur téléphone
 

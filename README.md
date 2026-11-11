@@ -39,6 +39,8 @@ Le thème suit la spécification [Typographie 1.1](docs/typographie.md) : titre 
 
 Le thème repose sur quatre fondations : couleur, typographie, espace et forme, mouvement. Chacune a une spécification réutilisable et un document qui la relie aux variables d'Obsidian. Le sommaire est dans [docs/README.md](docs/README.md).
 
+Les tableaux Markdown et ceux de Bases reprennent les surfaces du thème : rayon de bloc, contour discret et ombre posée. Les tableaux des notes gardent des séparations horizontales et les alignements écrits en Markdown. Le défilement et les contrôles d’édition restent gérés par Obsidian.
+
 Pour vérifier le thème après un changement (variables, couleurs, contrastes, docs) :
 
 ```bash

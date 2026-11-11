@@ -1,5 +1,11 @@
 # Journal des versions
 
+## À publier
+
+- Tableaux Markdown, en lecture et en aperçu actif : contour discret, rayon de bloc et ombre posée, depuis les jetons existants du thème. Les cellules gardent des séparations horizontales, des chiffres tabulaires et l’alignement de la note.
+- Tableaux de Bases : même surface et même contour ; grille, défilement et contrôles conservés.
+- Marges des cellules Markdown reliées à l’échelle d’espace, sans couleur ni mesure supplémentaire propre aux tableaux.
+
 ## 1.8.0
 
 ### Nouveautés
