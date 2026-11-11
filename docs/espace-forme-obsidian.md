@@ -59,9 +59,11 @@ Tasogare suit le principe « pas de filet dur » : aucun séparateur entre la si
 
 ## Barre d’état
 
-Sur ordinateur, `--status-bar-position: static` remet la barre d’état dans le flux natif de la fenêtre, sous les panneaux. Son fond lit `--background-secondary`, comme le cadre. Elle reste globale à la fenêtre et ses compteurs sont alignés à droite. Sa hauteur naturelle réserve l’espace nécessaire ; le contenu des panneaux et l’inset se terminent au-dessus.
+Sur ordinateur, la barre d’état garde son positionnement flottant natif. Son fond lit `--background-primary`, comme la carte. Le coin inférieur droit reprend le rayon de la carte ; la barre reste à l’intérieur de celle-ci et laisse l’inset libre. Elle ne crée aucun bandeau sous les panneaux.
 
-Aucune largeur de sidebar ni hauteur de barre n’est inscrite dans le thème. L’ouverture, la fermeture et le redimensionnement des panneaux passent par la mise en page d’Obsidian. Le mobile garde son fonctionnement natif. [Minimal utilise également cette variable native pour sa présentation en pied de fenêtre](https://github.com/kepano/obsidian-minimal/blob/master/src/scss/app/status-bar.scss).
+Les cartes centrales déclarent l’ancre CSS `--tasogare-carte`. La barre s’aligne sur les bords inférieur et de fin de ligne de la dernière carte visible dans l’ordre des panneaux. Sa largeur maximale vient de la taille de cette même carte ; ses éléments peuvent passer à la ligne. L’ouverture, la fermeture et le redimensionnement des sidebars modifient donc son placement sans calcul de largeur en JavaScript, coordonnée de fenêtre recopiée ni compensation manuelle de l’inset. Dans une vue divisée, elle reste attachée à une seule carte.
+
+L’ancrage CSS est pris en charge par le moteur de l’Obsidian 1.15 requis par le thème. Le mobile garde son fonctionnement natif. [Minimal conserve lui aussi une barre flottante sur le fond de la note par défaut](https://github.com/kepano/obsidian-minimal/blob/master/src/scss/app/status-bar.scss). Sa variante `minimal-status-off` produit un bandeau dans le flux ; Tasogare n’utilise pas cette variante. L’ancrage au panneau central est propre à Tasogare, pour respecter sa carte et son inset.
 
 ## Tableaux
 
