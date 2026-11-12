@@ -1,6 +1,6 @@
 # Journal des versions
 
-## À publier
+## 1.9.0
 
 - Interface épurée intégrée au thème sans Hider : barre d’état et commandes du navigateur de fichiers masquées par défaut sur ordinateur, réaffichables avec Style Settings. Les icônes de propriétés sont elles aussi facultatives. Aucun plugin communautaire obligatoire.
 
