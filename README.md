@@ -11,6 +11,20 @@
 3. Facultatif : installe le plugin communautaire **Style Settings** pour choisir la palette.
 4. Règle Apparence → Taille de police sur 15 pour l'échelle typographique exacte.
 
+## Interface
+
+Tasogare propose une navigation gauche avec libellés, un panneau droit arrondi avec le même inset que la note et des propriétés sur le fond de note, sans icônes de type. Les capitales ne changent que l’affichage des clés ; l’ajout de propriété reste accessible au survol et au clavier. Les callouts `note` gardent leur encadré sans icône. Les sept palettes et toute l’échelle typographique restent celles de Tasogare.
+
+La disposition des onglets relève du coffre : Fichiers, Tags, Recherche et Favoris à gauche ; graphe local, liens entrants, liens sortants, propriétés et plan à droite. Chaque sidebar garde son bouton natif de repli. Le thème masque par défaut la barre d’état et les commandes du navigateur de fichiers sur ordinateur. Style Settings peut les réafficher, ainsi que les icônes des propriétés. Sans ce plugin, l’interface fonctionne avec ses valeurs par défaut. Les barres de défilement gardent le comportement Tasogare : visibles au survol.
+
+## Modules et réglages
+
+- **Aucun plugin communautaire obligatoire.** Le thème porte les insets, les onglets, les libellés de navigation et la présentation des propriétés et encadrés.
+- **Modules natifs d’Obsidian** : Graphe, Liens entrants, Liens sortants, Propriétés, Plan, Tags, Recherche, Favoris et Bases fournissent leurs vues. Activer les modules souhaités puis ranger leurs onglets dans les sidebars ; leur ordre appartient au coffre, pas au thème.
+- **Style Settings, facultatif** : choix de palette et options d’affichage. Sans lui : Graphite et interface épurée.
+- **Hider et Minimal Theme Settings ne sont pas nécessaires.** Les autres plugins de l’article restent des choix de workflow, pas des dépendances du thème.
+- Pour retrouver la disposition de la démonstration, le coffre de test fournit `workspace.json` et le réglage natif qui masque le ruban. Le thème seul conserve l’organisation du coffre dans lequel il est installé.
+
 ## Palettes
 
 Sept palettes, chacune en clair et en sombre. Graphite, neutre avec un accent bleu, sert de base. Les six autres font le tour du cercle des couleurs : une palette par famille, pour qu'aucune ne double une autre.
@@ -41,7 +55,7 @@ Le thème repose sur quatre fondations : couleur, typographie, espace et forme, 
 
 Les tableaux Markdown et ceux de Bases reprennent les surfaces du thème : rayon de bloc, contour discret et ombre posée. Les tableaux des notes gardent des séparations horizontales et les alignements écrits en Markdown. Le défilement et les contrôles d’édition restent gérés par Obsidian.
 
-Sur ordinateur, la barre d’état flotte dans l’angle inférieur droit de la carte centrale, sur le même fond. Son ancrage CSS suit l’ouverture et le redimensionnement des sidebars ; elle ne crée aucun bandeau sous les panneaux et laisse l’inset libre.
+Sur ordinateur, la barre d’état flotte dans l’angle inférieur droit de la carte centrale, sur le même fond. Lorsqu’elle est affichée, son ancrage CSS suit l’ouverture et le redimensionnement des sidebars ; elle ne crée aucun bandeau sous les panneaux et laisse l’inset libre.
 
 Pour vérifier le thème après un changement (variables, couleurs, contrastes, docs) :
 
@@ -49,14 +63,26 @@ Pour vérifier le thème après un changement (variables, couleurs, contrastes, 
 python3 outils/verifier.py
 ```
 
+## Vérifier l’interface native
+
+`outils/verifier-interface.py` pilote une instance **isolée** d’Obsidian 1.15 avec un port CDP et le coffre de démonstration. Il exige zéro plugin communautaire chargé et vérifie que le chemin du coffre correspond à celui fourni. Installer Playwright dans l’environnement de test, puis lancer :
+
+```bash
+python3 outils/verifier-interface.py --cdp http://127.0.0.1:9230 --coffre /chemin/du/coffre-de-test --sortie /chemin/des/resultats
+```
+
+Le coffre de test contient les deux notes Exemple, les cinq panneaux natifs à droite et la Base Bibliothèque du lot romā à 155 fiches. Le script compare couleurs et typographie avec la référence `5653884` du dépôt, teste les sept palettes dans les deux modes, seize dispositions, le repli et le redimensionnement, les options d’affichage et les vues tableau et cartes. Il conserve les fiches et exporte les captures et le rapport JSON. Le test de palettes applique leurs classes CSS directement ; il ne nécessite pas Style Settings. Les contrôles de géométrie s’effectuent après la fin des transitions natives.
+
+Ce test sous Linux ne valide pas une exécution sur macOS ni sur téléphone.
+
 ## Adapter
 
 - **Couleurs et mesures** : elles vivent dans la couche 1 de `theme.css` (`--tasogare-*`). Une palette remplit les mêmes emplacements (`--tasogare-cadre`, `--tasogare-encre`, `--tasogare-accent`…) ; les règles ne lisent que des rôles.
-- **Icônes des propriétés (facultatif)** : le snippet `snippets/tasogare-icones-proprietes.css` donne une icône à une clé de propriété précise (`statut`, `source`…). Copie-le dans le dossier `.obsidian/snippets/` de ton coffre, puis active-le dans Réglages → Apparence → Snippets CSS. Une clé absente garde l'icône de son type.
+- **Icônes des propriétés (facultatif)** : active d’abord leur affichage dans Style Settings → Tasogare → Interface. Le snippet `snippets/tasogare-icones-proprietes.css` donne une icône à une clé de propriété précise (`statut`, `source`…). Copie-le dans le dossier `.obsidian/snippets/` de ton coffre, puis active-le dans Réglages → Apparence → Snippets CSS. Une clé absente garde l'icône de son type.
 
 ## Crédits
 
-Le défilement révélé au survol et les filets des fenêtres s'inspirent du thème Border (Akifyss/obsidian-border). La structure des palettes en emplacements s'inspire du thème Minimal (kepano/obsidian-minimal, licence MIT). Les règles de mouvement viennent des skills d'Emil Kowalski (emilkowalski/skill, licence MIT) et de l'article « Using Gestures in Motion » de Jakub Krehel. Certaines règles de hiérarchie, d'alignement et de mouvement composé s'inspirent d'Interface Craft (Josh Puckett), reformulées.
+Le défilement révélé au survol et les filets des fenêtres s'inspirent du thème Border (Akifyss/obsidian-border). La structure des palettes en emplacements et la navigation avec libellés s’inspirent du thème Minimal (kepano/obsidian-minimal, licence MIT ; notice dans `licences/minimal.txt`). Les règles de mouvement viennent des skills d'Emil Kowalski (emilkowalski/skill, licence MIT) et de l'article « Using Gestures in Motion » de Jakub Krehel. Certaines règles de hiérarchie, d'alignement et de mouvement composé s'inspirent d'Interface Craft (Josh Puckett), reformulées.
 
 ## Licence
 

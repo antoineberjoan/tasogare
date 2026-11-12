@@ -2,6 +2,12 @@
 
 ## À publier
 
+- Interface épurée intégrée au thème sans Hider : barre d’état et commandes du navigateur de fichiers masquées par défaut sur ordinateur, réaffichables avec Style Settings. Les icônes de propriétés sont elles aussi facultatives. Aucun plugin communautaire obligatoire.
+
+- Essai d’interface : panneau droit avec le même inset et les mêmes arrondis que la note ; barres d’onglets alignées, sans recompter l’inset dans les boutons latéraux.
+- Navigation gauche avec libellés, adaptée de Labeled Nav de Kepano ; contrôles natifs et repli conservés.
+- Propriétés sans fond de carte ni icônes, capitales d’affichage et ajout accessible au clavier ; encadré `note` sans icône. Palettes et typographie conservées.
+
 - Barre d’état sur ordinateur : flottante dans l’angle de la carte centrale, sur le même fond, sans bandeau sous les panneaux. L’ancrage CSS suit les sidebars et conserve l’inset, sans largeur ni coordonnée de fenêtre recopiée.
 - Tableaux Markdown, en lecture et en aperçu actif : contour discret, rayon de bloc et ombre posée, depuis les jetons existants du thème. Les cellules gardent des séparations horizontales, des chiffres tabulaires et l’alignement de la note.
 - Tableaux de Bases : même surface et même contour ; grille, défilement et contrôles conservés.

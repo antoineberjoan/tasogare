@@ -14,7 +14,7 @@ Tasogare n'utilise que six marches de l'échelle : 2, 4, 6, 8, 10 et 14 px.
 | `--tasogare-ecart-proprietes` | 2 px | `--space-2` | Entre deux propriétés (`--metadata-gap`) |
 | `--tasogare-pas-onglet` | 4 × 10 px | `--space-4`, `--space-10` | Marge intérieure d'un onglet |
 | `--tasogare-pas-ligne-nav` | 8 px | `--space-8` | Marge verticale d'une ligne de la sidebar (`--nav-item-padding`, notes et dossiers) et de la fenêtre de réglages |
-| `--tasogare-pas-proprietes` | 10 × 14 × 8 px | `--space-10`, `--space-14`, `--space-8` | Marge du bloc de propriétés |
+| `--tasogare-pas-proprietes` | 4 × 0 px | `--space-4` | Marge du bloc de propriétés, sans fond de carte |
 | `--tasogare-pas-propriete` | 4 px | `--space-4` | Marge latérale d'une propriété |
 | `--tasogare-pas-selecteur-coffre` | 6 × 10 px | `--space-6`, `--space-10` | Sélecteur de coffre |
 
@@ -99,3 +99,11 @@ Le survol d'une icône est un carré de côté « icône + 6 px de chaque côté
 - La marge verticale d'un onglet passe de 3 à 4 px, et celle d'une ligne de la sidebar de 7 à 8 px : les deux valeurs rejoignent l'échelle. Chaque ligne gagne 2 px de hauteur.
 - La carte intérieure de la fenêtre de réglages passe d'un rayon de 10 à 6 px, pour être concentrique.
 - Le sélecteur de coffre lit un espacement (`--space-6`) au lieu d'un rayon pour sa marge.
+
+## Interface avec navigation libellée
+
+Le panneau droit reprend le padding de fin de ligne et de bas de la carte centrale. Les deux barres font la hauteur d’un onglet plus deux insets ; le bouton latéral ne recompte pas ces insets. L’écart entre les cartes vient du padding central : aucune largeur de sidebar ni coordonnée de fenêtre n’est fixée par le thème.
+
+Les libellés de navigation utilisent les rôles typographiques de navigation existants. Les panneaux eux-mêmes sont des vues natives d’Obsidian et leur ordre est enregistré dans `workspace.json`, séparément du thème.
+
+Les commandes du navigateur de fichiers et la barre d’état sont masquées par défaut sur ordinateur, directement par le thème. Les classes `tasogare-actions-fichiers` et `tasogare-barre-etat` les réaffichent ; Style Settings peut piloter ces options, mais son absence ne bloque aucun composant. `tasogare-icones-proprietes` réaffiche les icônes de type des propriétés.

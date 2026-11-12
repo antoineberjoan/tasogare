@@ -43,6 +43,29 @@ settings:
       -
         label: Galet noir
         value: tasogare-galet
+  -
+    id: tasogare-interface
+    title: Interface
+    type: heading
+    level: 1
+    collapsed: false
+  -
+    id: tasogare-barre-etat
+    title: Afficher la barre d’état
+    description: La barre reste ancrée à la carte de note et respecte son inset.
+    type: class-toggle
+    default: false
+  -
+    id: tasogare-actions-fichiers
+    title: Afficher les commandes du navigateur de fichiers
+    description: Nouveau fichier, nouveau dossier et tri restent aussi accessibles par les commandes natives.
+    type: class-toggle
+    default: false
+  -
+    id: tasogare-icones-proprietes
+    title: Afficher les icônes des propriétés
+    type: class-toggle
+    default: false
 
 */
 
@@ -67,7 +90,7 @@ body {
   --tasogare-ecart-proprietes: var(--tasogare-espace-2);
   --tasogare-pas-onglet: var(--tasogare-espace-4) var(--tasogare-espace-10);
   --tasogare-pas-ligne-nav: var(--tasogare-espace-8);           /* marge verticale d'une ligne de la sidebar */
-  --tasogare-pas-proprietes: var(--tasogare-inset) var(--tasogare-espace-14) var(--tasogare-espace-8);
+  --tasogare-pas-proprietes: var(--tasogare-espace-4) 0;
   --tasogare-pas-propriete: var(--tasogare-espace-4);
   --tasogare-gouttiere-nav: var(--size-4-6);                    /* à gauche d'une ligne de la sidebar : la place de la flèche des dossiers */
   --tasogare-retrait-arbre: calc(var(--tasogare-gouttiere-nav) / 2);   /* du bord d'un dossier au trait qui guide ses enfants : le milieu de la gouttière */
@@ -1186,7 +1209,7 @@ body {
   --table-header-background-hover: var(--table-header-background);
   --table-cell-padding: var(--tasogare-espace-8) var(--tasogare-espace-14);
 
-  --metadata-background: var(--background-secondary);
+  --metadata-background: transparent;
   --metadata-padding: var(--tasogare-pas-proprietes);
   --metadata-border-radius: var(--tasogare-rayon-carte);
   --metadata-property-padding: 0 var(--tasogare-pas-propriete);
@@ -1389,10 +1412,10 @@ body:not(.is-mobile) .workspace-split.mod-root .workspace-tab-header {
 body:not(.is-mobile) .workspace-split.mod-root .workspace-tab-header-inner {
   height: 100%;
 }
-/* Les boutons de sidebar repliée (dans la barre d'onglets) prennent la hauteur de la rangée : l'icône se centre
-   sur les pastilles. Obsidian les cale sur --header-height ; à 30 px, leur fond de survol devenait un rectangle plat. */
+/* Les boutons latéraux prennent la hauteur des onglets, sans recompter
+   l'inset déjà porté par leur barre. Le survol carré reste centré sur l'icône. */
 body:not(.is-mobile) .workspace-split.mod-root .sidebar-toggle-button {
-  height: calc(var(--tasogare-hauteur-entete) + 2 * var(--tasogare-inset));
+  height: var(--tasogare-hauteur-entete);
   padding-block: 0;
   display: flex;
   align-items: center;
@@ -1432,17 +1455,30 @@ body:not(.is-mobile) .mod-sidedock .workspace-tab-header-container .workspace-ta
   background: transparent;
 }
 
-/* ---------- Panneau de note : carte arrondie, inset à droite et en bas ---------- */
-body:not(.is-mobile) .workspace-split.mod-root .workspace-tab-container {
+/* ---------- Barre du panneau droit : même rangée que les onglets ---------- */
+body:not(.is-mobile) .workspace-split.mod-right-split .workspace-tab-header-container {
+  height: calc(var(--tasogare-hauteur-entete) + 2 * var(--tasogare-inset));
+  padding-block: var(--tasogare-inset);
+}
+body:not(.is-mobile) .workspace-split.mod-right-split .workspace-tab-header-container-inner {
+  margin-block: 0;
+  padding-block: 0;
+}
+body:not(.is-mobile) .workspace-split.mod-right-split .workspace-tab-header {
+  height: var(--tasogare-hauteur-entete);
+}
+
+/* ---------- Panneaux central et droit : carte arrondie, inset à droite et en bas ---------- */
+body:not(.is-mobile) :is(.workspace-split.mod-root, .workspace-split.mod-right-split) .workspace-tab-container {
   padding: 0 var(--tasogare-inset) var(--tasogare-inset) 0;
 }
-body:not(.is-mobile) .workspace-split.mod-root .workspace-leaf {
+body:not(.is-mobile) :is(.workspace-split.mod-root, .workspace-split.mod-right-split) .workspace-leaf {
   border-radius: var(--tasogare-rayon-carte);
   overflow: hidden;
 }
-body:not(.is-mobile) .workspace-split.mod-root .workspace-leaf-content,
-body:not(.is-mobile) .workspace-split.mod-root .view-header,
-body:not(.is-mobile) .workspace-split.mod-root .view-content {
+body:not(.is-mobile) :is(.workspace-split.mod-root, .workspace-split.mod-right-split) .workspace-leaf-content,
+body:not(.is-mobile) :is(.workspace-split.mod-root, .workspace-split.mod-right-split) .view-header,
+body:not(.is-mobile) :is(.workspace-split.mod-root, .workspace-split.mod-right-split) .view-content {
   background: var(--background-primary);
 }
 
@@ -1504,6 +1540,74 @@ body:not(.is-mobile) :is(.clickable-icon, .nav-action-button, .side-dock-ribbon-
 }
 body:not(.is-mobile) :is(.clickable-icon, .nav-action-button, .side-dock-ribbon-action, .workspace-split.mod-sidedock .workspace-tab-header):is(:hover, .has-active-menu)::after {
   background: var(--background-modifier-hover);
+}
+
+/* ---------- Interface épurée, sans plugin de masquage ----------
+   Les options de Style Settings sont facultatives : sans le plugin,
+   les trois commandes restent désactivées et le thème fonctionne seul. */
+body:not(.is-mobile):not(.tasogare-barre-etat) .status-bar,
+body:not(.is-mobile):not(.tasogare-actions-fichiers) .workspace-leaf-content[data-type="file-explorer"] .nav-header {
+  display: none;
+}
+
+/* ---------- Navigation gauche avec libellés ----------
+   Adaptée de Labeled Nav de Steph Ango (@kepano), MIT, voir licences/minimal.txt.
+   La rangée du haut réserve la place des contrôles natifs de la fenêtre. */
+body:not(.is-mobile) .workspace-split.mod-left-split .workspace-tabs.mod-top .workspace-tab-header-container {
+  position: relative;
+  flex-direction: column-reverse;
+  height: auto;
+  padding: 0;
+}
+body:not(.is-mobile) .workspace-split.mod-left-split .workspace-tabs.mod-top .workspace-tab-header-spacer {
+  display: none;
+}
+body:not(.is-mobile) .workspace-split.mod-left-split .workspace-tabs.mod-top .sidebar-toggle-button.mod-primary {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  height: calc(var(--tasogare-hauteur-entete) + 2 * var(--tasogare-inset));
+  align-items: center;
+}
+body:not(.is-mobile) .workspace-split.mod-left-split .workspace-tabs.mod-top .workspace-tab-header-container-inner {
+  flex-direction: column;
+  align-items: stretch;
+  height: auto;
+  margin-block: calc(var(--tasogare-hauteur-entete) + 2 * var(--tasogare-inset)) 0;
+  padding: var(--tasogare-espace-4) var(--tasogare-espace-8);
+}
+body:not(.is-mobile) .workspace-split.mod-left-split .workspace-tabs.mod-top .workspace-tab-header {
+  width: 100%;
+  height: auto;
+  padding: 0;
+  margin-block-end: var(--tasogare-espace-2);
+  border-radius: var(--tasogare-rayon-bloc);
+}
+body:not(.is-mobile) .workspace-split.mod-left-split .workspace-tabs.mod-top .workspace-tab-header-inner {
+  gap: var(--tasogare-ecart-icone);
+  padding: var(--tasogare-espace-4) var(--tasogare-espace-8);
+  border-radius: var(--tasogare-rayon-bloc);
+}
+body:not(.is-mobile) .workspace-split.mod-left-split .workspace-tabs.mod-top .workspace-tab-header-inner-title {
+  display: block;
+  font-size: var(--nav-item-size);
+  font-weight: var(--nav-item-weight);
+}
+body:not(.is-mobile) .workspace-split.mod-left-split .workspace-tabs.mod-top .workspace-tab-header.is-active .workspace-tab-header-inner-title {
+  font-weight: var(--nav-item-weight-active);
+}
+/* Le survol suit la ligne complète ; le carré des seules icônes reste à droite. */
+body:not(.is-mobile) .workspace-split.mod-left-split .workspace-tabs.mod-top .workspace-tab-header::after {
+  display: none;
+}
+body:not(.is-mobile) .workspace-split.mod-left-split .workspace-tabs.mod-top .workspace-tab-header:is(:hover, .has-active-menu) .workspace-tab-header-inner {
+  background: var(--nav-item-background-hover);
+}
+body.mod-macos:not(.is-mobile):not(.is-fullscreen) .workspace-split.mod-left-split .workspace-tabs.mod-top .workspace-tab-header-container {
+  -webkit-app-region: drag;
+}
+body.mod-macos:not(.is-mobile) .workspace-split.mod-left-split .workspace-tabs.mod-top :is(.workspace-tab-header-container-inner, .sidebar-toggle-button) {
+  -webkit-app-region: no-drag;
 }
 
 /* ---------- Infobulle : l'approche du rôle caption (taille et rayon en couche 2) ---------- */
@@ -1626,7 +1730,7 @@ body:not(.is-mobile) .nav-folder:not(.mod-root) > .nav-folder-children {
   border-inline-start: var(--nav-indentation-guide-width) solid var(--nav-indentation-guide-color);
 }
 
-/* ---------- Propriétés : une carte du cadre, une ligne par rangée ----------
+/* ---------- Propriétés : fond de note, une ligne par rangée ----------
    Fond, marge, rayons et nombre de lignes : variables --metadata-* (couche 2).
    Le titre « Propriétés » reste visible quand le bloc est replié, pour pouvoir le rouvrir. */
 .metadata-container:not(.is-collapsed) .metadata-properties-heading { display: none; }
@@ -1638,7 +1742,11 @@ body:not(.is-mobile) .metadata-container {
   font-weight: var(--tasogare-type-body-weight);
   color: var(--text-muted);
 }
-.metadata-add-button { color: var(--text-muted); }
+.metadata-property-key-input { text-transform: capitalize; }
+body:not(.tasogare-icones-proprietes) .metadata-property-icon { display: none; }
+/* La commande Ajouter une propriété reste disponible au survol ou au clavier. */
+body:not(.is-mobile) .metadata-add-button { opacity: 0; }
+body:not(.is-mobile) .metadata-container:is(:hover, :focus-within) .metadata-add-button { opacity: 1; }
 /* Une rangée tient sur une ligne ; le trop long se coupe en points de suspension. */
 .metadata-property {
   white-space: nowrap;
@@ -1704,6 +1812,7 @@ body:not(.is-mobile) .prompt {
 
 /* ---------- Transclusions et callouts ---------- */
 .markdown-embed { border-radius: var(--tasogare-rayon-bloc); }
+.callout[data-callout="note"] .callout-icon { display: none; }
 .callout {
   border: var(--tasogare-filet) solid var(--background-modifier-border);
 }
