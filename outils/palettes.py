@@ -75,7 +75,7 @@ def resoudre(valeur, emplacements, sources, profondeur=0):
             return sources[nom]
         raise Defaut(f"variable inconnue : --tasogare-{nom}")
 
-    return re.sub(r"var\(--tasogare-([a-z0-9-]+)\)", un, valeur.strip())
+    return re.sub(r"var\(\s*--tasogare-([a-z0-9-]+)\s*\)", un, valeur.strip())
 
 
 def lire_palettes(texte, noms):
