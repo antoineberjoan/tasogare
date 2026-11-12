@@ -2,6 +2,10 @@
 
 ## 1.9.0
 
+- Compatibilité avec les onglets empilés : les pastilles des onglets ordinaires ne réduisent plus les en-têtes verticaux ; l’inset de la barre supérieure reste cohérent.
+- Les règles d’alignement des propriétés sont limitées au bloc de métadonnées des notes, pour ne pas modifier les menus de tri et de filtre des Bases.
+- Protocole de revue et comparaison fonctionnelle reproductible avec Minimal, sans dépendance à son style ni à ses plugins.
+
 - Propriétés natives sur ordinateur : chaque valeur suit son libellé ajusté au texte et ses deux-points. Édition et renommage conservés, valeurs longues repliables et libellés plafonnés dans les fenêtres étroites. Aucun changement des clés YAML ni de la grille des Bases.
 
 - Interface épurée intégrée au thème sans Hider : barre d’état et commandes du navigateur de fichiers masquées par défaut sur ordinateur, réaffichables avec Style Settings. Les icônes de propriétés sont elles aussi facultatives. Aucun plugin communautaire obligatoire.

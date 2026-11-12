@@ -1390,7 +1390,7 @@ body {
 /* ---------- Onglets : une pastille, le même inset au-dessus et au-dessous ----------
    La barre garde ses marges latérales d'Obsidian (place du bouton de sidebar) ;
    seules les marges verticales passent à l'inset. */
-body:not(.is-mobile) .workspace-split.mod-root {
+body:not(.is-mobile) .workspace-split.mod-root .workspace-tabs:not(.mod-stacked) {
   --tab-inner-background-hover: transparent; /* un seul voile au survol : celui de l'onglet */
   --tab-container-padding-start: 0; /* la première pastille s'aligne sur le bord de la carte */
 }
@@ -1403,42 +1403,42 @@ body:not(.is-mobile) .workspace-split.mod-root .workspace-tab-header-container-i
   margin-block: 0;
   padding-block: 0;
 }
-body:not(.is-mobile) .workspace-split.mod-root .workspace-tab-header {
+body:not(.is-mobile) .workspace-split.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header {
   height: var(--tasogare-hauteur-entete);
   border-radius: var(--tasogare-rayon-bloc);
   background: transparent;
   padding: var(--tasogare-pas-onglet);
 }
-body:not(.is-mobile) .workspace-split.mod-root .workspace-tab-header-inner {
+body:not(.is-mobile) .workspace-split.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header-inner {
   height: 100%;
 }
 /* Les boutons latéraux prennent la hauteur des onglets, sans recompter
    l'inset déjà porté par leur barre. Le survol carré reste centré sur l'icône. */
-body:not(.is-mobile) .workspace-split.mod-root .sidebar-toggle-button {
+body:not(.is-mobile) .workspace-split.mod-root .workspace-tabs:not(.mod-stacked) .sidebar-toggle-button {
   height: var(--tasogare-hauteur-entete);
   padding-block: 0;
   display: flex;
   align-items: center;
 }
-body:not(.is-mobile) .workspace-split.mod-root .sidebar-toggle-button .clickable-icon {
+body:not(.is-mobile) .workspace-split.mod-root .workspace-tabs:not(.mod-stacked) .sidebar-toggle-button .clickable-icon {
   height: auto;
   aspect-ratio: 1;
   align-self: center;
 }
 /* Le bouton « + » et le menu des onglets se centrent sur la pastille, sans l'étirer. */
-body:not(.is-mobile) .workspace-split.mod-root :is(.workspace-tab-header-new-tab, .workspace-tab-header-tab-list) {
+body:not(.is-mobile) .workspace-split.mod-root .workspace-tabs:not(.mod-stacked) :is(.workspace-tab-header-new-tab, .workspace-tab-header-tab-list) {
   padding-block: 0;
   align-self: center;
 }
-body:not(.is-mobile) .workspace-split.mod-root .workspace-tab-header.is-active {
+body:not(.is-mobile) .workspace-split.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header.is-active {
   background: var(--background-primary);
 }
-body:not(.is-mobile) .workspace-split.mod-root .workspace-tab-header:not(.is-active):hover {
+body:not(.is-mobile) .workspace-split.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header:not(.is-active):hover {
   background: var(--background-modifier-hover);
 }
-body:not(.is-mobile) .workspace-tab-header::before,
-body:not(.is-mobile) .workspace-tab-header::after,
-body:not(.is-mobile) .workspace-tab-header-inner::after {
+body:not(.is-mobile) .workspace-tabs:not(.mod-stacked) .workspace-tab-header::before,
+body:not(.is-mobile) .workspace-tabs:not(.mod-stacked) .workspace-tab-header::after,
+body:not(.is-mobile) .workspace-tabs:not(.mod-stacked) .workspace-tab-header-inner::after {
   display: none;
 }
 /* L'onglet actif : une pastille de la carte et le texte en encre ; les autres en texte secondaire. */
@@ -1751,17 +1751,17 @@ body:not(.is-mobile) .metadata-container:is(:hover, :focus-within) .metadata-add
    Les clés et les widgets restent éditables. Les moteurs plus anciens gardent
    la grille native ; le mobile garde sa présentation Obsidian. */
 @supports (field-sizing: content) {
-  body:not(.is-mobile) .metadata-property {
+  body:not(.is-mobile) .metadata-container .metadata-property {
     align-items: flex-start;
     white-space: normal;
   }
-  body:not(.is-mobile) .metadata-property-key {
+  body:not(.is-mobile) .metadata-container .metadata-property-key {
     min-inline-size: 0;
     inline-size: auto;
     max-inline-size: 50%;
     flex: 0 0 auto;
   }
-  body:not(.is-mobile) .metadata-property-key-input {
+  body:not(.is-mobile) .metadata-container .metadata-property-key-input {
     field-sizing: content;
     inline-size: auto;
     min-inline-size: 0;
@@ -1769,16 +1769,16 @@ body:not(.is-mobile) .metadata-container:is(:hover, :focus-within) .metadata-add
     flex: 0 1 auto;
     padding-inline: 0;
   }
-  body:not(.is-mobile) .metadata-property-key::after {
+  body:not(.is-mobile) .metadata-container .metadata-property-key::after {
     content: ":";
     flex: none;
     color: var(--text-muted);
   }
-  body:not(.is-mobile) .metadata-property-value {
+  body:not(.is-mobile) .metadata-container .metadata-property-value {
     min-inline-size: 0;
     padding-inline-start: var(--tasogare-espace-4);
   }
-  body:not(.is-mobile) .metadata-property-value .metadata-input-longtext {
+  body:not(.is-mobile) .metadata-container .metadata-property-value .metadata-input-longtext {
     padding-inline: 0;
     white-space: pre-wrap;
     overflow-wrap: anywhere;

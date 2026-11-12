@@ -77,6 +77,18 @@ Le coffre de test contient les deux notes Exemple, les cinq panneaux natifs à d
 
 Ce test sous Linux ne valide pas une exécution sur macOS ni sur téléphone.
 
+## Revue de parité avec Minimal
+
+Minimal de Kepano sert de référence de comportement, avec les mêmes fichiers et paramètres ; Tasogare conserve son identité visuelle. Le contrat de revue est dans `AGENTS.md`. Une différence de style est permise ; une régression d’édition, de navigation, de tri, de filtre ou de repli doit être corrigée.
+
+`outils/comparer-minimal.py` compare les deux thèmes sans plugin communautaire, dans le coffre isolé décrit plus haut :
+
+```bash
+python3 outils/comparer-minimal.py --cdp http://127.0.0.1:9230 --coffre /chemin/du/coffre-de-test --minimal /chemin/du/theme/Minimal --sortie /chemin/des/resultats
+```
+
+Le script crée trois notes temporaires et une Base identique pour les deux thèmes. Il compare les interactions réelles de tri, recherche, filtre, changement de vue, édition d’un nombre et d’une case à cocher, ouverture d’une fiche et onglets empilés. Il vérifie aussi les collections du coffre : 155 fiches en tableau et 35 œuvres en cartes. Les notes temporaires sont supprimées et les fiches originales doivent rester identiques. Le rapport indique la version de Minimal effectivement utilisée. Cela ne prétend pas couvrir toutes les fonctions d’Obsidian ni toutes les plateformes.
+
 ## Adapter
 
 - **Couleurs et mesures** : elles vivent dans la couche 1 de `theme.css` (`--tasogare-*`). Une palette remplit les mêmes emplacements (`--tasogare-cadre`, `--tasogare-encre`, `--tasogare-accent`…) ; les règles ne lisent que des rôles.
