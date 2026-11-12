@@ -3,6 +3,7 @@
 Minimal de Kepano est la référence de comportement Obsidian ; Tasogare conserve ses palettes, sa typographie et ses formes. Ne pas attribuer à Kepano une validation qu’il n’a pas donnée.
 
 Pour chaque modification de présentation :
+
 - lire les règles concernées et les variables natives avant de changer le CSS ;
 - préférer les variables d’Obsidian, des sélecteurs peu spécifiques et des styles locaux ; éviter les doublons et les compensations liées à une largeur de sidebar ;
 - comparer le comportement avec Minimal sur les mêmes fichiers et la même configuration, sans confondre différences de style et régressions fonctionnelles ;

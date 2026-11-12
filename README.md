@@ -1,103 +1,65 @@
 # Tasogare
 
-黄昏, tasogare : le crépuscule, en japonais. Un thème Obsidian calme : une carte de note arrondie dans un cadre nu, sans séparateurs, avec un inset unique de 10 px, en clair comme en sombre.
+Un thème Obsidian calme : une carte de note dans un cadre de 10 px, sept palettes et une typographie Inter commune au clair et au sombre.
 
-![Tasogare : les six palettes, en clair et en sombre](images/palettes.png)
+La version 1.9.0 est une **version candidate**. La publication d’une release reste distincte de la préparation du code.
+
+![Tasogare](screenshot.png)
 
 ## Installer
 
-1. Dans Obsidian, ouvre Réglages → Apparence → Thèmes → Gérer.
-2. Cherche **Tasogare**, puis choisis Installer et utiliser.
-3. Facultatif : installe le plugin communautaire **Style Settings** pour choisir la palette.
-4. Règle Apparence → Taille de police sur 15 pour l'échelle typographique exacte.
+La version publiée s’installe dans **Apparence → Thèmes → Gérer**. Pour un essai local, placer le dossier contenant `theme.css` et `manifest.json` dans `.obsidian/themes/Tasogare`, puis sélectionner Tasogare.
 
-## Interface
+Le thème fonctionne sans plugin communautaire. **Style Settings**, facultatif, permet de choisir une palette et de réafficher la barre d’état, les commandes du navigateur de fichiers ou les icônes de propriétés. Sans lui : Graphite et interface épurée.
 
-Tasogare propose une navigation gauche avec libellés, un panneau droit arrondi avec le même inset que la note et des propriétés sur le fond de note, sans icônes de type. Sur ordinateur, chaque valeur suit directement son libellé et ses deux-points. Les clés gardent leur taille intrinsèque, plafonnée à la moitié de la rangée ; les valeurs peuvent passer à la ligne sur une fenêtre étroite. Les capitales ne changent que l’affichage des clés ; l’ajout de propriété reste accessible au survol et au clavier. Les callouts `note` gardent leur encadré sans icône. Les sept palettes et toute l’échelle typographique restent celles de Tasogare.
+## Utiliser
 
-La disposition des onglets relève du coffre : Fichiers, Tags, Recherche et Favoris à gauche ; graphe local, liens entrants, liens sortants, propriétés et plan à droite. Chaque sidebar garde son bouton natif de repli. Le thème masque par défaut la barre d’état et les commandes du navigateur de fichiers sur ordinateur. Style Settings peut les réafficher, ainsi que les icônes des propriétés. Sans ce plugin, l’interface fonctionne avec ses valeurs par défaut. Les barres de défilement gardent le comportement Tasogare : visibles au survol.
+- **Notes** : colonne de lecture de 640 px. Le réglage de taille de police d’Obsidian reste prioritaire ; la base 15 restitue l’échelle typographique de référence.
+- **Bases** : les fichiers `.base` gardent leurs vues et leurs contrôles natifs. Le ratio des images se règle dans chaque vue.
+- **Pages de collection** : ajouter `wide` à la propriété native `cssclasses` pour une note large, y compris sa Base intégrée.
+- **Propriétés** : champs natifs éditables, libellé ajusté à son texte et valeur placée après les deux-points sur ordinateur. Les clés YAML restent intactes.
+- **Panneaux** : les sidebars se replient et se redimensionnent normalement. Leur contenu et l’ordre des onglets appartiennent au coffre.
 
-## Modules et réglages
+```yaml
+cssclasses: [wide]
+```
 
-- **Aucun plugin communautaire obligatoire.** Le thème porte les insets, les onglets, les libellés de navigation et la présentation des propriétés et encadrés.
-- **Modules natifs d’Obsidian** : Graphe, Liens entrants, Liens sortants, Propriétés, Plan, Tags, Recherche, Favoris et Bases fournissent leurs vues. Activer les modules souhaités puis ranger leurs onglets dans les sidebars ; leur ordre appartient au coffre, pas au thème.
-- **Style Settings, facultatif** : choix de palette et options d’affichage. Sans lui : Graphite et interface épurée.
-- **Hider et Minimal Theme Settings ne sont pas nécessaires.** Les autres plugins de l’article restent des choix de workflow, pas des dépendances du thème.
-- Pour retrouver la disposition de la démonstration, le coffre de test fournit `workspace.json` et le réglage natif qui masque le ruban. Le thème seul conserve l’organisation du coffre dans lequel il est installé.
+Les palettes sont Graphite, Crépuscule alpin, Grès rosé, Thé vert, Lac profond, Porte bleue et Galet noir. Leurs valeurs et contrastes sont documentés dans [les couleurs](docs/couleur-obsidian.md). Les autres fondations sont décrites dans [docs](docs/README.md).
 
-## Palettes
+## Construire
 
-Sept palettes, chacune en clair et en sombre. Graphite, neutre avec un accent bleu, sert de base. Les six autres font le tour du cercle des couleurs : une palette par famille, pour qu'aucune ne double une autre.
+`theme.css` est la seule source de style et le fichier directement lu par Obsidian. Il comporte trois couches :
 
-- **Graphite** (par défaut, gris neutres et bleu) : Graphite `#1C1C1E`, Brume `#F2F2F7`, Pierre `#636366`, Argent `#8E8E93`, Trait `#D1D1D6`, Bleu lien `#0066CC`, Bleu action `#0071E3`, Bleu ciel `#4DA3FF`.
-- **Crépuscule alpin** (violet et rouge) : Cabine rouge `#9E2B25`, Ciel lavande `#6E6BA8`, Alpenglow `#E8A3B4`, Neige d'ombre `#B9B3D6`, Lueur `#F4C66A`, Câble acier `#4A4E5C`, Sapin nuit `#1F2A3A`.
-- **Grès rosé** (terre) : Grès rosé `#B98A72`, Chaux `#E6E2DA`, Travertin `#D3C7B2`, Olivier sec `#8C7E5E`, Ombre douce `#B4AEA2`, Argile cuite `#7A5443`, Encre taupe `#3F3832`.
-- **Thé vert** (vert) : Matcha vif `#8DB33A`, Noyer usé `#5B3A24`, Céramique noire `#2A2622`, Mousse `#6E7A2C`, Jour pâle `#E9E6DC`, Laiton `#C2A25A`, Lin ardoise `#4A4F55`.
-- **Lac profond** (bleu-vert) : Bouée rouge `#D2452B`, Lac profond `#1F5A5C`, Turquoise lac `#3E8A86`, Brume montagne `#7E9590`, Chanvre `#C8AE7E`, Écume `#EEEAE2`, Ponton gris `#6F685E`.
-- **Porte bleue** (bleu) : Bleu cobalt `#2347A8`, Mur safran `#E6BE3A`, Bougainvillier `#C2287A`, Terracotta `#C0663E`, Cactus `#5E8B4A`, Zellige `#F0E3BE`, Nuit bleue `#13213F`.
-- **Galet noir** (neutre) : Galet noir `#2B2A27`, Plâtre `#C9C4BA`, Lin avoine `#B3A68F`, Porcelaine `#EEEBE5`, Pierre grise `#8E8A80`, Fumée `#5F5B53`, Mousse sèche `#7D7A5E`.
+1. **Données** : palettes, échelle typographique et mesures.
+2. **Rôles** : variables natives d’Obsidian alimentées par ces données.
+3. **Composants** : règles limitées au cadre, aux onglets, à la navigation, aux propriétés et aux surfaces.
 
-Chaque palette garde un fond neutre ; sa couleur forte va à l'accent, aux boutons et aux signaux. Le titre et les liens portent la couleur de la famille ; quand elle est trop claire ou trop sombre pour du texte, elle est assombrie ou éclaircie à cet emplacement, sans changer de teinte.
+Aucune compilation, aucun JavaScript d’affichage et aucun fragment CSS additionnel ne sont nécessaires. Les contrôles et icônes restent natifs. La barre d’état, si elle est affichée, s’ancre à une carte par CSS ; aucune largeur de sidebar n’est recopiée. Les règles de bureau sont séparées de la disposition mobile.
 
-Le choix se fait dans Réglages → Style Settings → Tasogare → Palette. Sans le plugin, le thème reste complet, avec Graphite.
-
-Chaque palette passe les seuils de contraste WCAG AA (4,5:1 pour les liens et le texte secondaire), et son texte courant atteint au moins 7:1.
-
-## Typographie
-
-Le thème suit la spécification [Typographie 1.1](docs/typographie.md) : titre 28 / 500, h2 19 / 500, texte 15 px avec un interligne de 1,75. La police est Inter, embarquée par Obsidian : rien à installer. Le détail de la correspondance avec les variables d'Obsidian est dans [docs/typographie-obsidian.md](docs/typographie-obsidian.md).
-
-À une taille de police de 15, chaque rôle tombe sur la valeur exacte de la spécification ; une autre valeur agrandit ou réduit toute l'échelle, sans changer ses proportions.
-
-## Design system
-
-Le thème repose sur quatre fondations : couleur, typographie, espace et forme, mouvement. Chacune a une spécification réutilisable et un document qui la relie aux variables d'Obsidian. Le sommaire est dans [docs/README.md](docs/README.md).
-
-Les tableaux Markdown et ceux de Bases reprennent les surfaces du thème : rayon de bloc, contour discret et ombre posée. Les tableaux des notes gardent des séparations horizontales et les alignements écrits en Markdown. Le défilement et les contrôles d’édition restent gérés par Obsidian.
-
-Sur ordinateur, la barre d’état flotte dans l’angle inférieur droit de la carte centrale, sur le même fond. Lorsqu’elle est affichée, son ancrage CSS suit l’ouverture et le redimensionnement des sidebars ; elle ne crée aucun bandeau sous les panneaux et laisse l’inset libre.
-
-Pour vérifier le thème après un changement (variables, couleurs, contrastes, docs) :
+## Vérifier
 
 ```bash
 python3 outils/verifier.py
+python3 -m unittest discover -s outils -p 'test_*.py'
+git diff --check
 ```
 
-## Vérifier l’interface native
+Ces contrôles couvrent les variables, les déclarations répétées, les ressources distantes, les valeurs brutes hors des fondations, la portée des propriétés, les contrastes et la documentation des palettes.
 
-`outils/verifier-interface.py` pilote une instance **isolée** d’Obsidian 1.15 avec un port CDP et le coffre de démonstration. Il exige zéro plugin communautaire chargé et vérifie que le chemin du coffre correspond à celui fourni. Installer Playwright dans l’environnement de test, puis lancer :
+Les versions des outils de développement sont fixées dans `requirements-dev.txt` (`python3 -m pip install -r requirements-dev.txt`). Le test d’interface utilise Playwright et une instance **isolée** d’Obsidian 1.15 avec un port CDP, une interface anglaise et zéro plugin communautaire :
 
 ```bash
-python3 outils/verifier-interface.py --cdp http://127.0.0.1:9230 --coffre /chemin/du/coffre-de-test --sortie /chemin/des/resultats
+python3 outils/verifier-interface.py \
+  --cdp http://127.0.0.1:9231 \
+  --coffre /chemin/du/coffre-de-test \
+  --minimal /chemin/du/theme/Minimal \
+  --sortie /chemin/des/resultats
 ```
 
-Le coffre de test contient les deux notes Exemple, les cinq panneaux natifs à droite et la Base Bibliothèque du lot romā à 155 fiches. Le script compare couleurs et typographie avec la référence `5653884` du dépôt, teste les sept palettes dans les deux modes, seize dispositions, le repli et le redimensionnement, les options d’affichage et les vues tableau et cartes. Le coffre de démonstration utilise des visuels paysage 1080 × 720 ; son `imageAspectRatio` vaut 2/3 (hauteur / largeur) dans les vues cartes, pour éviter un cadre portrait vide autour de ces images. Le thème respecte le ratio choisi par la Base. Il conserve les fiches et exporte les captures et le rapport JSON. Le test de palettes applique leurs classes CSS directement ; il ne nécessite pas Style Settings. Les contrôles de géométrie s’effectuent après la fin des transitions natives.
+Le test crée ses trois fiches et sa Base, puis les supprime. Il vérifie les palettes, seize dispositions, les propriétés longues et leur édition, la largeur des pages et la parité avec Minimal : vues, tri, recherche, filtres, édition des cellules, ouverture et onglets empilés. Les fichiers Markdown préexistants doivent rester identiques. L’option `--reference /chemin/avant.css` compare aussi les couleurs et la typographie au thème précédent.
 
-`outils/verifier-proprietes.py` utilise les mêmes arguments sur ce coffre isolé. Il crée puis supprime sa note temporaire et vérifie les libellés longs, URL, listes, champs vides, cases à cocher, nombres, fenêtres étroites, édition d’une valeur et renommage d’une clé dans le YAML. Les règles d’alignement ciblent uniquement le bloc natif de propriétés ; les tableaux et cartes de Bases conservent leur grille.
+[AGENTS.md](AGENTS.md) porte le contrat de revue. Les tests sous Linux ne valident pas une installation sur Mac ni un appareil mobile réel.
 
-Ce test sous Linux ne valide pas une exécution sur macOS ni sur téléphone.
+## Crédits et licence
 
-## Revue de parité avec Minimal
-
-Minimal de Kepano sert de référence de comportement, avec les mêmes fichiers et paramètres ; Tasogare conserve son identité visuelle. Le contrat de revue est dans `AGENTS.md`. Une différence de style est permise ; une régression d’édition, de navigation, de tri, de filtre ou de repli doit être corrigée.
-
-`outils/comparer-minimal.py` compare les deux thèmes sans plugin communautaire, dans le coffre isolé décrit plus haut :
-
-```bash
-python3 outils/comparer-minimal.py --cdp http://127.0.0.1:9230 --coffre /chemin/du/coffre-de-test --minimal /chemin/du/theme/Minimal --sortie /chemin/des/resultats
-```
-
-Le script crée trois notes temporaires et une Base identique pour les deux thèmes. Il compare les interactions réelles de tri, recherche, filtre, changement de vue, édition d’un nombre et d’une case à cocher, ouverture d’une fiche et onglets empilés. Il vérifie aussi les collections du coffre : 155 fiches en tableau et 35 œuvres en cartes. Les notes temporaires sont supprimées et les fiches originales doivent rester identiques. Le rapport indique la version de Minimal effectivement utilisée. Cela ne prétend pas couvrir toutes les fonctions d’Obsidian ni toutes les plateformes.
-
-## Adapter
-
-- **Couleurs et mesures** : elles vivent dans la couche 1 de `theme.css` (`--tasogare-*`). Une palette remplit les mêmes emplacements (`--tasogare-cadre`, `--tasogare-encre`, `--tasogare-accent`…) ; les règles ne lisent que des rôles.
-- **Icônes des propriétés (facultatif)** : active d’abord leur affichage dans Style Settings → Tasogare → Interface. Le snippet `snippets/tasogare-icones-proprietes.css` donne une icône à une clé de propriété précise (`statut`, `source`…). Copie-le dans le dossier `.obsidian/snippets/` de ton coffre, puis active-le dans Réglages → Apparence → Snippets CSS. Une clé absente garde l'icône de son type.
-
-## Crédits
-
-Le défilement révélé au survol et les filets des fenêtres s'inspirent du thème Border (Akifyss/obsidian-border). La structure des palettes en emplacements et la navigation avec libellés s’inspirent du thème Minimal (kepano/obsidian-minimal, licence MIT ; notice dans `licences/minimal.txt`). Les règles de mouvement viennent des skills d'Emil Kowalski (emilkowalski/skill, licence MIT) et de l'article « Using Gestures in Motion » de Jakub Krehel. Certaines règles de hiérarchie, d'alignement et de mouvement composé s'inspirent d'Interface Craft (Josh Puckett), reformulées.
-
-## Licence
-
-MIT, voir `LICENSE`.
+La structure des palettes et la navigation avec libellés s’inspirent de Minimal de Steph Ango, sous licence MIT ; la [notice](licences/minimal.txt) est incluse. Les fondations décrivent leurs autres sources. Tasogare est distribué sous [licence MIT](LICENSE).

@@ -2,23 +2,15 @@
 
 ## 1.9.0
 
-- Compatibilité avec les onglets empilés : les pastilles des onglets ordinaires ne réduisent plus les en-têtes verticaux ; l’inset de la barre supérieure reste cohérent.
-- Les règles d’alignement des propriétés sont limitées au bloc de métadonnées des notes, pour ne pas modifier les menus de tri et de filtre des Bases.
-- Protocole de revue et comparaison fonctionnelle reproductible avec Minimal, sans dépendance à son style ni à ses plugins.
+### Refonte
 
-- Propriétés natives sur ordinateur : chaque valeur suit son libellé ajusté au texte et ses deux-points. Édition et renommage conservés, valeurs longues repliables et libellés plafonnés dans les fenêtres étroites. Aucun changement des clés YAML ni de la grille des Bases.
-
-- Interface épurée intégrée au thème sans Hider : barre d’état et commandes du navigateur de fichiers masquées par défaut sur ordinateur, réaffichables avec Style Settings. Les icônes de propriétés sont elles aussi facultatives. Aucun plugin communautaire obligatoire.
-
-- Essai d’interface : panneau droit avec le même inset et les mêmes arrondis que la note ; barres d’onglets alignées, sans recompter l’inset dans les boutons latéraux.
-- Navigation gauche avec libellés, adaptée de Labeled Nav de Kepano ; contrôles natifs et repli conservés.
-- Propriétés sans fond de carte ni icônes, capitales d’affichage et ajout accessible au clavier ; encadré `note` sans icône. Palettes et typographie conservées.
-
-- Barre d’état sur ordinateur : flottante dans l’angle de la carte centrale, sur le même fond, sans bandeau sous les panneaux. L’ancrage CSS suit les sidebars et conserve l’inset, sans largeur ni coordonnée de fenêtre recopiée.
-- Tableaux Markdown, en lecture et en aperçu actif : contour discret, rayon de bloc et ombre posée, depuis les jetons existants du thème. Les cellules gardent des séparations horizontales, des chiffres tabulaires et l’alignement de la note.
-- Tableaux de Bases : même surface et même contour ; grille, défilement et contrôles conservés.
-- Marges des cellules Markdown reliées à l’échelle d’espace, sans couleur ni mesure supplémentaire propre aux tableaux.
-- Filets pilotés par les variables natives des tableaux et sélecteurs allégés pour préserver les états de sélection. Le rayon intérieur est calculé à un seul endroit.
+- Règles de composants réécrites à partir des variables et contrôles natifs d’Obsidian. Palettes et échelle typographique conservées.
+- Une seule source CSS, sans compilation, JavaScript d’affichage ni fragment supplémentaire. Sélecteurs limités à leur composant et règles distinctes pour le bureau.
+- Cadre et panneau droit avec le même inset ; rôle de hauteur commun aux barres d’onglets, séparé des contrôles de note. Onglets empilés conservés.
+- Propriétés natives en ligne sur ordinateur, éditables et repliables ; ajout accessible au clavier. Les autres actions d’édition restent visibles.
+- Pages larges via `cssclasses: [wide]`, sans calcul de translation des Bases. Tableaux et cartes conservent les contrôles natifs.
+- Suppression des survols artificiels des icônes, des remplacements SVG des fichiers et des réglages géométriques des fenêtres.
+- Contrôles de source renforcés et un test d’interface autonome : données temporaires, parité Minimal, préservation des notes, palettes et dispositions.
 
 ## 1.8.0
 
