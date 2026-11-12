@@ -62,6 +62,7 @@ NOTE_TEXT = (
     "---\n"
     + "".join(f"{k}: {json.dumps(v, ensure_ascii=False)}\n" for k, v in FIELDS.items())
     + "---\n\n# Propriétés\n\n## Une idée lisible\n\nUn paragraphe de référence.\n\n### Un détail\n\nTexte et `code`.\n"
+    + "\n| Mission | Prix |\n| --- | ---: |\n| Étude | 1 200 € |\n| Conseil | 600 € |\n"
 )
 
 
@@ -468,6 +469,45 @@ def interactions(app):
     return result
 
 
+def table_surfaces(app):
+    results = []
+    app.page.set_viewport_size({"width": 1136, "height": 812})
+    app.sides(True, False)
+    for mode in ["light", "dark"]:
+        app.mode(mode)
+        app.open(BASE, "Tableau")
+        app.count(3)
+        data = app.page.evaluate("""() => {
+            const view = document.querySelector('.mod-root .bases-view');
+            const table = view.querySelector('.bases-table-container');
+            const header = view.querySelector('.bases-thead');
+            const body = table.querySelector('.bases-tbody');
+            return {
+                marge: table.getBoundingClientRect().x - view.getBoundingClientRect().x,
+                contour: parseFloat(getComputedStyle(table).borderLeftWidth),
+                entete: getComputedStyle(header).backgroundColor,
+                corps: getComputedStyle(body).backgroundColor
+            };
+        }""")
+        assert data["marge"] >= 14 and data["contour"] > 0, data
+        assert data["entete"] != data["corps"], data
+        app.screenshot("tableau-" + mode + ".png")
+        app.open(NOTE)
+        table = app.page.locator(".mod-root .markdown-preview-view table:visible")
+        table.wait_for()
+        markdown = table.evaluate("""el => ({
+            contour: parseFloat(getComputedStyle(el).borderLeftWidth),
+            entete: getComputedStyle(el.querySelector('thead tr')).backgroundColor,
+            corps: getComputedStyle(el).backgroundColor
+        })""")
+        assert markdown["contour"] > 0, markdown
+        assert markdown["entete"] not in {markdown["corps"], "rgba(0, 0, 0, 0)"}, (
+            markdown
+        )
+        results.append({"mode": mode, "base": data, "markdown": markdown})
+    return results
+
+
 def stacked(app):
     layout = app.page.evaluate("() => app.workspace.getLayout()")
     try:
@@ -567,6 +607,7 @@ def main():
                 report["dispositions"] = layouts(app)
                 report["proprietes"] = metadata(app)
                 report["largeur"] = wide(app)
+                report["surfaces_tableaux"] = table_surfaces(app)
                 for theme in ["Minimal", "Tasogare"]:
                     app.theme(theme)
                     app.mode("dark")

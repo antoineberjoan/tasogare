@@ -15,7 +15,7 @@ Le thème fonctionne sans plugin communautaire. **Style Settings**, facultatif, 
 ## Utiliser
 
 - **Notes** : colonne de lecture de 640 px. Le réglage de taille de police d’Obsidian reste prioritaire ; la base 15 restitue l’échelle typographique de référence.
-- **Bases** : les fichiers `.base` gardent leurs vues et leurs contrôles natifs. Le ratio des images se règle dans chaque vue.
+- **Bases** : les fichiers `.base` gardent leurs vues et leurs contrôles natifs. Le ratio des images se règle dans chaque vue. Les tableaux disposent d’une marge intérieure, d’un en-tête teinté et de séparations lisibles, issus des rôles du thème.
 - **Pages de collection** : ajouter `wide` à la propriété native `cssclasses` pour une note large, y compris sa Base intégrée.
 - **Propriétés** : champs natifs éditables, libellé ajusté à son texte et valeur placée après les deux-points sur ordinateur. Les clés YAML restent intactes.
 - **Panneaux** : les sidebars se replient et se redimensionnent normalement. Leur contenu et l’ordre des onglets appartiennent au coffre.

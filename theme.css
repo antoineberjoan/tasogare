@@ -1252,8 +1252,9 @@ body {
   --table-cell-padding: var(--tasogare-espace-8) var(--tasogare-espace-14);
   --bases-table-row-height: var(--tasogare-hauteur-ligne-tableau);
   --bases-table-column-border-width: 0;
-  --bases-table-border-color: var(--background-modifier-border);
-  --bases-table-header-background: transparent;
+  --bases-table-border-color: var(--tasogare-filet-tableau);
+  --bases-table-header-background: var(--table-header-background);
+  --bases-table-header-color: var(--text-normal);
   --bases-table-header-weight: var(--tasogare-type-label-weight);
   --bases-table-group-background: var(--background-primary);
   --bases-table-row-background-hover: var(--background-modifier-hover);
@@ -1590,13 +1591,21 @@ body:not(.tasogare-icones-proprietes)
   border-bottom-right-radius: var(--tasogare-rayon-cellule-tableau);
 }
 .bases-table-container {
-  --table-border-color: var(--bases-table-border-color);
   --link-color: var(--text-normal);
   --link-decoration: none;
-  border: var(--tasogare-filet) solid var(--background-modifier-border);
+  border: var(--tasogare-filet) solid var(--bases-table-border-color);
   border-radius: var(--tasogare-rayon-bloc);
   background: var(--background-primary);
   box-shadow: var(--tasogare-ombre-posee);
+}
+/* Une Base ouverte seule garde sa barre native ; sa vue laisse respirer le tableau. */
+.workspace-leaf-content[data-type="bases"] {
+  --bases-header-padding-start: var(--tasogare-espace-14);
+  --bases-header-padding-end: var(--tasogare-espace-14);
+}
+:where(.workspace-leaf-content[data-type="bases"])
+  .bases-view[data-view-type="table"] {
+  --bases-view-padding: var(--tasogare-espace-14);
 }
 .bases-cards-property.mod-title,
 .bases-kanban-card-property.mod-title {

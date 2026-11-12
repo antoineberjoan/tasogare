@@ -4,6 +4,8 @@
 
 ### Refonte
 
+- Tableaux de Bases séparés du panneau par une marge intérieure ; en-têtes teintés, libellés contrastés et filets de tableau de la palette. Contrôles natifs conservés.
+
 - Règles de composants réécrites à partir des variables et contrôles natifs d’Obsidian. Palettes et échelle typographique conservées.
 - Une seule source CSS, sans compilation, JavaScript d’affichage ni fragment supplémentaire. Sélecteurs limités à leur composant et règles distinctes pour le bureau.
 - Cadre et panneau droit avec le même inset ; rôle de hauteur commun aux barres d’onglets, séparé des contrôles de note. Onglets empilés conservés.

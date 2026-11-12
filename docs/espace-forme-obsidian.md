@@ -28,7 +28,9 @@ Les propriétés utilisent la largeur intrinsèque de leur champ de clé. La cl�
 
 ## Surfaces
 
-Les tableaux Markdown et de Bases utilisent le fond de la carte, un filet discret, un rayon de bloc et l’ombre posée. Le thème ne fixe ni les colonnes ni le ratio des couvertures. Il ne masque pas les outils d’édition ou le défilement des tableaux.
+[Minimal](https://github.com/kepano/obsidian-minimal) sert de référence pour les contrôles et la grille native. L’[article de James Bedford](https://www.thethinkers.club/p/how-to-make-obsidian-beautiful) décrit une configuration sobre de Minimal, pas une recette particulière pour les tableaux. Tasogare conserve ses couleurs, sa police et ses surfaces.
+
+Les tableaux Markdown et de Bases utilisent le fond de la carte, un en-tête teinté par le rôle de creux, les filets de tableau de la palette, un rayon de bloc et l’ombre posée. Une Base ouverte seule reçoit une marge intérieure de 14 px via `--bases-view-padding` sur sa vue tableau ; la barre d’outils native s’aligne sur cette marge. Les autres vues gardent leur disposition native. Le thème ne fixe ni les colonnes ni le ratio des couvertures. Il ne masque pas les outils d’édition ou le défilement des tableaux.
 
 La barre d’état est masquée par défaut sur ordinateur. Lorsqu’elle est affichée, une ancre CSS la place dans la dernière carte centrale visible ; sa largeur maximale vient de cette carte. Cette règle requiert le moteur de l’Obsidian 1.15 déclaré dans le manifeste. Les sidebars peuvent donc changer de taille sans coordonnée ajoutée au thème.
 
