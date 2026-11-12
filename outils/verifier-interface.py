@@ -104,7 +104,8 @@ with sync_playwright() as p:
   pg.evaluate("async v=>{await app.workspace.getMostRecentLeaf().setViewState({type:'bases',state:{file:'Templates/Bases/Bibliothèque.base',viewName:v}});app.workspace.rightSplit.collapse()}",view)
   pg.wait_for_function("n=>[...document.querySelectorAll('.text-button-label')].some(e=>e.textContent.trim()===n+' results')",arg=count,timeout=15000)
   if count==35:
-   ratio=pg.locator('.bases-cards-cover').first.evaluate('e=>{const r=e.getBoundingClientRect();return r.height/r.width}')
+   pg.wait_for_function("()=>[...document.querySelectorAll('.bases-cards-cover')].some(e=>e.getBoundingClientRect().width>50)")
+   ratio=pg.locator('.bases-cards-cover').evaluate_all('items=>{const e=items.find(e=>e.getBoundingClientRect().width>50);const r=e.getBoundingClientRect();return r.height/r.width}')
    assert abs(ratio-2/3)<0.02, 'Le cadre des cartes ne correspond pas aux couvertures paysage du coffre de test.'
    report['ratio_cartes']=ratio
   pg.screenshot(path=str(root/('tableau.png' if count==155 else 'cartes.png')))
