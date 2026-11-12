@@ -103,6 +103,10 @@ with sync_playwright() as p:
  for view,count in [('Tout · tableau',155),('Œuvres · cartes',35)]:
   pg.evaluate("async v=>{await app.workspace.getMostRecentLeaf().setViewState({type:'bases',state:{file:'Templates/Bases/Bibliothèque.base',viewName:v}});app.workspace.rightSplit.collapse()}",view)
   pg.wait_for_function("n=>[...document.querySelectorAll('.text-button-label')].some(e=>e.textContent.trim()===n+' results')",arg=count,timeout=15000)
+  if count==35:
+   ratio=pg.locator('.bases-cards-cover').first.evaluate('e=>{const r=e.getBoundingClientRect();return r.height/r.width}')
+   assert abs(ratio-2/3)<0.02, 'Le cadre des cartes ne correspond pas aux couvertures paysage du coffre de test.'
+   report['ratio_cartes']=ratio
   pg.screenshot(path=str(root/('tableau.png' if count==155 else 'cartes.png')))
  report['bases']={'tableau':155,'oeuvres_cartes':35}
  # État d'ouverture livré : note avec graphe, Graphite sombre.

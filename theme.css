@@ -1747,14 +1747,42 @@ body:not(.tasogare-icones-proprietes) .metadata-property-icon { display: none; }
 /* La commande Ajouter une propriété reste disponible au survol ou au clavier. */
 body:not(.is-mobile) .metadata-add-button { opacity: 0; }
 body:not(.is-mobile) .metadata-container:is(:hover, :focus-within) .metadata-add-button { opacity: 1; }
-/* Une rangée tient sur une ligne ; le trop long se coupe en points de suspension. */
-.metadata-property {
-  white-space: nowrap;
-  overflow: hidden;
-}
-.metadata-property [class*="value"] {
-  overflow: hidden;
-  text-overflow: ellipsis;
+/* Libellé puis valeur : largeur intrinsèque du champ natif, sans recopier la clé.
+   Les clés et les widgets restent éditables. Les moteurs plus anciens gardent
+   la grille native ; le mobile garde sa présentation Obsidian. */
+@supports (field-sizing: content) {
+  body:not(.is-mobile) .metadata-property {
+    align-items: flex-start;
+    white-space: normal;
+  }
+  body:not(.is-mobile) .metadata-property-key {
+    min-inline-size: 0;
+    inline-size: auto;
+    max-inline-size: 50%;
+    flex: 0 0 auto;
+  }
+  body:not(.is-mobile) .metadata-property-key-input {
+    field-sizing: content;
+    inline-size: auto;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    flex: 0 1 auto;
+    padding-inline: 0;
+  }
+  body:not(.is-mobile) .metadata-property-key::after {
+    content: ":";
+    flex: none;
+    color: var(--text-muted);
+  }
+  body:not(.is-mobile) .metadata-property-value {
+    min-inline-size: 0;
+    padding-inline-start: var(--tasogare-espace-4);
+  }
+  body:not(.is-mobile) .metadata-property-value .metadata-input-longtext {
+    padding-inline: 0;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
 }
 .metadata-property-icon {
   --icon-size: var(--tasogare-taille-icone);

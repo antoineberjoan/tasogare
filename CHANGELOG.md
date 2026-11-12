@@ -2,6 +2,8 @@
 
 ## 1.9.0
 
+- Propriétés natives sur ordinateur : chaque valeur suit son libellé ajusté au texte et ses deux-points. Édition et renommage conservés, valeurs longues repliables et libellés plafonnés dans les fenêtres étroites. Aucun changement des clés YAML ni de la grille des Bases.
+
 - Interface épurée intégrée au thème sans Hider : barre d’état et commandes du navigateur de fichiers masquées par défaut sur ordinateur, réaffichables avec Style Settings. Les icônes de propriétés sont elles aussi facultatives. Aucun plugin communautaire obligatoire.
 
 - Essai d’interface : panneau droit avec le même inset et les mêmes arrondis que la note ; barres d’onglets alignées, sans recompter l’inset dans les boutons latéraux.

@@ -107,3 +107,7 @@ Le panneau droit reprend le padding de fin de ligne et de bas de la carte centra
 Les libellés de navigation utilisent les rôles typographiques de navigation existants. Les panneaux eux-mêmes sont des vues natives d’Obsidian et leur ordre est enregistré dans `workspace.json`, séparément du thème.
 
 Les commandes du navigateur de fichiers et la barre d’état sont masquées par défaut sur ordinateur, directement par le thème. Les classes `tasogare-actions-fichiers` et `tasogare-barre-etat` les réaffichent ; Style Settings peut piloter ces options, mais son absence ne bloque aucun composant. `tasogare-icones-proprietes` réaffiche les icônes de type des propriétés.
+
+## Alignement des propriétés
+
+Sur ordinateur, `field-sizing: content` ajuste le champ de clé à son contenu ; les deux-points sont un pseudo-élément d’affichage. La clé occupe au plus la moitié de la rangée et ne se rétrécit pas au profit d’une URL longue. La valeur prend l’espace restant et les widgets natifs peuvent passer à la ligne. Le champ texte reste éditable et le texte long peut se replier. Les espacements lisent les jetons existants. Sur mobile ou sans prise en charge de `field-sizing`, la structure native reste disponible. Ces règles ne s’appliquent pas aux cellules ni aux propriétés des cartes de Bases.

@@ -13,7 +13,7 @@
 
 ## Interface
 
-Tasogare propose une navigation gauche avec libellés, un panneau droit arrondi avec le même inset que la note et des propriétés sur le fond de note, sans icônes de type. Les capitales ne changent que l’affichage des clés ; l’ajout de propriété reste accessible au survol et au clavier. Les callouts `note` gardent leur encadré sans icône. Les sept palettes et toute l’échelle typographique restent celles de Tasogare.
+Tasogare propose une navigation gauche avec libellés, un panneau droit arrondi avec le même inset que la note et des propriétés sur le fond de note, sans icônes de type. Sur ordinateur, chaque valeur suit directement son libellé et ses deux-points. Les clés gardent leur taille intrinsèque, plafonnée à la moitié de la rangée ; les valeurs peuvent passer à la ligne sur une fenêtre étroite. Les capitales ne changent que l’affichage des clés ; l’ajout de propriété reste accessible au survol et au clavier. Les callouts `note` gardent leur encadré sans icône. Les sept palettes et toute l’échelle typographique restent celles de Tasogare.
 
 La disposition des onglets relève du coffre : Fichiers, Tags, Recherche et Favoris à gauche ; graphe local, liens entrants, liens sortants, propriétés et plan à droite. Chaque sidebar garde son bouton natif de repli. Le thème masque par défaut la barre d’état et les commandes du navigateur de fichiers sur ordinateur. Style Settings peut les réafficher, ainsi que les icônes des propriétés. Sans ce plugin, l’interface fonctionne avec ses valeurs par défaut. Les barres de défilement gardent le comportement Tasogare : visibles au survol.
 
@@ -71,7 +71,9 @@ python3 outils/verifier.py
 python3 outils/verifier-interface.py --cdp http://127.0.0.1:9230 --coffre /chemin/du/coffre-de-test --sortie /chemin/des/resultats
 ```
 
-Le coffre de test contient les deux notes Exemple, les cinq panneaux natifs à droite et la Base Bibliothèque du lot romā à 155 fiches. Le script compare couleurs et typographie avec la référence `5653884` du dépôt, teste les sept palettes dans les deux modes, seize dispositions, le repli et le redimensionnement, les options d’affichage et les vues tableau et cartes. Il conserve les fiches et exporte les captures et le rapport JSON. Le test de palettes applique leurs classes CSS directement ; il ne nécessite pas Style Settings. Les contrôles de géométrie s’effectuent après la fin des transitions natives.
+Le coffre de test contient les deux notes Exemple, les cinq panneaux natifs à droite et la Base Bibliothèque du lot romā à 155 fiches. Le script compare couleurs et typographie avec la référence `5653884` du dépôt, teste les sept palettes dans les deux modes, seize dispositions, le repli et le redimensionnement, les options d’affichage et les vues tableau et cartes. Le coffre de démonstration utilise des visuels paysage 1080 × 720 ; son `imageAspectRatio` vaut 2/3 (hauteur / largeur) dans les vues cartes, pour éviter un cadre portrait vide autour de ces images. Le thème respecte le ratio choisi par la Base. Il conserve les fiches et exporte les captures et le rapport JSON. Le test de palettes applique leurs classes CSS directement ; il ne nécessite pas Style Settings. Les contrôles de géométrie s’effectuent après la fin des transitions natives.
+
+`outils/verifier-proprietes.py` utilise les mêmes arguments sur ce coffre isolé. Il crée puis supprime sa note temporaire et vérifie les libellés longs, URL, listes, champs vides, cases à cocher, nombres, fenêtres étroites, édition d’une valeur et renommage d’une clé dans le YAML. Les règles d’alignement ciblent uniquement le bloc natif de propriétés ; les tableaux et cartes de Bases conservent leur grille.
 
 Ce test sous Linux ne valide pas une exécution sur macOS ni sur téléphone.
 
