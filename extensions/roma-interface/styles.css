@@ -1,13 +1,16 @@
 .roma-note-sheet {
+  --roma-note-sheet-inset: var(--tasogare-espace-6, var(--size-2-3));
   position: absolute;
-  inset-block: 0;
-  inset-inline-end: 0;
+  inset-block: var(--roma-note-sheet-inset);
+  inset-inline-end: var(--roma-note-sheet-inset);
   z-index: 1;
   inline-size: clamp(min(100%, 22rem), 45%, 36rem);
+  max-inline-size: calc(100% - 2 * var(--roma-note-sheet-inset));
   overflow: auto;
   overscroll-behavior: contain;
   padding: var(--size-4-4);
-  border-inline-start: var(--border-width) solid var(--background-modifier-border);
+  border: var(--tasogare-filet, var(--border-width)) solid var(--background-modifier-border);
+  border-radius: max(0px, calc(var(--tasogare-rayon-carte, var(--radius-l)) - var(--roma-note-sheet-inset)));
   background: var(--background-primary);
   box-shadow: var(--shadow-s);
 }

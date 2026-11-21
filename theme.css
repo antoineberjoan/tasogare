@@ -127,6 +127,7 @@ body {
   --tasogare-taille-bouton-icone: calc(
     var(--tasogare-taille-icone) + 2 * var(--tasogare-espace-6)
   );
+  --tasogare-ecart-commandes: var(--tasogare-espace-4);
   --tasogare-trait-icone: 1.75px;
 
   /* Dimensions */
@@ -1654,7 +1655,7 @@ body:not(.is-mobile)
   background: var(--background-primary);
 }
 
-/* Un seul rôle de hauteur pour les barres. Les contrôles gardent leur CSS natif. */
+/* La barre d’onglets et ses commandes partagent l’échelle d’espace du thème. */
 body:not(.is-mobile)
   :where(.mod-root, .mod-right-split)
   .workspace-tab-header-container {
@@ -1710,6 +1711,45 @@ body:not(.is-mobile)
   :is(.workspace-tab-header-new-tab, .workspace-tab-header-tab-list) {
   align-self: center;
   padding-block: 0;
+  margin-inline-end: var(--tasogare-ecart-commandes);
+}
+body:not(.is-mobile)
+  :where(.workspace-tab-header-container)
+  .sidebar-toggle-button {
+  align-items: center;
+  padding-block: 0;
+}
+body:not(.is-mobile)
+  :where(.workspace-tab-header-container, .workspace-sidedock-vault-profile)
+  :is(
+    .workspace-tab-header-new-tab,
+    .workspace-tab-header-tab-list,
+    .sidebar-toggle-button,
+    .workspace-drawer-vault-actions
+  )
+  > .clickable-icon,
+body:not(.is-mobile)
+  :where(.mod-right-split) .workspace-tab-header-container .workspace-tab-header {
+  flex: none;
+  inline-size: var(--tasogare-taille-bouton-icone);
+  block-size: var(--tasogare-taille-bouton-icone);
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: var(--clickable-icon-radius);
+}
+body:not(.is-mobile) .mod-right-split
+  .workspace-tab-header-container .workspace-tab-header-container-inner {
+  align-items: center;
+  gap: var(--tasogare-ecart-commandes);
+  margin-block: 0;
+  padding-block: 0;
+}
+body:not(.is-mobile) :where(.mod-right-split)
+  .workspace-tab-header-container .workspace-tab-header-inner {
+  justify-content: center;
+  padding: 0;
+  border-radius: inherit;
 }
 
 /* Navigation avec libellés : structure adaptée de Labeled Nav (Kepano, MIT). */
@@ -1811,6 +1851,10 @@ body:not(.is-mobile) :where(.workspace-sidedock-vault-profile)
   order: 1;
   flex: none;
 }
+body:not(.is-mobile) :where(.workspace-sidedock-vault-profile)
+  .workspace-drawer-vault-actions {
+  gap: var(--tasogare-ecart-commandes);
+}
 body:not(.is-mobile) :where(.nav-file-title, .nav-folder-title).is-active {
   box-shadow: var(--tasogare-ombre-posee);
 }
@@ -1856,7 +1900,10 @@ body:not(.is-mobile) .status-bar > .plugin-backlink {
 @supports (anchor-name: --tasogare-note) {
   body:not(.is-mobile) .mod-left-split:not(.is-sidedock-collapsed)
     .workspace-sidedock-vault-profile {
-    padding-inline-end: calc(var(--tasogare-gouttiere-sidebar) + var(--tasogare-taille-bouton-icone));
+    padding-inline-end: calc(
+      var(--tasogare-gouttiere-sidebar) + var(--tasogare-taille-bouton-icone) +
+        var(--tasogare-ecart-commandes)
+    );
   }
   body:not(.is-mobile) .mod-left-split:not(.is-sidedock-collapsed)
     .workspace-drawer-vault-actions {
@@ -1867,7 +1914,7 @@ body:not(.is-mobile) .status-bar > .plugin-backlink {
     position: fixed;
     position-anchor: --tasogare-actions-coffre;
     inset-block-start: anchor(center);
-    inset-inline-start: anchor(end);
+    inset-inline-start: calc(anchor(end) + var(--tasogare-ecart-commandes));
     inset-inline-end: auto;
     height: var(--tasogare-taille-bouton-icone);
     translate: 0 -50%;

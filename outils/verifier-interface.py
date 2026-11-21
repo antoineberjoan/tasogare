@@ -435,7 +435,7 @@ def vault_chrome(app):
         button_center = button["y"] + button["height"] / 2
         assert abs(button_center - tools["y"] - tools["height"] / 2) < 1
         assert abs(button_center - collapse["y"] - collapse["height"] / 2) < 1
-        assert abs(tools["x"] + tools["width"] - collapse["x"]) < 1
+        assert abs(collapse["x"] - tools["x"] - tools["width"] - 4) < 1
         left_margin = button["x"] - panel["x"]
         right_margin = panel["x"] + panel["width"] - collapse["x"] - collapse["width"]
         assert right_margin > 10 and left_margin > right_margin
@@ -449,6 +449,25 @@ def vault_chrome(app):
         assert dropdown["x"] + dropdown["width"] <= width, dropdown
         page.keyboard.press("Escape")
         menu.wait_for(state="hidden")
+
+    app.sides(True, True)
+    controls = page.locator(".mod-root .workspace-tab-header-container").first.locator(
+        ":is(.workspace-tab-header-new-tab, .workspace-tab-header-tab-list, .sidebar-toggle-button) > .clickable-icon"
+    )
+    right_tabs = page.locator(".mod-right-split .workspace-tab-header-container .workspace-tab-header")
+    items = [item for item in controls.all() + right_tabs.all() if item.is_visible()]
+    boxes = [item.bounding_box() for item in items]
+    assert len(boxes) >= 4 and all(box["width"] == box["height"] == 28 for box in boxes), boxes
+    assert max(box["y"] for box in boxes) - min(box["y"] for box in boxes) < 1, boxes
+    for first, second in zip(right_tabs.all(), right_tabs.all()[1:]):
+        a, b = first.bounding_box(), second.bounding_box()
+        assert abs(b["x"] - a["x"] - a["width"] - 4) < 1, (a, b)
+    inactive = page.locator(".mod-right-split .workspace-tab-header:not(.is-active)").first
+    surface = inactive.locator(".workspace-tab-header-inner")
+    inactive.hover()
+    assert surface.bounding_box() == inactive.bounding_box()
+    assert surface.evaluate("e => getComputedStyle(e).backgroundColor") != "rgba(0, 0, 0, 0)"
+    app.sides(True, False)
 
     app.open(NOTE)
     page.evaluate("""async file => {
@@ -486,7 +505,7 @@ def vault_chrome(app):
             app.workspace.getLeavesOfType('markdown').find(item => item.view.file?.path === file)?.detach();
         }""", DATA + "/Alpha.md")
         page.set_viewport_size({"width": 1136, "height": 812})
-    return {"menu_aligne": True, "commandes_sur_une_ligne": True, "retroliens_au_survol": True, "ancrage_volet_actif": True}
+    return {"menu_aligne": True, "commandes_sur_une_ligne": True, "commandes_uniformes": True, "retroliens_au_survol": True, "ancrage_volet_actif": True}
 
 
 def interactions(app):
