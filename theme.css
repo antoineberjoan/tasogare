@@ -1611,8 +1611,9 @@ body:not(.is-mobile) :where(.metadata-container) .metadata-input-longtext {
 }
 
 /* Le cadre et les cartes ne changent que la présentation du bureau. */
-body:not(.is-mobile) :where(.workspace, .workspace-split.mod-root) {
-  background: var(--background-secondary);
+body:not(.is-mobile) .workspace,
+body:not(.is-mobile) .workspace-split.mod-root {
+  background-color: var(--background-secondary);
 }
 body:not(.is-mobile) :where(.workspace:not(.is-left-sidedock-open)) > .mod-root {
   padding-inline-start: var(--tasogare-inset);

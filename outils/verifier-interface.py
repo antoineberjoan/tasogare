@@ -302,7 +302,11 @@ def geometry(page):
     return page.evaluate("""() => {
         const r = e => e.getBoundingClientRect().toJSON();
         const visible = q => [...document.querySelectorAll(q)].find(e => e.getBoundingClientRect().width > 0);
-        return {main: r(document.querySelector('.mod-root')), card: r(visible('.mod-root .workspace-leaf')),
+        const main = document.querySelector('.mod-root');
+        const card = visible('.mod-root .workspace-leaf');
+        const background = e => getComputedStyle(e).backgroundColor;
+        return {main: r(main), card: r(card),
+            mainBackground: background(main), frameBackground: background(card.closest('.workspace-tab-container')), cardBackground: background(card),
             right: r(document.querySelector('.mod-right-split')), rightCard: visible('.mod-right-split .workspace-leaf') ? r(visible('.mod-right-split .workspace-leaf')) : null,
             header: r(document.querySelector('.mod-root .workspace-tab-header-container')),
             tab: r(document.querySelector('.mod-root .workspace-tab-header.is-active')),
@@ -327,6 +331,7 @@ def layouts(app):
                 g = geometry(app.page)
                 assert not g["overflow"], g
                 assert abs(g["card"]["left"] - g["main"]["left"] - (0 if left else 10)) < 1, g
+                assert g["mainBackground"] == g["frameBackground"] != g["cardBackground"], g
                 assert abs(g["main"]["right"] - g["card"]["right"] - 10) < 1, g
                 assert abs(g["main"]["bottom"] - g["card"]["bottom"] - 10) < 1, g
                 assert g["tab"]["top"] >= g["header"]["top"] + 9, g
