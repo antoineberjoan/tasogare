@@ -24,13 +24,13 @@ Les valeurs passent par les variables natives. Les boutons n’ont pas de pseudo
 
 Une note reste dans sa colonne de lecture de 640 px. La classe native `cssclasses: [wide]` remplace la largeur de lecture par 100 % dans cette note. Une Base intégrée suit alors la largeur de la page, sans translation ni compensation géométrique. Un fichier `.base` ouvert directement garde sa disposition native.
 
-Les propriétés utilisent la largeur intrinsèque de leur champ de clé. La clé occupe au plus la moitié de la rangée et la valeur peut se replier. Les deux-points sont visuels. Ces règles sont limitées au bloc de métadonnées de la note et ne concernent pas les menus de Bases. Le mobile et les moteurs sans `field-sizing: content` gardent l’alignement natif.
+Les propriétés alignent les valeurs sur une colonne commune. Sur ordinateur, la largeur du libellé suit le rôle typographique et occupe au plus 40 % de la rangée quand les champs sont côte à côte. Obsidian empile les champs sur les notes étroites. Le bouton d’ajout reste visible. Les règles sont limitées au bloc de métadonnées des notes.
 
 ## Surfaces
 
 [Minimal](https://github.com/kepano/obsidian-minimal) sert de référence pour les contrôles et la grille native. L’[article de James Bedford](https://www.thethinkers.club/p/how-to-make-obsidian-beautiful) décrit une configuration sobre de Minimal, pas une recette particulière pour les tableaux. Tasogare conserve ses couleurs, sa police et ses surfaces.
 
-Les tableaux Markdown et de Bases utilisent le fond de la carte, un en-tête teinté par le rôle de creux, les filets de tableau de la palette, un rayon de bloc et l’ombre posée. Une Base ouverte seule reçoit une marge intérieure de 14 px via `--bases-view-padding` sur sa vue tableau ; la barre d’outils native s’aligne sur cette marge. Les autres vues gardent leur disposition native. Le thème ne fixe ni les colonnes ni le ratio des couvertures. Il ne masque pas les outils d’édition ou le défilement des tableaux.
+Les tableaux Markdown et de Bases utilisent le fond de la carte, un en-tête teinté par le rôle de creux, les filets de tableau de la palette entre les lignes et les colonnes, un rayon de bloc et l’ombre posée. Une Base ouverte seule reçoit une marge intérieure de 14 px via `--bases-view-padding` sur sa vue tableau ; la barre d’outils native s’aligne sur cette marge. Les autres vues gardent leur disposition native. Le thème ne fixe ni les colonnes ni le ratio des couvertures. Il ne masque pas les outils d’édition ou le défilement des tableaux.
 
 La barre d’état est masquée par défaut sur ordinateur. Lorsqu’elle est affichée, une ancre CSS la place dans la dernière carte centrale visible ; sa largeur maximale vient de cette carte. Cette règle requiert le moteur de l’Obsidian 1.15 déclaré dans le manifeste. Les sidebars peuvent donc changer de taille sans coordonnée ajoutée au thème.
 

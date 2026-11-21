@@ -4,12 +4,14 @@
 
 ### Refonte
 
+- Grille fine entre les colonnes des Bases et des tableaux Markdown. Propriétés alignées sur une colonne commune et bouton d’ajout visible.
+
 - Tableaux de Bases séparés du panneau par une marge intérieure ; en-têtes teintés, libellés contrastés et filets de tableau de la palette. Contrôles natifs conservés.
 
 - Règles de composants réécrites à partir des variables et contrôles natifs d’Obsidian. Palettes et échelle typographique conservées.
 - Une seule source CSS, sans compilation, JavaScript d’affichage ni fragment supplémentaire. Sélecteurs limités à leur composant et règles distinctes pour le bureau.
 - Cadre et panneau droit avec le même inset ; rôle de hauteur commun aux barres d’onglets, séparé des contrôles de note. Onglets empilés conservés.
-- Propriétés natives en ligne sur ordinateur, éditables et repliables ; ajout accessible au clavier. Les autres actions d’édition restent visibles.
+- Propriétés natives éditables et repliables, avec ajout accessible au clavier. Les autres actions d’édition restent visibles.
 - Pages larges via `cssclasses: [wide]`, sans calcul de translation des Bases. Tableaux et cartes conservent les contrôles natifs.
 - Suppression des survols artificiels des icônes, des remplacements SVG des fichiers et des réglages géométriques des fenêtres.
 - Contrôles de source renforcés et un test d’interface autonome : données temporaires, parité Minimal, préservation des notes, palettes et dispositions.

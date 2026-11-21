@@ -357,12 +357,16 @@ def metadata(app):
             app.sides(True, right)
             rows = app.page.evaluate("""() => [...document.querySelectorAll('.metadata-container .metadata-property')].map(e => {
                 const k = e.querySelector('.metadata-property-key'), v = e.querySelector('.metadata-property-value');
-                return {key: e.dataset.propertyKey, row: e.getBoundingClientRect().toJSON(), keyWidth: k.getBoundingClientRect().width, value: v.getBoundingClientRect().toJSON()};
+                return {key: e.dataset.propertyKey, row: e.getBoundingClientRect().toJSON(), keyBox: k.getBoundingClientRect().toJSON(), value: v.getBoundingClientRect().toJSON()};
             })""")
             assert rows
             assert all(
-                r["keyWidth"] <= r["row"]["width"] / 2 + 1
+                r["keyBox"]["right"] <= r["row"]["right"] + 1
                 and r["value"]["right"] <= r["row"]["right"] + 1
+                and (
+                    r["keyBox"]["width"] <= r["row"]["width"] / 2 + 1
+                    or r["value"]["top"] > r["keyBox"]["top"] + r["keyBox"]["height"] / 2
+                )
                 for r in rows
             ), rows
             assert all(
@@ -375,7 +379,7 @@ def metadata(app):
                 if r["key"] in ["type", "domaine", "mots-clés", "source"]
             ]
             if rows[0]["row"]["width"] > 350:
-                assert len({round(r["value"]["x"]) for r in short}) >= 3
+                assert len({round(r["value"]["x"]) for r in short}) == 1
             results.append({"largeur": width, "droite": right})
     app.page.set_viewport_size({"width": 1136, "height": 812})
     value = app.page.locator('[data-property-key="type"] .metadata-input-longtext')
@@ -486,11 +490,12 @@ def table_surfaces(app):
                 marge: table.getBoundingClientRect().x - view.getBoundingClientRect().x,
                 contour: parseFloat(getComputedStyle(table).borderLeftWidth),
                 entete: getComputedStyle(header).backgroundColor,
+                separateur: parseFloat(getComputedStyle(header).getPropertyValue("--bases-table-column-border-width")),
                 corps: getComputedStyle(body).backgroundColor
             };
         }""")
         assert data["marge"] >= 14 and data["contour"] > 0, data
-        assert data["entete"] != data["corps"], data
+        assert data["entete"] != data["corps"] and data["separateur"] > 0, data
         app.screenshot("tableau-" + mode + ".png")
         app.open(NOTE)
         table = app.page.locator(".mod-root .markdown-preview-view table:visible")
@@ -498,9 +503,10 @@ def table_surfaces(app):
         markdown = table.evaluate("""el => ({
             contour: parseFloat(getComputedStyle(el).borderLeftWidth),
             entete: getComputedStyle(el.querySelector('thead tr')).backgroundColor,
-            corps: getComputedStyle(el).backgroundColor
+            corps: getComputedStyle(el).backgroundColor,
+            separateur: parseFloat(getComputedStyle(el.querySelector('td')).borderInlineEndWidth)
         })""")
-        assert markdown["contour"] > 0, markdown
+        assert markdown["contour"] > 0 and markdown["separateur"] > 0, markdown
         assert markdown["entete"] not in {markdown["corps"], "rgba(0, 0, 0, 0)"}, (
             markdown
         )

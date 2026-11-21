@@ -1238,7 +1238,6 @@ body {
   --metadata-padding: var(--tasogare-pas-proprietes);
   --metadata-property-padding: 0 var(--tasogare-pas-propriete);
   --metadata-property-radius: var(--tasogare-rayon-champ);
-  --metadata-label-width: var(--tasogare-largeur-libelle);
   --metadata-gap: var(--tasogare-ecart-proprietes);
   --metadata-property-background-hover: var(--background-modifier-hover);
   --metadata-label-background-active: transparent;
@@ -1247,15 +1246,15 @@ body {
   --table-border-width: var(--tasogare-filet);
   --table-header-border-width: var(--tasogare-filet);
   --table-row-last-border-width: 0;
-  --table-header-color: var(--text-muted);
+  --table-header-color: var(--text-normal);
   --table-header-weight: var(--tasogare-type-emphasis-weight);
   --table-cell-padding: var(--tasogare-espace-8) var(--tasogare-espace-14);
   --bases-table-row-height: var(--tasogare-hauteur-ligne-tableau);
-  --bases-table-column-border-width: 0;
+  --bases-table-column-border-width: var(--tasogare-filet);
   --bases-table-border-color: var(--tasogare-filet-tableau);
   --bases-table-header-background: var(--table-header-background);
   --bases-table-header-color: var(--text-normal);
-  --bases-table-header-weight: var(--tasogare-type-label-weight);
+  --bases-table-header-weight: var(--tasogare-type-emphasis-weight);
   --bases-table-group-background: var(--background-primary);
   --bases-table-row-background-hover: var(--background-modifier-hover);
   --bases-group-heading-property-color: var(--text-muted);
@@ -1447,12 +1446,6 @@ body {
   body.styled-scrollbars :hover::-webkit-scrollbar-thumb {
     background-color: var(--scrollbar-thumb-bg);
   }
-  :where(.metadata-container) .metadata-add-button {
-    opacity: 0;
-  }
-  :where(.metadata-container:is(:hover, :focus-within)) .metadata-add-button {
-    opacity: 1;
-  }
 }
 
 /* Métadonnées : les widgets et leur édition ne changent pas. */
@@ -1474,41 +1467,12 @@ body:not(.tasogare-icones-proprietes)
   --icon-stroke: var(--tasogare-trait-icone);
   margin-inline-end: var(--tasogare-ecart-icone-propriete);
 }
-@supports (field-sizing: content) {
-  body:not(.is-mobile) :where(.metadata-container) .metadata-property {
-    align-items: flex-start;
-  }
-  body:not(.is-mobile) :where(.metadata-container) .metadata-property-key {
-    inline-size: auto;
-    min-inline-size: 0;
-    max-inline-size: 50%;
-    flex: 0 0 auto;
-  }
-  body:not(.is-mobile)
-    :where(.metadata-container)
-    .metadata-property-key-input {
-    field-sizing: content;
-    inline-size: auto;
-    min-inline-size: 0;
-    max-inline-size: 100%;
-    flex: 0 1 auto;
-    padding-inline: 0;
-  }
-  body:not(.is-mobile)
-    :where(.metadata-container)
-    .metadata-property-key::after {
-    content: ":";
-    flex: none;
-  }
-  body:not(.is-mobile) :where(.metadata-container) .metadata-property-value {
-    min-inline-size: 0;
-    padding-inline-start: var(--tasogare-espace-4);
-  }
-  body:not(.is-mobile) :where(.metadata-container) .metadata-input-longtext {
-    padding-inline: 0;
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-  }
+body:not(.is-mobile) .metadata-container {
+  --metadata-label-width: min(var(--tasogare-largeur-libelle), 40%);
+}
+body:not(.is-mobile) :where(.metadata-container) .metadata-input-longtext {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 :where(.metadata-property-value, .bases-table-container) .external-link {
   color: var(--text-muted);
@@ -1549,6 +1513,11 @@ body:not(.tasogare-icones-proprietes)
   border-top-width: 0;
   border-bottom: var(--table-border-width) solid var(--table-border-color);
   vertical-align: top;
+}
+:where(.markdown-rendered, .cm-table-widget)
+  table:not(:where(.bases-table-container *))
+  :is(th, td):not(:last-child) {
+  border-inline-end: var(--table-border-width) solid var(--table-border-color);
 }
 :where(.markdown-rendered, .cm-table-widget)
   table:not(:where(.bases-table-container *))
