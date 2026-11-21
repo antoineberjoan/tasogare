@@ -15,7 +15,7 @@
 - Aide, réglages et repli sur la ligne du sélecteur de coffre. L’extension facultative Interface romā ajoute le tiroir de lecture et une sélection multiple des éléments visibles.
 - Marges latérales élargies dans la navigation gauche. Le tiroir d’Interface romā s’insère dans la carte active et laisse le panneau du graphe local accessible à côté.
 - Quand la navigation est repliée, l’inset gauche du cadre principal reprend le même fond que les autres bords. La navigation ouverte a davantage de marge au bord gauche.
-- Les icônes d’Obsidian dans les barres d’onglets utilisent la même surface de survol. Le tiroir de lecture reçoit un léger retrait et une bordure sur les quatre côtés.
+- Les icônes d’Obsidian dans les barres d’onglets utilisent la même surface de survol. Le tiroir de lecture reçoit un léger retrait et reprend la couleur d’accent sur ses quatre bords.
 - Les libellés d’onglet, les dossiers et les notes à la racine de la navigation gauche partagent le même alignement. Les sous-dossiers gardent leur retrait.
 - Propriétés natives éditables et repliables, avec ajout accessible au clavier. Les autres actions d’édition restent visibles.
 - Pages larges via `cssclasses: [wide]`, sans calcul de translation des Bases. Tableaux et cartes conservent les contrôles natifs.

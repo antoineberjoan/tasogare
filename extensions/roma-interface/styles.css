@@ -9,7 +9,7 @@
   overflow: auto;
   overscroll-behavior: contain;
   padding: var(--size-4-4);
-  border: var(--tasogare-filet, var(--border-width)) solid var(--background-modifier-border);
+  border: var(--tasogare-filet, var(--border-width)) solid var(--color-accent);
   border-radius: max(0px, calc(var(--tasogare-rayon-carte, var(--radius-l)) - var(--roma-note-sheet-inset)));
   background: var(--background-primary);
   box-shadow: var(--shadow-s);
