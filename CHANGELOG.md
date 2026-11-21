@@ -4,7 +4,7 @@
 
 ### Refonte
 
-- Crépuscule japonais, une palette claire et sombre inspirée du lac Ashi et de son torii.
+- Crépuscule japonais devient la palette par défaut, avec deux modes inspirés du lac Ashi et de son torii. Les palettes choisies dans Style Settings restent disponibles.
 - Larch associe l’or du mélèze aux tons de calcaire et d’épicéa. Graphite, Larch et Crépuscule japonais partagent le blanc et les gris neutres en mode clair.
 
 - Grille fine entre les colonnes des Bases et des tableaux Markdown. Propriétés alignées sur une colonne commune et bouton d’ajout visible.

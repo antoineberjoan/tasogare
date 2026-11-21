@@ -18,14 +18,18 @@ import sys
 
 THEME = pathlib.Path(__file__).resolve().parent.parent / "theme.css"
 
-# Un bloc de palette : .theme-light { … }, .theme-dark.tasogare-the { … }, etc.
+# Le bloc par défaut partage ses rôles avec l'option qui porte le même nom.
 # Un sélecteur précédé d'une virgule (le bloc des rôles) n'est pas une palette.
-BLOC = re.compile(r"(?<!,\n)^\.theme-(light|dark)(?:\.tasogare-([a-z]+))?\s*\{(.*?)^\}", re.S | re.M)
+BLOC = re.compile(
+    r"(?<!,\n)^\.theme-(light|dark)(?:\.tasogare-([a-z]+))?"
+    r"(?:,\s*\.theme-\1:not\(([^)]*)\))?\s*\{(.*?)^\}",
+    re.S | re.M,
+)
 VARIABLE = re.compile(r"--tasogare-([a-z0-9-]+):\s*([^;]+);")
 # Les noms affichés viennent des options de Style Settings, dans le même fichier.
 OPTION = re.compile(r"label: (.+)\n\s+value: tasogare-([a-z]+)")
 MODES = {"light": "clair", "dark": "sombre"}
-# La palette de base : ses blocs n'ont pas de classe, et les autres palettes en héritent.
+# Graphite définit les rôles communs hérités par les autres palettes.
 BASE = "graphite"
 
 # (texte, fond, minimum, usage)
@@ -62,6 +66,27 @@ def lire_noms(texte):
     return noms
 
 
+def lire_defaut(texte, noms):
+    """Vérifie que le choix de Style Settings et le CSS sans extension coïncident."""
+    defauts = re.findall(r"^[ \t]+default: tasogare-([a-z]+)[ \t]*$", texte, re.M)
+    if len(defauts) != 1 or defauts[0] not in noms:
+        raise Defaut("le réglage Palette doit avoir un défaut déclaré dans ses options")
+    defaut = defauts[0]
+    attendues = sorted(f".tasogare-{nom}" for nom in noms if nom != defaut)
+    modes = set()
+    for mode, palette, exclusions, _ in BLOC.findall(texte):
+        if not exclusions:
+            continue
+        if palette != defaut or mode in modes:
+            raise Defaut(f"sélecteur de palette par défaut inattendu ({mode})")
+        if sorted(classe.strip() for classe in exclusions.split(",")) != attendues:
+            raise Defaut(f"exclusions du défaut désynchronisées avec les options ({mode})")
+        modes.add(mode)
+    if modes != MODES.keys():
+        raise Defaut("le défaut doit s'appliquer sans extension dans les deux modes")
+    return defaut
+
+
 def resoudre(valeur, emplacements, sources, profondeur=0):
     """Remplace chaque var(--tasogare-x) par la valeur de l'emplacement x, sinon de la couleur source x."""
     if profondeur > 10:
@@ -82,7 +107,7 @@ def lire_palettes(texte, noms):
     """Rend {(palette, mode): {emplacement: valeur résolue}}, chaque palette héritant de la palette de base."""
     sources = dict(re.findall(r"--tasogare-([a-z0-9-]+):\s*(#[0-9a-fA-F]{6});", texte))
     brut = {}
-    for mode, palette, corps in BLOC.findall(texte):
+    for mode, palette, _, corps in BLOC.findall(texte):
         brut.setdefault((palette or BASE, mode), {}).update(VARIABLE.findall(corps))
     for palette in noms:
         for mode in MODES:
@@ -148,15 +173,15 @@ def verifier(palettes, noms):
 def accorder(texte, palettes):
     """Rend theme.css avec --tasogare-accent-h/s/l recalculés depuis l'accent de chaque palette."""
     def un(m):
-        corps = m.group(3)
+        corps = m.group(4)
         if "--tasogare-accent-h:" not in corps:
             return m.group(0)
         mode, palette = m.group(1), m.group(2) or BASE
         h, s, l = teinte(hexa(palettes[(palette, mode)]["accent"], f"{palette} / {MODES[mode]}, accent"))
         for cle, valeur in (("h", h), ("s", f"{s}%"), ("l", f"{l}%")):
             corps = re.sub(rf"(--tasogare-accent-{cle}:\s*)[^;]+;", rf"\g<1>{valeur};", corps)
-        debut = m.start(3) - m.start(0)
-        return m.group(0)[:debut] + corps + m.group(0)[debut + len(m.group(3)):]
+        debut = m.start(4) - m.start(0)
+        return m.group(0)[:debut] + corps + m.group(0)[debut + len(m.group(4)):]
     return BLOC.sub(un, texte)
 
 
@@ -174,6 +199,7 @@ def main():
     texte = THEME.read_text(encoding="utf-8")
     try:
         noms = lire_noms(texte)
+        lire_defaut(texte, noms)
         palettes = lire_palettes(texte, noms)
         if "--markdown" in sys.argv:
             markdown(palettes, noms)

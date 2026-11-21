@@ -37,20 +37,20 @@ settings:
     description: Les couleurs du thème, en clair comme en sombre.
     type: class-select
     allowEmpty: false
-    default: tasogare-graphite
+    default: tasogare-japon
     options:
       -
-        label: Graphite
-        value: tasogare-graphite
+        label: Crépuscule japonais
+        value: tasogare-japon
       -
         label: Larch
         value: tasogare-larch
       -
+        label: Graphite
+        value: tasogare-graphite
+      -
         label: Crépuscule alpin
         value: tasogare-crepuscule
-      -
-        label: Crépuscule japonais
-        value: tasogare-japon
       -
         label: Grès rosé
         value: tasogare-gres
@@ -539,7 +539,7 @@ body {
   --tasogare-part-defilement-actif: 55%;
 }
 
-/* ---------- Palette Graphite (par défaut) ----------
+/* ---------- Palette Graphite et rôles communs ----------
    Des gris neutres, un seul bleu pour l'accent. Aucune couleur écrite ici : chaque emplacement lit une couleur source.
    Changer une couleur source change la palette. Les autres palettes héritent des emplacements de Graphite. */
 .theme-light {
@@ -1180,8 +1180,14 @@ body {
   --tasogare-part-recherche: 15%;
 }
 
-/* ---------- Palette Crépuscule japonais ---------- */
-.theme-light.tasogare-japon {
+/* ---------- Palette Crépuscule japonais (par défaut) ----------
+   Sans classe de palette, ces rôles s'appliquent aussi sans Style Settings.
+   Le vérificateur compare les exclusions aux options du réglage. */
+.theme-light.tasogare-japon,
+.theme-light:not(
+  .tasogare-graphite, .tasogare-larch, .tasogare-crepuscule, .tasogare-gres,
+  .tasogare-the, .tasogare-lac, .tasogare-porte, .tasogare-galet
+) {
   --tasogare-accent-h: 8;
   --tasogare-accent-s: 51%;
   --tasogare-accent-l: 39%;
@@ -1199,7 +1205,11 @@ body {
   --tasogare-bleu: var(--tasogare-japon-bleu-clair);
 }
 
-.theme-dark.tasogare-japon {
+.theme-dark.tasogare-japon,
+.theme-dark:not(
+  .tasogare-graphite, .tasogare-larch, .tasogare-crepuscule, .tasogare-gres,
+  .tasogare-the, .tasogare-lac, .tasogare-porte, .tasogare-galet
+) {
   --tasogare-accent-h: 16;
   --tasogare-accent-s: 67%;
   --tasogare-accent-l: 68%;

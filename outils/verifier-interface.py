@@ -12,7 +12,7 @@ import json
 import shutil
 
 from playwright.sync_api import sync_playwright
-from palettes import THEME, lire_noms
+from palettes import THEME, lire_defaut, lire_noms
 
 FOLDER = "Notes/Test Tasogare"
 DATA = FOLDER + "/Données"
@@ -267,8 +267,11 @@ def palettes(app, reference):
     app.page.wait_for_selector(".metadata-container")
     results = []
     reference_palettes = lire_noms(reference) if reference else {}
+    texte = THEME.read_text()
+    noms = lire_noms(texte)
+    defaut = lire_defaut(texte, noms)
     try:
-        for palette in lire_noms(THEME.read_text()):
+        for palette in noms:
             app.page.evaluate(
                 "p => {for (const c of [...document.body.classList]) if (c.startsWith('tasogare-')) document.body.classList.remove(c); document.body.classList.add('tasogare-' + p)}",
                 palette,
@@ -289,6 +292,13 @@ def palettes(app, reference):
         app.page.evaluate(
             "() => {for (const c of [...document.body.classList]) if (c.startsWith('tasogare-')) document.body.classList.remove(c)}"
         )
+    for mode in ["dark", "light"]:
+        app.mode(mode)
+        attendu = next(
+            entree["mesures"] for entree in results
+            if entree["palette"] == defaut and entree["mode"] == mode
+        )
+        assert metrics(app.page) == attendu, {"défaut": defaut, "mode": mode}
     return results
 
 

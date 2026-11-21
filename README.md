@@ -10,7 +10,7 @@ La version 1.9.0 est une **version candidate**. La publication d’une release r
 
 La version publiée s’installe dans **Apparence → Thèmes → Gérer**. Pour un essai local, placer le dossier contenant `theme.css` et `manifest.json` dans `.obsidian/themes/Tasogare`, puis sélectionner Tasogare.
 
-Le thème fonctionne sans plugin communautaire. **Style Settings**, facultatif, permet de choisir une palette et d’afficher la barre d’état complète, les commandes du navigateur de fichiers ou les icônes de propriétés. Par défaut, le thème utilise Graphite et affiche les rétroliens au survol ou au focus de leur badge sur ordinateur.
+Le thème fonctionne sans plugin communautaire. **Style Settings**, facultatif, permet de choisir une palette et d’afficher la barre d’état complète, les commandes du navigateur de fichiers ou les icônes de propriétés. Par défaut, le thème utilise Crépuscule japonais et affiche les rétroliens au survol ou au focus de leur badge sur ordinateur.
 
 [Interface romā](extensions/roma-interface/README.md) est une extension séparée et facultative. Elle ouvre les fiches de Bases dans un tiroir de lecture à l’intérieur du volet et regroupe les éléments visibles dans un menu à choix multiples.
 
@@ -38,7 +38,7 @@ Crépuscule japonais reprend les tons du lac Ashi à l’heure bleue. Larch empr
 2. **Rôles** : variables natives d’Obsidian alimentées par ces données.
 3. **Composants** : règles limitées au cadre, aux onglets, à la navigation, aux propriétés et aux surfaces.
 
-Aucune compilation, aucun JavaScript d’affichage et aucun fragment CSS additionnel ne sont nécessaires. Sur ordinateur, la barre d’état suit le volet actif par ancrage CSS. Le menu natif du coffre s’aligne sous son bouton. Ses deux coordonnées définies en ligne par Obsidian nécessitent un remplacement ciblé. En l’absence d’ancrage CSS, Obsidian conserve son placement natif.
+Aucune compilation, aucun JavaScript d’affichage et aucun fragment CSS additionnel ne sont nécessaires. Sur ordinateur, la barre d’état suit le volet actif par ancrage CSS. Le même mécanisme place le menu du coffre sous son bouton. Obsidian définit les coordonnées du menu en ligne. Les deux déclarations `!important` du thème remplacent ces coordonnées uniquement sur ce menu. Le placement natif s’applique si l’ancrage CSS est indisponible ou si le sélecteur du menu ne correspond plus. [Recommandations officielles pour les thèmes](https://docs.obsidian.md/Themes/App+themes/Theme+guidelines)
 
 ## Vérifier
 
