@@ -426,6 +426,7 @@ def vault_chrome(app):
     actions = page.locator('.mod-left-split .workspace-drawer-vault-actions')
     toggle = page.locator('.mod-left-split .sidebar-toggle-button')
     sidebar = page.locator('.mod-left-split')
+    sidebar.locator('.workspace-tab-header[data-type="file-explorer"]').click()
     for width in [1136, 850]:
         page.set_viewport_size({"width": width, "height": 812})
         button = switcher.bounding_box()
@@ -439,6 +440,9 @@ def vault_chrome(app):
         left_margin = button["x"] - panel["x"]
         right_margin = panel["x"] + panel["width"] - collapse["x"] - collapse["width"]
         assert right_margin > 10 and left_margin > right_margin
+        tab_label = sidebar.locator('.workspace-tab-header-inner-title').first.bounding_box()
+        folder_label = sidebar.locator('.nav-folder-title-content').first.bounding_box()
+        assert abs(tab_label["x"] - folder_label["x"]) < 1, (tab_label, folder_label)
         switcher.click()
         menu = page.locator('body > .menu').filter(has_text="Manage vaults")
         menu.wait_for()

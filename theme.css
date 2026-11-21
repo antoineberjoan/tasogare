@@ -124,6 +124,7 @@ body {
 
   /* Icônes */
   --tasogare-taille-icone: 16px;
+  --tasogare-colonne-icone-nav: calc(var(--tasogare-taille-icone) + var(--tasogare-ecart-icone));
   --tasogare-taille-bouton-icone: calc(
     var(--tasogare-taille-icone) + 2 * var(--tasogare-espace-6)
   );
@@ -1754,8 +1755,7 @@ body:not(.is-mobile) :where(.mod-right-split)
 
 /* Navigation avec libellés : structure adaptée de Labeled Nav (Kepano, MIT). */
 body:not(.is-mobile)
-  .workspace-split.mod-left-split
-  :where(.workspace-tabs.mod-top)
+  .mod-left-split .workspace-tabs.mod-top
   .workspace-tab-header-container {
   position: relative;
   flex-direction: column;
@@ -1861,6 +1861,16 @@ body:not(.is-mobile) :where(.nav-file-title, .nav-folder-title).is-active {
 body:not(.is-mobile) :where(.mod-left-split [data-type="file-explorer"])
   .nav-files-container {
   padding-inline: var(--tasogare-gouttiere-sidebar-debut) var(--tasogare-gouttiere-sidebar);
+}
+body:not(.is-mobile) :where(.mod-left-split [data-type="file-explorer"])
+  .nav-file-title-content {
+  margin-inline-start: var(--tasogare-colonne-icone-nav);
+}
+body:not(.is-mobile) :where(.mod-left-split [data-type="file-explorer"])
+  .nav-folder-title > .collapse-icon {
+  position: static;
+  inline-size: var(--tasogare-taille-icone);
+  margin-inline: 0 var(--tasogare-ecart-icone);
 }
 
 /* Options d'affichage : aucun plugin nécessaire aux valeurs par défaut. */
