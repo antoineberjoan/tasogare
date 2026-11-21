@@ -1,10 +1,10 @@
 # Tasogare
 
-Un thème Obsidian calme : une carte de note dans un cadre de 10 px, des palettes et une typographie Inter commune au clair et au sombre.
+Un thème Obsidian calme : une carte de note dans un cadre de 10 px, neuf palettes et une typographie Inter commune au clair et au sombre.
 
 La version 1.9.0 est une **version candidate**. La publication d’une release reste distincte de la préparation du code.
 
-![Tasogare](screenshot.png)
+![Tasogare en Crépuscule japonais sombre, avec une note, un Kanban et le graphe local](screenshot.png)
 
 ## Installer
 
@@ -26,7 +26,9 @@ Le thème fonctionne sans plugin communautaire. **Style Settings**, facultatif, 
 cssclasses: [wide]
 ```
 
-Graphite, Larch et Crépuscule japonais utilisent des cartes blanches et un cadre gris neutre en mode clair. Larch reprend l’or du mélèze et Crépuscule japonais les tons du lac Ashi à l’heure bleue. La liste complète et les contrastes figurent dans [les couleurs](docs/couleur-obsidian.md). Les autres fondations sont décrites dans [docs](docs/README.md).
+Crépuscule japonais reprend les tons du lac Ashi à l’heure bleue. Larch emprunte l’or du mélèze. Les deux palettes et Graphite utilisent des cartes blanches et un cadre gris neutre en mode clair. Les neuf palettes et leurs contrastes sont détaillés dans [les couleurs](docs/couleur-obsidian.md).
+
+[Voir Crépuscule japonais, Larch et Graphite dans Obsidian](docs/apercu-palettes.png). La planche montre le tiroir de l’extension facultative Interface romā.
 
 ## Construire
 
