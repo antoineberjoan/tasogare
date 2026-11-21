@@ -94,8 +94,7 @@ body {
   --tasogare-pas-proprietes: var(--tasogare-espace-4) 0
     var(--tasogare-espace-sous-proprietes);
   --tasogare-pas-propriete: var(--tasogare-espace-4);
-  --tasogare-pas-selecteur-coffre: var(--tasogare-espace-6)
-    var(--tasogare-inset);
+  --tasogare-pas-selecteur-coffre: var(--tasogare-espace-6);
   --tasogare-flou-verre: var(--tasogare-espace-8);
   --tasogare-teinte-verre: 86%;
 
@@ -126,7 +125,7 @@ body {
   --tasogare-taille-icone: 16px;
   --tasogare-colonne-icone-nav: calc(var(--tasogare-taille-icone) + var(--tasogare-ecart-icone));
   --tasogare-taille-bouton-icone: calc(
-    var(--tasogare-taille-icone) + 2 * var(--tasogare-espace-6)
+    var(--tasogare-taille-icone) + 2 * var(--tasogare-espace-8)
   );
   --tasogare-ecart-commandes: var(--tasogare-espace-4);
   --tasogare-trait-icone: 1.75px;
@@ -457,6 +456,8 @@ body {
 /* ---------- Parts de transparence, communes à toutes les palettes ----------
    Une palette ne redéfinit une part que si sa couleur le demande. */
 .theme-light {
+  --tasogare-part-cadre-clair: 92%;
+  --tasogare-part-encre-secondaire-sur-cadre: 40%;
   --tasogare-part-survol: 5%;
   --tasogare-part-filet: 8%;
   --tasogare-part-filet-survol: 16%;
@@ -1291,11 +1292,33 @@ body {
   --graph-text: var(--text-muted);
 }
 
-/* Rayons des contrôles de bureau, y compris les valeurs spécifiques à macOS. */
+/* Rôles des surfaces et des contrôles de bureau. */
 body:not(.is-mobile) {
   --input-radius: var(--tasogare-rayon-champ);
   --clickable-icon-radius: var(--tasogare-rayon-champ);
   --modal-radius: var(--tasogare-rayon-fenetre);
+  --tab-container-background: var(--background-secondary);
+  --sidebar-tab-container-background: var(--tab-container-background);
+  --titlebar-background: var(--tab-container-background);
+  --titlebar-background-focused: var(--tab-container-background);
+  --ribbon-background: var(--tab-container-background);
+  --ribbon-background-collapsed: var(--tab-container-background);
+}
+body.theme-light:not(.is-mobile) {
+  --tab-container-background: color-mix(
+    in srgb,
+    var(--background-secondary) var(--tasogare-part-cadre-clair),
+    var(--text-normal)
+  );
+}
+body.theme-light:not(.is-mobile) .mod-left-split {
+  --nav-item-color: color-mix(
+    in srgb,
+    var(--text-muted) var(--tasogare-part-encre-secondaire-sur-cadre),
+    var(--text-normal)
+  );
+  --tab-text-color: var(--nav-item-color);
+  --tab-text-color-focused: var(--nav-item-color);
 }
 
 /* ---------- Couleurs : chaque rôle lit un emplacement de la palette active ---------- */
@@ -1615,7 +1638,7 @@ body:not(.is-mobile) :where(.metadata-container) .metadata-input-longtext {
 /* Le cadre et les cartes ne changent que la présentation du bureau. */
 body:not(.is-mobile) .workspace,
 body:not(.is-mobile) .workspace-split.mod-root {
-  background-color: var(--background-secondary);
+  background-color: var(--tab-container-background);
 }
 body:not(.is-mobile) :where(.workspace:not(.is-left-sidedock-open)) > .mod-root {
   padding-inline-start: var(--tasogare-inset);
@@ -1635,6 +1658,7 @@ body:not(.is-mobile)
   :is(
     .workspace-tabs,
     .workspace-tab-container,
+    .workspace-leaf,
     .workspace-leaf-content,
     .view-content,
     .nav-header
@@ -1645,7 +1669,7 @@ body:not(.is-mobile)
   :where(.mod-root, .mod-right-split)
   .workspace-tab-container {
   padding: 0 var(--tasogare-inset) var(--tasogare-inset) 0;
-  background: var(--background-secondary);
+  background: var(--tab-container-background);
 }
 body:not(.is-mobile) :where(.mod-root, .mod-right-split) .workspace-leaf {
   border-radius: var(--tasogare-rayon-carte);
@@ -1665,7 +1689,7 @@ body:not(.is-mobile)
   height: var(--header-height);
   padding-block: var(--tasogare-inset);
   align-items: center;
-  background: var(--background-secondary);
+  background: var(--tab-container-background);
 }
 body:not(.is-mobile)
   :where(.mod-root, .mod-right-split)
@@ -1803,7 +1827,7 @@ body:not(.is-mobile)
   :where(.workspace-tabs.mod-top)
   .workspace-tab-header-inner {
   gap: var(--tasogare-ecart-icone);
-  padding: var(--tasogare-espace-4) var(--tasogare-espace-8);
+  padding: var(--tasogare-espace-6) var(--tasogare-espace-8);
   border-radius: var(--tasogare-rayon-bloc);
 }
 body:not(.is-mobile)
@@ -1835,6 +1859,7 @@ body:not(.is-mobile) .workspace-split.mod-primary-split .workspace-sidedock-vaul
   order: 0;
   padding-block: var(--header-height) var(--tasogare-inset);
   padding-inline: var(--tasogare-gouttiere-sidebar-debut) var(--tasogare-gouttiere-sidebar);
+  background-color: var(--tab-container-background);
 }
 body:not(.is-mobile)
   .workspace-split.mod-primary-split
@@ -1842,6 +1867,7 @@ body:not(.is-mobile)
   .workspace-drawer-vault-switcher {
   flex: 0 1 auto;
   min-inline-size: 0;
+  gap: var(--tasogare-ecart-commandes);
   padding: var(--tasogare-pas-selecteur-coffre);
   border-radius: var(--tasogare-rayon-bloc);
   background: var(--background-modifier-hover);

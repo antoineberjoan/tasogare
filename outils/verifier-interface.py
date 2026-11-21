@@ -307,6 +307,9 @@ def geometry(page):
         const background = e => getComputedStyle(e).backgroundColor;
         return {main: r(main), card: r(card),
             mainBackground: background(main), frameBackground: background(card.closest('.workspace-tab-container')), cardBackground: background(card),
+            leftBackground: background(document.querySelector('.mod-left-split')),
+            vaultBackground: background(document.querySelector('.workspace-sidedock-vault-profile')),
+            rightBackground: background(document.querySelector('.mod-right-split')),
             right: r(document.querySelector('.mod-right-split')), rightCard: visible('.mod-right-split .workspace-leaf') ? r(visible('.mod-right-split .workspace-leaf')) : null,
             header: r(document.querySelector('.mod-root .workspace-tab-header-container')),
             tab: r(document.querySelector('.mod-root .workspace-tab-header.is-active')),
@@ -331,7 +334,10 @@ def layouts(app):
                 g = geometry(app.page)
                 assert not g["overflow"], g
                 assert abs(g["card"]["left"] - g["main"]["left"] - (0 if left else 10)) < 1, g
-                assert g["mainBackground"] == g["frameBackground"] != g["cardBackground"], g
+                assert (
+                    g["mainBackground"] == g["frameBackground"] == g["leftBackground"]
+                    == g["vaultBackground"] == g["rightBackground"] != g["cardBackground"]
+                ), g
                 assert abs(g["main"]["right"] - g["card"]["right"] - 10) < 1, g
                 assert abs(g["main"]["bottom"] - g["card"]["bottom"] - 10) < 1, g
                 assert g["tab"]["top"] >= g["header"]["top"] + 9, g
@@ -461,7 +467,7 @@ def vault_chrome(app):
     right_tabs = page.locator(".mod-right-split .workspace-tab-header-container .workspace-tab-header")
     items = [item for item in controls.all() + right_tabs.all() if item.is_visible()]
     boxes = [item.bounding_box() for item in items]
-    assert len(boxes) >= 4 and all(box["width"] == box["height"] == 28 for box in boxes), boxes
+    assert len(boxes) >= 4 and all(box["width"] == box["height"] == 32 for box in boxes), boxes
     assert max(box["y"] for box in boxes) - min(box["y"] for box in boxes) < 1, boxes
     for first, second in zip(right_tabs.all(), right_tabs.all()[1:]):
         a, b = first.bounding_box(), second.bounding_box()

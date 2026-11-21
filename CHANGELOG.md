@@ -17,6 +17,7 @@
 - Quand la navigation est repliée, l’inset gauche du cadre principal reprend le même fond que les autres bords. La navigation ouverte a davantage de marge au bord gauche.
 - Les icônes d’Obsidian dans les barres d’onglets utilisent la même surface de survol. Le tiroir de lecture reçoit un léger retrait et reprend la couleur d’accent sur ses quatre bords.
 - Les libellés d’onglet, les dossiers et les notes à la racine de la navigation gauche partagent le même alignement. Les sous-dossiers gardent leur retrait.
+- En mode clair, le fond commun du cadre et des panneaux latéraux se distingue davantage des cartes. Les onglets de navigation ont des zones de survol plus amples.
 - Propriétés natives éditables et repliables, avec ajout accessible au clavier. Les autres actions d’édition restent visibles.
 - Pages larges via `cssclasses: [wide]`, sans calcul de translation des Bases. Tableaux et cartes conservent les contrôles natifs.
 - Suppression des survols artificiels des icônes, des remplacements SVG des fichiers et des réglages géométriques des fenêtres.
