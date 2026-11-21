@@ -45,6 +45,9 @@ views:
     filters: note.achete == true
 """
 FIELDS = {
+    "cssclasses": ["projet"],
+    "titre": "Fiche projet",
+    "priorité": "Moyenne",
     "type": "Source",
     "domaine": "Connaissance",
     "mots-clés": [
@@ -376,6 +379,8 @@ def metadata(app):
                 return {key: e.dataset.propertyKey, row: e.getBoundingClientRect().toJSON(), keyBox: k.getBoundingClientRect().toJSON(), value: v.getBoundingClientRect().toJSON()};
             })""")
             assert rows
+            visible_keys = {r["key"] for r in rows if r["row"]["height"] > 0}
+            assert {"titre", "cssclasses", "priorité"} <= visible_keys, rows
             assert all(
                 r["keyBox"]["right"] <= r["row"]["right"] + 1
                 and r["value"]["right"] <= r["row"]["right"] + 1
@@ -398,10 +403,10 @@ def metadata(app):
                 assert len({round(r["value"]["x"]) for r in short}) == 1
             results.append({"largeur": width, "droite": right})
     app.page.set_viewport_size({"width": 1136, "height": 812})
-    value = app.page.locator('[data-property-key="type"] .metadata-input-longtext')
-    value.fill("Article")
+    value = app.page.locator('[data-property-key="priorité"] .metadata-input-longtext')
+    value.fill("Haute")
     value.press("Tab")
-    app.cache(NOTE, "type", "Article")
+    app.cache(NOTE, "priorité", "Haute")
     key = app.page.locator('[data-property-key="domaine"] .metadata-property-key-input')
     key.fill("champ temporaire")
     key.press("Enter")
@@ -423,6 +428,7 @@ def metadata(app):
         app.page.evaluate("c => document.body.classList.remove(c)", flag)
     return {
         "dispositions": results,
+        "champs_projet_visibles": True,
         "edition": True,
         "renommage": True,
         "ajout_au_clavier": True,

@@ -1630,16 +1630,6 @@ body {
   --file-line-width: 100%;
 }
 
-/* Dans une fiche projet, le nom et la mise en page figurent déjà à l’écran. */
-:where(.projet) .metadata-property:is(
-  [data-property-key="titre"],
-  [data-property-key="cssclasses"],
-  [data-property-key="priorité"]
-),
-:where(.projet) .bases-table-header-icon {
-  display: none;
-}
-
 @media (hover: hover) {
   body.styled-scrollbars ::-webkit-scrollbar-thumb {
     background-color: transparent;
