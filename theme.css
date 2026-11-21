@@ -2128,16 +2128,6 @@ body:not(.is-mobile) .status-bar > .plugin-backlink {
     max-inline-size: anchor-size(width);
     flex-wrap: wrap;
   }
-  body:not(.is-mobile) .workspace-sidedock-vault-profile .workspace-drawer-vault-switcher {
-    anchor-name: --tasogare-selecteur-coffre;
-  }
-  /* Obsidian place ce menu par coordonnées en ligne. Garder son menu et ses actions natifs. */
-  body:not(.is-mobile):has(.workspace-sidedock-vault-profile .workspace-drawer-vault-switcher.has-active-menu)
-    > .menu:has(.menu-item.mod-checked .menu-item-icon.mod-checked) {
-    position-anchor: --tasogare-selecteur-coffre;
-    left: anchor(left) !important;
-    top: anchor(bottom) !important;
-  }
 }
 @media (prefers-reduced-motion: reduce) {
   body {

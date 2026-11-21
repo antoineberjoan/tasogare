@@ -3,7 +3,7 @@
 import unittest
 
 from palettes import Defaut, resoudre
-from verifier import VAULT_MENU, check_source
+from verifier import check_source
 
 MARKER = "/* Couche 2 : rôles */\n"
 
@@ -48,11 +48,9 @@ class Controles(unittest.TestCase):
         errors = check_source(MARKER + ".note {padding: 0; padding: 0;}")
         self.assertTrue(any("répétée" in e for e in errors), errors)
 
-    def test_coordonnees_menu_coffre(self):
-        css = MARKER + VAULT_MENU + " {left: anchor(left) !important;}"
-        self.assertEqual(check_source(css), [])
-        self.assertTrue(check_source(css.replace(VAULT_MENU, ".menu")))
-        self.assertTrue(check_source(css.replace("anchor(left)", "0")))
+    def test_important_interdit_meme_sur_le_menu_natif(self):
+        css = MARKER + "body > .menu {left: anchor(left) ! IMPORTANT;}"
+        self.assertTrue(any("!important" in error for error in check_source(css)))
 
     def test_proprietes_portees(self):
         self.assertTrue(check_source(MARKER + ".metadata-property {flex: none;}"))

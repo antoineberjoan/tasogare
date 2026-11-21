@@ -14,7 +14,7 @@
 - Règles de composants réécrites à partir des variables et contrôles natifs d’Obsidian. Palettes et échelle typographique conservées.
 - Une seule source CSS, sans compilation, JavaScript d’affichage ni fragment supplémentaire. Sélecteurs limités à leur composant et règles distinctes pour le bureau.
 - Cadre et panneau droit avec le même inset ; rôle de hauteur commun aux barres d’onglets, séparé des contrôles de note. Onglets empilés conservés.
-- Menu natif du coffre aligné sous son bouton. Badge des rétroliens translucide au survol, avec un fond opaque lorsque la transparence est réduite. La barre d’état suit le volet actif dans une vue scindée.
+- Placement natif du menu du coffre. Badge des rétroliens translucide au survol, avec un fond opaque lorsque la transparence est réduite. La barre d’état suit le volet actif dans une vue scindée.
 - Aide, réglages et repli sur la ligne du sélecteur de coffre. L’extension facultative Interface romā ajoute le tiroir de lecture et une sélection multiple des éléments visibles.
 - Marges latérales élargies dans la navigation gauche. Le tiroir d’Interface romā s’insère dans la carte active et laisse le panneau du graphe local accessible à côté.
 - Quand la navigation est repliée, l’inset gauche du cadre principal reprend le même fond que les autres bords. La navigation ouverte a davantage de marge au bord gauche.

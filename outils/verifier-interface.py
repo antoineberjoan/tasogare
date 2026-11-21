@@ -456,11 +456,13 @@ def vault_chrome(app):
         switcher.click()
         menu = page.locator('body > .menu').filter(has_text="Manage vaults")
         menu.wait_for()
-        button = switcher.bounding_box()
         dropdown = menu.bounding_box()
-        assert abs(button["x"] - dropdown["x"]) < 1, (button, dropdown)
-        assert abs(button["y"] + button["height"] - dropdown["y"]) < 1, (button, dropdown)
-        assert dropdown["x"] + dropdown["width"] <= width, dropdown
+        assert 0 <= dropdown["x"] and dropdown["x"] + dropdown["width"] <= width, dropdown
+        assert menu.evaluate("""element => {
+            const computed = getComputedStyle(element);
+            return ['left', 'top'].every(key => element.style[key] && computed[key] === element.style[key]);
+        }"""), "Le placement du menu doit venir des coordonnées natives d’Obsidian."
+        menu.locator(".menu-item").filter(has_text="Manage vaults").click(trial=True)
         page.keyboard.press("Escape")
         menu.wait_for(state="hidden")
 
@@ -519,7 +521,7 @@ def vault_chrome(app):
             app.workspace.getLeavesOfType('markdown').find(item => item.view.file?.path === file)?.detach();
         }""", DATA + "/Alpha.md")
         page.set_viewport_size({"width": 1136, "height": 812})
-    return {"menu_aligne": True, "commandes_sur_une_ligne": True, "commandes_uniformes": True, "retroliens_au_survol": True, "ancrage_volet_actif": True}
+    return {"menu_natif": True, "commandes_sur_une_ligne": True, "commandes_uniformes": True, "retroliens_au_survol": True, "ancrage_volet_actif": True}
 
 
 def interactions(app):

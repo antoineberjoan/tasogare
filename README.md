@@ -38,7 +38,7 @@ Crépuscule japonais reprend les tons du lac Ashi à l’heure bleue. Larch empr
 2. **Rôles** : variables natives d’Obsidian alimentées par ces données.
 3. **Composants** : règles limitées au cadre, aux onglets, à la navigation, aux propriétés et aux surfaces.
 
-Aucune compilation, aucun JavaScript d’affichage et aucun fragment CSS additionnel ne sont nécessaires. Sur ordinateur, la barre d’état suit le volet actif par ancrage CSS. Le même mécanisme place le menu du coffre sous son bouton. Obsidian définit les coordonnées du menu en ligne. Les deux déclarations `!important` du thème remplacent ces coordonnées uniquement sur ce menu. Le placement natif s’applique si l’ancrage CSS est indisponible ou si le sélecteur du menu ne correspond plus. [Recommandations officielles pour les thèmes](https://docs.obsidian.md/Themes/App+themes/Theme+guidelines)
+Aucune compilation, aucun JavaScript d’affichage et aucun fragment CSS additionnel ne sont nécessaires. Sur ordinateur, la barre d’état suit le volet actif par ancrage CSS. Obsidian place le menu du coffre et les fragments CSS peuvent surcharger le thème. [Recommandations officielles pour les thèmes](https://docs.obsidian.md/Themes/App+themes/Theme+guidelines)
 
 ## Vérifier
 
@@ -60,7 +60,7 @@ python3 outils/verifier-interface.py \
   --sortie /chemin/des/resultats
 ```
 
-Le test crée ses trois fiches et sa Base, puis les supprime. Il vérifie les palettes, seize dispositions, l’alignement du menu du coffre, les rétroliens dans le volet actif, les propriétés longues et leur édition, la largeur des pages et la parité des interactions des Bases avec Minimal. Les fichiers Markdown préexistants doivent rester identiques. L’option `--reference /chemin/avant.css` compare aussi les couleurs et la typographie au thème précédent.
+Le test crée ses trois fiches et sa Base, puis les supprime. Il vérifie les palettes, seize dispositions, l’ouverture et le placement natifs du menu du coffre, les rétroliens dans le volet actif, les propriétés longues et leur édition, la largeur des pages et la parité des interactions des Bases avec Minimal. Les fichiers Markdown préexistants doivent rester identiques. L’option `--reference /chemin/avant.css` compare aussi les couleurs et la typographie au thème précédent.
 
 [AGENTS.md](AGENTS.md) porte le contrat de revue. Les tests sous Linux ne valident pas une installation sur Mac ni un appareil mobile réel.
 
