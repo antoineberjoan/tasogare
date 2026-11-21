@@ -1,0 +1,45 @@
+.roma-note-sheet-container {
+  justify-content: flex-end;
+  padding: var(--tasogare-inset, var(--size-4-3));
+}
+
+.roma-note-sheet-container .roma-note-sheet {
+  --modal-width: 36rem;
+  --modal-max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  border-radius: var(--tasogare-rayon-carte, var(--radius-l));
+  box-shadow: var(--shadow-l);
+}
+
+.roma-note-sheet-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--size-4-2);
+  margin-block-end: var(--size-4-4);
+}
+
+.roma-note-sheet-toolbar button {
+  margin-inline-start: auto;
+}
+
+.roma-note-sheet-badge {
+  padding: var(--size-2-1) var(--size-4-2);
+  border-radius: var(--radius-s);
+  background: var(--background-modifier-hover);
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+}
+
+.roma-visibility-field summary {
+  cursor: pointer;
+  padding: var(--size-4-2);
+}
+
+.roma-visibility-field label {
+  display: flex;
+  align-items: center;
+  gap: var(--size-4-2);
+  padding: var(--size-4-2);
+}

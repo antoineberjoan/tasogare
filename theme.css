@@ -44,8 +44,8 @@ settings:
     collapsed: false
   -
     id: tasogare-barre-etat
-    title: Afficher la barre d’état
-    description: La barre reste ancrée à la carte de note et respecte son inset.
+    title: Afficher toute la barre d’état
+    description: Par défaut, seuls les rétroliens apparaissent au survol. La barre suit la carte active.
     type: class-toggle
     default: false
   -
@@ -94,6 +94,8 @@ body {
   --tasogare-pas-propriete: var(--tasogare-espace-4);
   --tasogare-pas-selecteur-coffre: var(--tasogare-espace-6)
     var(--tasogare-inset);
+  --tasogare-flou-verre: var(--tasogare-espace-8);
+  --tasogare-teinte-verre: 86%;
 
   /* Rythme du texte, en em ou rem : il suit la taille du texte. */
   --tasogare-espace-paragraphe: 0.9rem;
@@ -120,6 +122,9 @@ body {
 
   /* Icônes */
   --tasogare-taille-icone: 16px;
+  --tasogare-taille-bouton-icone: calc(
+    var(--tasogare-taille-icone) + 2 * var(--tasogare-espace-6)
+  );
   --tasogare-trait-icone: 1.75px;
 
   /* Dimensions */
@@ -1439,6 +1444,16 @@ body {
   --file-line-width: 100%;
 }
 
+/* Dans une fiche projet, le nom et la mise en page figurent déjà à l’écran. */
+:where(.projet) .metadata-property:is(
+  [data-property-key="titre"],
+  [data-property-key="cssclasses"],
+  [data-property-key="priorité"]
+),
+:where(.projet) .bases-table-header-icon {
+  display: none;
+}
+
 @media (hover: hover) {
   body.styled-scrollbars ::-webkit-scrollbar-thumb {
     background-color: transparent;
@@ -1457,7 +1472,7 @@ body {
   text-transform: capitalize;
   color: var(--text-muted);
 }
-body:not(.tasogare-icones-proprietes)
+body:is([data-roma-visibilite]:not([data-roma-visibilite~="proprietes"]), :not([data-roma-visibilite], .tasogare-icones-proprietes))
   :where(.metadata-container)
   .metadata-property-icon {
   display: none;
@@ -1766,38 +1781,125 @@ body:not(.is-mobile)
   .workspace-tab-header-inner {
   background: var(--nav-item-background-hover);
 }
-body:not(.is-mobile) :where(.mod-left-split) .workspace-sidedock-vault-profile {
-  padding: var(--tasogare-inset);
+/* Le profil natif précède les onglets dans le flux de la sidebar. */
+body:not(.is-mobile) .workspace-split.mod-primary-split .workspace-sidedock-vault-profile {
+  --vault-profile-font-size: var(--font-ui-large);
+  --vault-profile-font-weight: var(--font-semibold);
+  order: 0;
+  padding: var(--header-height) var(--tasogare-inset) var(--tasogare-inset);
 }
-body:not(.is-mobile) :where(.mod-left-split) .workspace-drawer-vault-switcher {
+body:not(.is-mobile)
+  .workspace-split.mod-primary-split
+  .workspace-sidedock-vault-profile
+  .workspace-drawer-vault-switcher {
+  flex: 0 1 auto;
+  min-inline-size: 0;
   padding: var(--tasogare-pas-selecteur-coffre);
   border-radius: var(--tasogare-rayon-bloc);
+  background: var(--background-modifier-hover);
+}
+body:not(.is-mobile) :where(.workspace-sidedock-vault-profile)
+  .workspace-drawer-vault-switcher-icon {
+  order: 1;
+  flex: none;
 }
 body:not(.is-mobile) :where(.nav-file-title, .nav-folder-title).is-active {
   box-shadow: var(--tasogare-ombre-posee);
 }
 
 /* Options d'affichage : aucun plugin nécessaire aux valeurs par défaut. */
-body:not(.is-mobile):not(.tasogare-barre-etat) .status-bar,
-body:not(.is-mobile):not(.tasogare-actions-fichiers)
+body:not(.is-mobile):is([data-roma-visibilite]:not([data-roma-visibilite~="fichiers"]), :not([data-roma-visibilite], .tasogare-actions-fichiers))
   :where(.workspace-leaf-content[data-type="file-explorer"])
   .nav-header {
   display: none;
 }
+body:not(.is-mobile):is([data-roma-visibilite]:not([data-roma-visibilite~="etat"]), :not([data-roma-visibilite], .tasogare-barre-etat)) .status-bar {
+  --status-bar-background: transparent;
+}
+body:not(.is-mobile):is([data-roma-visibilite]:not([data-roma-visibilite~="etat"]), :not([data-roma-visibilite], .tasogare-barre-etat))
+  .status-bar > .status-bar-item:not(.plugin-backlink) {
+  display: none;
+}
+body:not(.is-mobile) .status-bar > .plugin-backlink {
+  color: var(--text-normal);
+  background: var(--background-secondary);
+  border: var(--tasogare-filet) solid var(--background-modifier-border);
+  border-radius: var(--tasogare-rayon-bloc);
+  box-shadow: var(--tasogare-ombre-posee);
+}
+@supports (backdrop-filter: blur(0)) {
+  @media not (prefers-reduced-transparency: reduce) {
+    body:not(.is-mobile) .status-bar > .plugin-backlink {
+      background: color-mix(in srgb, var(--background-secondary) var(--tasogare-teinte-verre), transparent);
+      backdrop-filter: blur(var(--tasogare-flou-verre));
+    }
+  }
+}
+@media (hover: hover) and (pointer: fine) {
+  body:not(.is-mobile):is([data-roma-visibilite]:not([data-roma-visibilite~="etat"]), :not([data-roma-visibilite], .tasogare-barre-etat))
+    .status-bar:not(:hover):not(:focus-within) > .plugin-backlink {
+    opacity: 0;
+  }
+}
 @supports (anchor-name: --tasogare-note) {
-  body:not(.is-mobile) :where(.mod-root) .workspace-leaf {
+  body:not(.is-mobile) .mod-left-split:not(.is-sidedock-collapsed)
+    .workspace-sidedock-vault-profile {
+    padding-inline-end: calc(var(--tasogare-inset) + var(--tasogare-taille-bouton-icone));
+  }
+  body:not(.is-mobile) .mod-left-split:not(.is-sidedock-collapsed)
+    .workspace-drawer-vault-actions {
+    anchor-name: --tasogare-actions-coffre;
+  }
+  body:not(.is-mobile) .mod-left-split:not(.is-sidedock-collapsed)
+    :where(.workspace-tabs.mod-top) .sidebar-toggle-button {
+    position: fixed;
+    position-anchor: --tasogare-actions-coffre;
+    inset-block-start: anchor(center);
+    inset-inline-start: anchor(end);
+    inset-inline-end: auto;
+    height: var(--tasogare-taille-bouton-icone);
+    translate: 0 -50%;
+  }
+  body:not(.is-mobile) .mod-left-split:not(.is-sidedock-collapsed)
+    :where(.workspace-tabs.mod-top) .workspace-tab-header-container-inner {
+    margin-block-start: 0;
+  }
+  body:not(.is-mobile) :where(.mod-root) .workspace-leaf.mod-active {
     anchor-name: --tasogare-note;
   }
-  body:not(.is-mobile) .status-bar {
+  body:not(.is-mobile):has(.mod-root .workspace-leaf.mod-active) .status-bar {
     position-anchor: --tasogare-note;
     bottom: anchor(bottom);
     inset-inline-end: anchor(end);
     max-inline-size: anchor-size(width);
     flex-wrap: wrap;
   }
+  body:not(.is-mobile) .workspace-sidedock-vault-profile .workspace-drawer-vault-switcher {
+    anchor-name: --tasogare-selecteur-coffre;
+  }
+  /* Obsidian place ce menu par coordonnées en ligne. Garder son menu et ses actions natifs. */
+  body:not(.is-mobile):has(.workspace-sidedock-vault-profile .workspace-drawer-vault-switcher.has-active-menu)
+    > .menu:has(.menu-item.mod-checked .menu-item-icon.mod-checked) {
+    position-anchor: --tasogare-selecteur-coffre;
+    left: anchor(left) !important;
+    top: anchor(bottom) !important;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   body {
     --anim-duration-fast: 0ms;
+  }
+}
+
+:where(body:not(.is-mobile) .mod-right-split [data-type="outline"])
+  .nav-buttons-container {
+  justify-content: end;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :where(body:not(.is-mobile) .mod-right-split)
+    [data-type="outline"]:not(:hover):not(:focus-within)
+    .nav-buttons-container {
+    opacity: 0;
   }
 }

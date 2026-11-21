@@ -394,7 +394,6 @@ def metadata(app):
     add.focus()
     assert add.evaluate("e => getComputedStyle(e).opacity") == "1"
     for flag, selector in [
-        ("tasogare-barre-etat", ".status-bar"),
         (
             "tasogare-actions-fichiers",
             '.workspace-leaf-content[data-type="file-explorer"] .nav-header',
@@ -412,6 +411,71 @@ def metadata(app):
         "renommage": True,
         "ajout_au_clavier": True,
     }
+
+
+def vault_chrome(app):
+    page = app.page
+    app.sides(True, False)
+    switcher = page.locator('.workspace-sidedock-vault-profile .workspace-drawer-vault-switcher')
+    actions = page.locator('.mod-left-split .workspace-drawer-vault-actions')
+    toggle = page.locator('.mod-left-split .sidebar-toggle-button')
+    for width in [1136, 850]:
+        page.set_viewport_size({"width": width, "height": 812})
+        button = switcher.bounding_box()
+        tools = actions.bounding_box()
+        collapse = toggle.bounding_box()
+        button_center = button["y"] + button["height"] / 2
+        assert abs(button_center - tools["y"] - tools["height"] / 2) < 1
+        assert abs(button_center - collapse["y"] - collapse["height"] / 2) < 1
+        assert abs(tools["x"] + tools["width"] - collapse["x"]) < 1
+        switcher.click()
+        menu = page.locator('body > .menu').filter(has_text="Manage vaults")
+        menu.wait_for()
+        button = switcher.bounding_box()
+        dropdown = menu.bounding_box()
+        assert abs(button["x"] - dropdown["x"]) < 1, (button, dropdown)
+        assert abs(button["y"] + button["height"] - dropdown["y"]) < 1, (button, dropdown)
+        assert dropdown["x"] + dropdown["width"] <= width, dropdown
+        page.keyboard.press("Escape")
+        menu.wait_for(state="hidden")
+
+    app.open(NOTE)
+    page.evaluate("""async file => {
+        const workspace = app.workspace;
+        const first = workspace.getMostRecentLeaf();
+        workspace.setActiveLeaf(first, {focus: true});
+        const second = workspace.getLeaf('split', 'vertical');
+        await second.setViewState({type: 'markdown', state: {file, mode: 'preview'}});
+    }""", DATA + "/Alpha.md")
+    badge = page.locator(".status-bar > .plugin-backlink")
+    bar = page.locator(".status-bar")
+    active_leaf = page.locator(".mod-root .workspace-leaf.mod-active")
+    try:
+        for file in [NOTE, DATA + "/Alpha.md"]:
+            page.evaluate("""file => {
+                const workspace = app.workspace;
+                const leaf = workspace.getLeavesOfType('markdown').find(item => item.view.file?.path === file);
+                workspace.setActiveLeaf(leaf, {focus: true});
+            }""", file)
+            page.mouse.move(300, 120)
+            pane = active_leaf.bounding_box()
+            status = bar.bounding_box()
+            assert abs(pane["x"] + pane["width"] - status["x"] - status["width"]) < 1, (pane, status)
+            assert abs(pane["y"] + pane["height"] - status["y"] - status["height"]) < 1, (pane, status)
+            assert badge.evaluate("e => getComputedStyle(e).opacity") == "0"
+            badge.hover()
+            assert badge.evaluate("e => getComputedStyle(e).opacity") == "1"
+            assert badge.evaluate("e => getComputedStyle(e).backdropFilter").startswith("blur(")
+        page.mouse.move(300, 120)
+        page.evaluate("() => document.body.classList.add('tasogare-barre-etat')")
+        assert badge.evaluate("e => getComputedStyle(e).opacity") == "1"
+    finally:
+        page.evaluate("""file => {
+            document.body.classList.remove('tasogare-barre-etat');
+            app.workspace.getLeavesOfType('markdown').find(item => item.view.file?.path === file)?.detach();
+        }""", DATA + "/Alpha.md")
+        page.set_viewport_size({"width": 1136, "height": 812})
+    return {"menu_aligne": True, "commandes_sur_une_ligne": True, "retroliens_au_survol": True, "ancrage_volet_actif": True}
 
 
 def interactions(app):
@@ -612,6 +676,7 @@ def main():
                 )
                 report["dispositions"] = layouts(app)
                 report["proprietes"] = metadata(app)
+                report["interface_coffre"] = vault_chrome(app)
                 report["largeur"] = wide(app)
                 report["surfaces_tableaux"] = table_surfaces(app)
                 for theme in ["Minimal", "Tasogare"]:
@@ -636,6 +701,7 @@ def main():
                 "palettes": len(report["palettes"]),
                 "dispositions": len(report["dispositions"]),
                 "proprietes": report["proprietes"],
+                "interface_coffre": report["interface_coffre"],
                 "parite_minimal": True,
             },
             ensure_ascii=False,

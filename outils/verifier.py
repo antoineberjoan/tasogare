@@ -8,6 +8,15 @@ import sys
 
 ROOT = Path(__file__).resolve().parent.parent
 MARKER = "<!-- Généré par `python3 outils/palettes.py --markdown`. Ne pas modifier à la main. -->\n"
+VAULT_MENU = (
+    'body:not(.is-mobile):has(.workspace-sidedock-vault-profile '
+    '.workspace-drawer-vault-switcher.has-active-menu) '
+    '> .menu:has(.menu-item.mod-checked .menu-item-icon.mod-checked)'
+)
+VAULT_MENU_COORDINATES = {
+    "left: anchor(left) !important",
+    "top: anchor(bottom) !important",
+}
 
 
 def css_rules(css):
@@ -22,10 +31,6 @@ def check_source(text):
     used = set(re.findall(r"var\(\s*(--tasogare-[\w-]+)\s*[,)]", css))
     errors.extend(f"Variable non déclarée : {name}" for name in sorted(used - declared))
     errors.extend(f"Variable inutilisée : {name}" for name in sorted(declared - used))
-    if "!important" in css:
-        errors.append(
-            "Déclaration !important : les surcharges doivent rester possibles."
-        )
     if re.search(r"@import|url\(\s*['\"]?(?:https?:)?//", css, re.I):
         errors.append("Ressource distante : le thème doit fonctionner hors ligne.")
     if "Couche 2 : rôles" not in text:
@@ -38,6 +43,15 @@ def check_source(text):
         if value not in {"1rem", "1em", "0ms"}:
             errors.append(f"Mesure littérale hors des fondations : {value}")
     for selector, declarations in css_rules(css):
+        # Le menu natif écrit ces deux coordonnées directement sur l’élément.
+        for declaration in declarations.split(";"):
+            if "!important" in declaration and (
+                " ".join(selector.split()) != VAULT_MENU
+                or " ".join(declaration.split()) not in VAULT_MENU_COORDINATES
+            ):
+                errors.append(
+                    "Déclaration !important : seules les coordonnées du menu du coffre sont permises."
+                )
         properties = re.findall(r"(?:^|;)\s*([\w-]+)\s*:", declarations)
         repeated = sorted({name for name in properties if properties.count(name) > 1})
         errors.extend(

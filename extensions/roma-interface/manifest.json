@@ -1,0 +1,9 @@
+{
+  "id": "roma-interface",
+  "name": "Interface romā",
+  "version": "0.1.0",
+  "minAppVersion": "1.15.0",
+  "description": "Ouvre les fiches de Bases dans un tiroir et regroupe les options de visibilité de Tasogare.",
+  "author": "Antoine Berjoan",
+  "isDesktopOnly": true
+}
