@@ -419,15 +419,20 @@ def vault_chrome(app):
     switcher = page.locator('.workspace-sidedock-vault-profile .workspace-drawer-vault-switcher')
     actions = page.locator('.mod-left-split .workspace-drawer-vault-actions')
     toggle = page.locator('.mod-left-split .sidebar-toggle-button')
+    sidebar = page.locator('.mod-left-split')
     for width in [1136, 850]:
         page.set_viewport_size({"width": width, "height": 812})
         button = switcher.bounding_box()
         tools = actions.bounding_box()
         collapse = toggle.bounding_box()
+        panel = sidebar.bounding_box()
         button_center = button["y"] + button["height"] / 2
         assert abs(button_center - tools["y"] - tools["height"] / 2) < 1
         assert abs(button_center - collapse["y"] - collapse["height"] / 2) < 1
         assert abs(tools["x"] + tools["width"] - collapse["x"]) < 1
+        left_margin = button["x"] - panel["x"]
+        right_margin = panel["x"] + panel["width"] - collapse["x"] - collapse["width"]
+        assert left_margin > 10 and abs(left_margin - right_margin) < 1
         switcher.click()
         menu = page.locator('body > .menu').filter(has_text="Manage vaults")
         menu.wait_for()

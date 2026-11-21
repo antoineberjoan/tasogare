@@ -1,6 +1,6 @@
 const {
-  Component, getFrontMatterInfo, MarkdownRenderer, Modal,
-  Notice, Plugin, PluginSettingTab, TFile,
+  Component, getFrontMatterInfo, MarkdownRenderer,
+  Notice, Plugin, PluginSettingTab, setIcon, TFile,
 } = require('obsidian');
 
 const visibilityOptions = [
@@ -9,21 +9,42 @@ const visibilityOptions = [
   { value: 'proprietes', label: 'Icônes des propriétés', legacy: 'tasogare-icones-proprietes' },
 ];
 
-class NoteSheet extends Modal {
-  constructor(app, file) {
-    super(app);
+class NoteSheet extends Component {
+  constructor(app, file, leaf, trigger, close) {
+    super();
+    this.app = app;
     this.file = file;
-    this.modalEl.addClass('roma-note-sheet');
-    this.containerEl.addClass('roma-note-sheet-container');
-    this.setTitle(file.basename);
+    this.leaf = leaf;
+    this.host = leaf.view.containerEl;
+    this.source = leaf.getViewState().state?.file;
+    this.trigger = trigger;
+    this.close = close;
   }
 
-  async onOpen() {
-    const renderer = new Component();
-    this.renderer = renderer;
-    renderer.load();
+  async onload() {
+    const sheet = this.host.createEl('aside', { cls: 'roma-note-sheet', attr: { 'aria-label': this.file.basename } });
+    const header = sheet.createEl('header', { cls: 'roma-note-sheet-header' });
+    header.createEl('h2', { cls: 'roma-note-sheet-title', text: this.file.basename });
+    const closeButton = header.createEl('button', {
+      cls: 'clickable-icon', attr: { type: 'button', 'aria-label': 'Fermer le tiroir' },
+    });
+    setIcon(closeButton, 'x');
+    this.registerDomEvent(closeButton, 'click', () => this.close());
+    this.registerDomEvent(sheet, 'keydown', event => {
+      if (event.key === 'Escape' && !event.defaultPrevented) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.close();
+      }
+    });
+    this.register(() => {
+      const hadFocus = sheet.contains(sheet.ownerDocument.activeElement);
+      sheet.remove();
+      if (hadFocus && this.trigger?.isConnected) this.trigger.focus({ preventScroll: true });
+    });
+    closeButton.focus({ preventScroll: true });
 
-    const toolbar = this.contentEl.createDiv({ cls: 'roma-note-sheet-toolbar' });
+    const toolbar = sheet.createDiv({ cls: 'roma-note-sheet-toolbar' });
     const properties = this.app.metadataCache.getFileCache(this.file)?.frontmatter;
     for (const key of ['statut', 'priorité']) {
       if (typeof properties?.[key] === 'string' && properties[key]) {
@@ -31,35 +52,35 @@ class NoteSheet extends Modal {
         badge.setAttribute('aria-label', `${key} ${properties[key]}`);
       }
     }
-    toolbar.createEl('button', { text: 'Ouvrir dans l’éditeur' }).addEventListener('click', async () => {
+    const editButton = toolbar.createEl('button', { text: 'Ouvrir dans l’éditeur' });
+    this.registerDomEvent(editButton, 'click', async () => {
       this.close();
       try {
-        await this.app.workspace.getLeaf(false).openFile(this.file, { state: { mode: 'source' } });
+        await this.leaf.openFile(this.file, { active: true, state: { mode: 'source' } });
       } catch {
         new Notice('Impossible d’ouvrir la fiche.');
       }
     });
 
-    const content = this.contentEl.createDiv({ cls: 'markdown-rendered roma-note-sheet-content' });
+    const content = sheet.createDiv({ cls: 'markdown-rendered roma-note-sheet-content' });
     try {
       const markdown = await this.app.vault.cachedRead(this.file);
-      if (this.renderer !== renderer) return;
+      if (!sheet.isConnected) return;
       const { contentStart } = getFrontMatterInfo(markdown);
       const body = markdown.slice(contentStart);
       if (body.trim()) {
-        await MarkdownRenderer.render(this.app, body, content, this.file.path, renderer);
+        await MarkdownRenderer.render(this.app, body, content, this.file.path, this);
       } else {
         content.createEl('p', { text: 'Cette fiche contient uniquement des propriétés.' });
       }
     } catch {
-      if (this.renderer === renderer) content.setText('Impossible de lire cette fiche.');
+      if (sheet.isConnected) content.setText('Impossible de lire cette fiche.');
     }
   }
 
-  onClose() {
-    this.renderer?.unload();
-    this.renderer = null;
-    this.contentEl.empty();
+  isMounted() {
+    return this.host.isConnected && this.leaf.view.containerEl === this.host
+      && this.leaf.getViewState().state?.file === this.source;
   }
 }
 
@@ -116,13 +137,22 @@ module.exports = class RomaInterface extends Plugin {
     }, { capture: true });
     this.registerEvent(this.app.workspace.on('file-menu', (menu, file) => {
       if (file instanceof TFile && file.extension === 'md') {
-        menu.addItem(item => item.setTitle('Aperçu à droite').setIcon('panel-right').onClick(() => this.openSheet(file)));
+        menu.addItem(item => item.setTitle('Aperçu à droite').setIcon('panel-right').onClick(() => {
+          const workspace = this.app.workspace;
+          const leaf = workspace.getMostRecentLeaf(workspace.rootSplit);
+          if (leaf) this.openSheet(file, leaf, document.activeElement);
+        }));
       }
     }));
+    const detachSheet = () => {
+      if (this.sheet && !this.sheet.isMounted()) this.closeSheet();
+    };
+    this.registerEvent(this.app.workspace.on('layout-change', detachSheet));
+    this.registerEvent(this.app.workspace.on('file-open', detachSheet));
   }
 
   onunload() {
-    this.sheet?.close();
+    this.closeSheet();
     document.body.removeAttribute('data-roma-visibilite');
   }
 
@@ -156,18 +186,29 @@ module.exports = class RomaInterface extends Plugin {
     if (!link) return;
     const reference = link.getAttribute('data-href');
     if (!reference || reference.includes('#')) return;
-    const source = this.app.workspace.getActiveFile()?.path ?? '';
+    let leaf;
+    this.app.workspace.iterateRootLeaves(candidate => {
+      if (candidate.view.containerEl.contains(target)) leaf = candidate;
+    });
+    if (!leaf) return;
+    const source = leaf.getViewState().state?.file ?? '';
     const file = this.app.metadataCache.getFirstLinkpathDest(reference, source);
     if (!(file instanceof TFile) || file.extension !== 'md') return;
 
     event.preventDefault();
     event.stopPropagation();
-    this.openSheet(file);
+    this.openSheet(file, leaf, target.closest('[tabindex="0"]') ?? document.activeElement);
   }
 
-  openSheet(file) {
-    this.sheet?.close();
-    this.sheet = new NoteSheet(this.app, file);
-    this.sheet.open();
+  closeSheet() {
+    if (!this.sheet) return;
+    const sheet = this.sheet;
+    this.sheet = null;
+    this.removeChild(sheet);
+  }
+
+  openSheet(file, leaf, trigger) {
+    this.closeSheet();
+    this.sheet = this.addChild(new NoteSheet(this.app, file, leaf, trigger, () => this.closeSheet()));
   }
 };

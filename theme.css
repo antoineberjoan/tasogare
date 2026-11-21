@@ -78,6 +78,7 @@ body {
 
   /* Rôles d'espace */
   --tasogare-inset: var(--tasogare-espace-10); /* l'inset unique du cadre */
+  --tasogare-gouttiere-sidebar: var(--tasogare-espace-14);
   --tasogare-ecart-icone: var(
     --tasogare-espace-10
   ); /* entre l'icône et le nom dans la sidebar */
@@ -1740,7 +1741,7 @@ body:not(.is-mobile)
   align-items: stretch;
   height: auto;
   margin-block: var(--tasogare-hauteur-barre) 0;
-  padding: var(--tasogare-espace-4) var(--tasogare-espace-8);
+  padding: var(--tasogare-espace-4) var(--tasogare-gouttiere-sidebar);
 }
 body:not(.is-mobile)
   .workspace-split.mod-left-split
@@ -1786,7 +1787,7 @@ body:not(.is-mobile) .workspace-split.mod-primary-split .workspace-sidedock-vaul
   --vault-profile-font-size: var(--font-ui-large);
   --vault-profile-font-weight: var(--font-semibold);
   order: 0;
-  padding: var(--header-height) var(--tasogare-inset) var(--tasogare-inset);
+  padding: var(--header-height) var(--tasogare-gouttiere-sidebar) var(--tasogare-inset);
 }
 body:not(.is-mobile)
   .workspace-split.mod-primary-split
@@ -1805,6 +1806,10 @@ body:not(.is-mobile) :where(.workspace-sidedock-vault-profile)
 }
 body:not(.is-mobile) :where(.nav-file-title, .nav-folder-title).is-active {
   box-shadow: var(--tasogare-ombre-posee);
+}
+body:not(.is-mobile) :where(.mod-left-split [data-type="file-explorer"])
+  .nav-files-container {
+  padding-inline: var(--tasogare-gouttiere-sidebar);
 }
 
 /* Options d'affichage : aucun plugin nécessaire aux valeurs par défaut. */
@@ -1844,7 +1849,7 @@ body:not(.is-mobile) .status-bar > .plugin-backlink {
 @supports (anchor-name: --tasogare-note) {
   body:not(.is-mobile) .mod-left-split:not(.is-sidedock-collapsed)
     .workspace-sidedock-vault-profile {
-    padding-inline-end: calc(var(--tasogare-inset) + var(--tasogare-taille-bouton-icone));
+    padding-inline-end: calc(var(--tasogare-gouttiere-sidebar) + var(--tasogare-taille-bouton-icone));
   }
   body:not(.is-mobile) .mod-left-split:not(.is-sidedock-collapsed)
     .workspace-drawer-vault-actions {

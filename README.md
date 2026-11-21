@@ -12,7 +12,7 @@ La version publiée s’installe dans **Apparence → Thèmes → Gérer**. Pour
 
 Le thème fonctionne sans plugin communautaire. **Style Settings**, facultatif, permet de choisir une palette et d’afficher la barre d’état complète, les commandes du navigateur de fichiers ou les icônes de propriétés. Par défaut, le thème utilise Graphite et affiche les rétroliens au survol ou au focus de leur badge sur ordinateur.
 
-[Interface romā](extensions/roma-interface/README.md) est une extension séparée et facultative. Elle ouvre les fiches de Bases dans un tiroir de lecture à droite et regroupe les éléments visibles dans un menu à choix multiples.
+[Interface romā](extensions/roma-interface/README.md) est une extension séparée et facultative. Elle ouvre les fiches de Bases dans un tiroir de lecture à l’intérieur du volet et regroupe les éléments visibles dans un menu à choix multiples.
 
 ## Utiliser
 
