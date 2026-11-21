@@ -5,7 +5,7 @@
 ### Refonte
 
 - Crépuscule japonais, une palette claire et sombre inspirée du lac Ashi et de son torii.
-- Larch associe l’or du mélèze aux tons de calcaire et d’épicéa. Graphite, Larch et Crépuscule japonais partagent des cartes blanches en mode clair.
+- Larch associe l’or du mélèze aux tons de calcaire et d’épicéa. Graphite, Larch et Crépuscule japonais partagent le blanc et les gris neutres en mode clair.
 
 - Grille fine entre les colonnes des Bases et des tableaux Markdown. Propriétés alignées sur une colonne commune et bouton d’ajout visible.
 

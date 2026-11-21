@@ -38,7 +38,7 @@ Chaque couleur d'une palette s'écrit une seule fois, dans le bloc « Couleurs s
 
 Le plugin communautaire **Style Settings** ajoute une liste « Palette » dans Réglages → Style Settings → Tasogare. Il pose la classe correspondant à l’option définie dans `theme.css`. Graphite s’applique par défaut et fournit les rôles que les autres palettes partagent.
 
-Graphite, Larch et Crépuscule japonais partagent le blanc pur des cartes en mode clair. Larch associe un cadre de papier chaud à l’or du mélèze. Crépuscule japonais reprend la brume du lac Ashi en clair et son bleu nuit en sombre. Le torii donne son accent à la palette.
+Graphite, Larch et Crépuscule japonais partagent des cartes blanches et un cadre gris neutre en mode clair. Larch utilise l’or du mélèze comme accent. Crépuscule japonais prend son accent du torii et son fond sombre du lac Ashi à l’heure bleue.
 
 ## Vérifier les contrastes
 
@@ -56,12 +56,12 @@ L'outil lit les palettes dans `theme.css`, applique les seuils de la spécificat
 
 | Emplacement | Clair | Sombre |
 | --- | --- | --- |
-| `cadre` | `#f2f2f7` | `#1c1c1e` |
+| `cadre` | `#f2f2f2` | `#1c1c1e` |
 | `carte` | `#ffffff` | `#2c2c2e` |
-| `creux` | `#f2f2f7` | `#242426` |
-| `encre` | `#1c1c1e` | `#f5f5f7` |
-| `encre-moyenne` | `#636366` | `#aeaeb2` |
-| `encre-pale` | `#8e8e93` | `#8e8e93` |
+| `creux` | `#f2f2f2` | `#242426` |
+| `encre` | `#1c1c1c` | `#f5f5f7` |
+| `encre-moyenne` | `#636363` | `#aeaeb2` |
+| `encre-pale` | `#8e8e8e` | `#8e8e93` |
 | `accent` | `#0066cc` | `#4da3ff` |
 | `accent-survol` | `#0050a8` | `#7bbcff` |
 | `action` | `#0071e3` | `#0071e3` |
@@ -85,12 +85,12 @@ L'outil lit les palettes dans `theme.css`, applique les seuils de la spécificat
 
 | Emplacement | Clair | Sombre |
 | --- | --- | --- |
-| `cadre` | `#e7e1d6` | `#14181b` |
+| `cadre` | `#f2f2f2` | `#14181b` |
 | `carte` | `#ffffff` | `#2a3236` |
-| `creux` | `#f7f4ee` | `#14181b` |
-| `encre` | `#14181b` | `#f7f4ee` |
-| `encre-moyenne` | `#535b59` | `#b7bebb` |
-| `encre-pale` | `#7f827e` | `#929a98` |
+| `creux` | `#f2f2f2` | `#14181b` |
+| `encre` | `#1c1c1c` | `#f7f4ee` |
+| `encre-moyenne` | `#636363` | `#b7bebb` |
+| `encre-pale` | `#8e8e8e` | `#929a98` |
 | `accent` | `#80540a` | `#e39b12` |
 | `accent-survol` | `#654007` | `#f1b24b` |
 | `action` | `#80540a` | `#e39b12` |
@@ -143,19 +143,19 @@ L'outil lit les palettes dans `theme.css`, applique les seuils de la spécificat
 
 | Emplacement | Clair | Sombre |
 | --- | --- | --- |
-| `cadre` | `#e9e1d5` | `#111c27` |
+| `cadre` | `#f2f2f2` | `#111c27` |
 | `carte` | `#ffffff` | `#1d2d3b` |
-| `creux` | `#e9e1d5` | `#152330` |
-| `encre` | `#283239` | `#f7f2e9` |
-| `encre-moyenne` | `#526168` | `#c1ccd2` |
-| `encre-pale` | `#777c7b` | `#8497a6` |
+| `creux` | `#f2f2f2` | `#152330` |
+| `encre` | `#1c1c1c` | `#f7f2e9` |
+| `encre-moyenne` | `#636363` | `#c1ccd2` |
+| `encre-pale` | `#8e8e8e` | `#8497a6` |
 | `accent` | `#983f31` | `#e49478` |
 | `accent-survol` | `#7d3025` | `#f5ad93` |
 | `action` | `#983f31` | `#e49478` |
 | `action-survol` | `#7d3025` | `#f5ad93` |
-| `sur-action` | `#f7f2e9` | `#111c27` |
+| `sur-action` | `#ffffff` | `#111c27` |
 | `coche` | `#983f31` | `#e49478` |
-| `coche-marque` | `#f7f2e9` | `#111c27` |
+| `coche-marque` | `#ffffff` | `#111c27` |
 | `surlignage` | `#edbe86` | `#edbe86` |
 | `selection` | `#8497a6` | `#8497a6` |
 | `recherche` | `#edbe86` | `#edbe86` |

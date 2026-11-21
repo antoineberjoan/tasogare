@@ -221,16 +221,19 @@ body {
    <palette>-<emplacement>-<mode>. Changer une couleur source change la palette partout. */
 body {
   --tasogare-blanc: #ffffff;
+  --tasogare-gris-clair: #f2f2f2;
+  --tasogare-encre-claire: #1c1c1c;
+  --tasogare-argent-clair: #8e8e8e;
 
   /* Graphite */
   --tasogare-graphite: #1c1c1e; /* Graphite */
   --tasogare-ardoise: #2c2c2e; /* Ardoise */
   --tasogare-ardoise-profonde: #242426; /* Ardoise profonde */
-  --tasogare-pierre: #636366; /* Pierre */
+  --tasogare-pierre: #636363; /* Pierre */
   --tasogare-argent: #8e8e93; /* Argent */
   --tasogare-brouillard: #aeaeb2; /* Brouillard */
-  --tasogare-trait: #d1d1d6; /* Trait */
-  --tasogare-cendre: #e5e5ea; /* Cendre */
+  --tasogare-trait: #d1d1d1; /* Trait */
+  --tasogare-cendre: #e5e5e5; /* Cendre */
   --tasogare-brume: #f2f2f7; /* Brume */
   --tasogare-neige-pale: #f5f5f7; /* Neige pâle */
   --tasogare-noir: #000000; /* Noir */
@@ -462,14 +465,8 @@ body {
   --tasogare-japon-lac: #1d2d3b;
   --tasogare-japon-profondeur: #152330;
   --tasogare-japon-washi: #f7f2e9;
-  --tasogare-japon-brume-clair: #e9e1d5;
   --tasogare-japon-brume-sombre: #c1ccd2;
   --tasogare-japon-gris-lac: #8497a6;
-  --tasogare-japon-encre-clair: #283239;
-  --tasogare-japon-encre-moyenne-clair: #526168;
-  --tasogare-japon-encre-pale-clair: #777c7b;
-  --tasogare-japon-filet-tableau-clair: #d9d2c7;
-  --tasogare-japon-filet-fort-clair: #beb8ae;
   --tasogare-japon-torii: #983f31;
   --tasogare-japon-torii-ombre: #7d3025;
   --tasogare-japon-cuivre: #e49478;
@@ -479,17 +476,13 @@ body {
   /* Larch · calcaire, épicéa, or de mélèze */
   --tasogare-larch-nuit: #14181b;
   --tasogare-larch-epicea: #2a3236;
-  --tasogare-larch-papier: #e7e1d6;
   --tasogare-larch-neige: #f7f4ee;
   --tasogare-larch-or: #e39b12;
   --tasogare-larch-or-clair: #f1b24b;
   --tasogare-larch-or-bruni: #80540a;
   --tasogare-larch-or-ombre: #654007;
-  --tasogare-larch-encre-moyenne-clair: #535b59;
-  --tasogare-larch-encre-pale-clair: #7f827e;
   --tasogare-larch-encre-moyenne-sombre: #b7bebb;
   --tasogare-larch-encre-pale-sombre: #929a98;
-  --tasogare-larch-filet-fort-clair: #beb9ab;
 }
 
 /* ---------- Parts de transparence, communes à toutes les palettes ----------
@@ -530,19 +523,19 @@ body {
   --tasogare-accent-s: 100%;
   --tasogare-accent-l: 40%;
 
-  --tasogare-cadre: var(--tasogare-brume);
+  --tasogare-cadre: var(--tasogare-gris-clair);
   --tasogare-carte: var(--tasogare-blanc);
   --tasogare-creux: var(
     --tasogare-cadre
   ); /* blocs de code, en-têtes de tableau */
   --tasogare-filet-tableau: var(--tasogare-cendre);
   --tasogare-filet-fort: var(--tasogare-trait);
-  --tasogare-voile: var(--tasogare-graphite);
-  --tasogare-ombre: var(--tasogare-graphite);
+  --tasogare-voile: var(--tasogare-encre-claire);
+  --tasogare-ombre: var(--tasogare-encre-claire);
 
-  --tasogare-encre: var(--tasogare-graphite);
+  --tasogare-encre: var(--tasogare-encre-claire);
   --tasogare-encre-moyenne: var(--tasogare-pierre); /* 5,4:1 sur le cadre */
-  --tasogare-encre-pale: var(--tasogare-argent); /* décor, jamais un libellé */
+  --tasogare-encre-pale: var(--tasogare-argent-clair); /* décor, jamais un libellé */
 
   --tasogare-accent: var(--tasogare-bleu-lien);
   --tasogare-accent-survol: var(--tasogare-bleu-profond);
@@ -555,7 +548,7 @@ body {
   --tasogare-surlignage: var(--tasogare-soleil);
   --tasogare-selection: var(--tasogare-bleu-ciel);
   --tasogare-recherche: var(--tasogare-soleil);
-  --tasogare-defilement: var(--tasogare-argent);
+  --tasogare-defilement: var(--tasogare-argent-clair);
   --tasogare-defilement-actif: var(--tasogare-bleu-action);
 
   --tasogare-rouge: var(--tasogare-rouge-feu);
@@ -1169,27 +1162,14 @@ body {
   --tasogare-accent-s: 51%;
   --tasogare-accent-l: 39%;
 
-  --tasogare-cadre: var(--tasogare-japon-brume-clair);
-  --tasogare-carte: var(--tasogare-blanc);
-  --tasogare-creux: var(--tasogare-japon-brume-clair);
-  --tasogare-filet-tableau: var(--tasogare-japon-filet-tableau-clair);
-  --tasogare-filet-fort: var(--tasogare-japon-filet-fort-clair);
-  --tasogare-voile: var(--tasogare-japon-encre-clair);
-  --tasogare-ombre: var(--tasogare-japon-encre-clair);
-  --tasogare-encre: var(--tasogare-japon-encre-clair);
-  --tasogare-encre-moyenne: var(--tasogare-japon-encre-moyenne-clair);
-  --tasogare-encre-pale: var(--tasogare-japon-encre-pale-clair);
   --tasogare-accent: var(--tasogare-japon-torii);
   --tasogare-accent-survol: var(--tasogare-japon-torii-ombre);
   --tasogare-action: var(--tasogare-japon-torii);
   --tasogare-action-survol: var(--tasogare-japon-torii-ombre);
-  --tasogare-sur-action: var(--tasogare-japon-washi);
   --tasogare-coche: var(--tasogare-japon-torii);
-  --tasogare-coche-marque: var(--tasogare-japon-washi);
   --tasogare-surlignage: var(--tasogare-japon-lueur);
   --tasogare-selection: var(--tasogare-japon-gris-lac);
   --tasogare-recherche: var(--tasogare-japon-lueur);
-  --tasogare-defilement: var(--tasogare-japon-encre-moyenne-clair);
   --tasogare-defilement-actif: var(--tasogare-japon-torii);
   --tasogare-rouge: var(--tasogare-japon-torii);
   --tasogare-bleu: var(--tasogare-japon-bleu-clair);
@@ -1229,27 +1209,14 @@ body {
   --tasogare-accent-s: 86%;
   --tasogare-accent-l: 27%;
 
-  --tasogare-cadre: var(--tasogare-larch-papier);
-  --tasogare-carte: var(--tasogare-blanc);
-  --tasogare-creux: var(--tasogare-larch-neige);
-  --tasogare-filet-tableau: var(--tasogare-larch-papier);
-  --tasogare-filet-fort: var(--tasogare-larch-filet-fort-clair);
-  --tasogare-voile: var(--tasogare-larch-nuit);
-  --tasogare-ombre: var(--tasogare-larch-nuit);
-  --tasogare-encre: var(--tasogare-larch-nuit);
-  --tasogare-encre-moyenne: var(--tasogare-larch-encre-moyenne-clair);
-  --tasogare-encre-pale: var(--tasogare-larch-encre-pale-clair);
   --tasogare-accent: var(--tasogare-larch-or-bruni);
   --tasogare-accent-survol: var(--tasogare-larch-or-ombre);
   --tasogare-action: var(--tasogare-larch-or-bruni);
   --tasogare-action-survol: var(--tasogare-larch-or-ombre);
-  --tasogare-sur-action: var(--tasogare-blanc);
   --tasogare-coche: var(--tasogare-larch-or-bruni);
-  --tasogare-coche-marque: var(--tasogare-blanc);
   --tasogare-surlignage: var(--tasogare-larch-or-clair);
   --tasogare-selection: var(--tasogare-larch-or-clair);
   --tasogare-recherche: var(--tasogare-larch-or);
-  --tasogare-defilement: var(--tasogare-larch-encre-moyenne-clair);
   --tasogare-defilement-actif: var(--tasogare-larch-or-bruni);
   --tasogare-jaune: var(--tasogare-larch-or-bruni);
 }

@@ -26,7 +26,7 @@ Le thème fonctionne sans plugin communautaire. **Style Settings**, facultatif, 
 cssclasses: [wide]
 ```
 
-Graphite, Larch et Crépuscule japonais utilisent des cartes blanches en mode clair. Larch reprend l’or du mélèze et Crépuscule japonais les tons du lac Ashi à l’heure bleue. La liste complète et les contrastes figurent dans [les couleurs](docs/couleur-obsidian.md). Les autres fondations sont décrites dans [docs](docs/README.md).
+Graphite, Larch et Crépuscule japonais utilisent des cartes blanches et un cadre gris neutre en mode clair. Larch reprend l’or du mélèze et Crépuscule japonais les tons du lac Ashi à l’heure bleue. La liste complète et les contrastes figurent dans [les couleurs](docs/couleur-obsidian.md). Les autres fondations sont décrites dans [docs](docs/README.md).
 
 ## Construire
 
