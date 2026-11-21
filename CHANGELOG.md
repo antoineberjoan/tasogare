@@ -14,6 +14,7 @@
 - Menu natif du coffre aligné sous son bouton. Badge des rétroliens translucide au survol, avec un fond opaque lorsque la transparence est réduite. La barre d’état suit le volet actif dans une vue scindée.
 - Aide, réglages et repli sur la ligne du sélecteur de coffre. L’extension facultative Interface romā ajoute le tiroir de lecture et une sélection multiple des éléments visibles.
 - Marges latérales élargies dans la navigation gauche. Le tiroir d’Interface romā s’insère dans la carte active et laisse le panneau du graphe local accessible à côté.
+- Le cadre principal conserve son inset gauche quand la navigation est repliée. La navigation ouverte a davantage de marge au bord gauche.
 - Propriétés natives éditables et repliables, avec ajout accessible au clavier. Les autres actions d’édition restent visibles.
 - Pages larges via `cssclasses: [wide]`, sans calcul de translation des Bases. Tableaux et cartes conservent les contrôles natifs.
 - Suppression des survols artificiels des icônes, des remplacements SVG des fichiers et des réglages géométriques des fenêtres.

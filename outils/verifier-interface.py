@@ -326,6 +326,7 @@ def layouts(app):
                 app.sides(left, right)
                 g = geometry(app.page)
                 assert not g["overflow"], g
+                assert abs(g["card"]["left"] - g["main"]["left"] - (0 if left else 10)) < 1, g
                 assert abs(g["main"]["right"] - g["card"]["right"] - 10) < 1, g
                 assert abs(g["main"]["bottom"] - g["card"]["bottom"] - 10) < 1, g
                 assert g["tab"]["top"] >= g["header"]["top"] + 9, g
@@ -432,7 +433,7 @@ def vault_chrome(app):
         assert abs(tools["x"] + tools["width"] - collapse["x"]) < 1
         left_margin = button["x"] - panel["x"]
         right_margin = panel["x"] + panel["width"] - collapse["x"] - collapse["width"]
-        assert left_margin > 10 and abs(left_margin - right_margin) < 1
+        assert right_margin > 10 and left_margin > right_margin
         switcher.click()
         menu = page.locator('body > .menu').filter(has_text="Manage vaults")
         menu.wait_for()

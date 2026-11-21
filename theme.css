@@ -79,6 +79,7 @@ body {
   /* Rôles d'espace */
   --tasogare-inset: var(--tasogare-espace-10); /* l'inset unique du cadre */
   --tasogare-gouttiere-sidebar: var(--tasogare-espace-14);
+  --tasogare-gouttiere-sidebar-debut: calc(var(--tasogare-gouttiere-sidebar) + var(--tasogare-espace-6));
   --tasogare-ecart-icone: var(
     --tasogare-espace-10
   ); /* entre l'icône et le nom dans la sidebar */
@@ -1613,6 +1614,9 @@ body:not(.is-mobile) :where(.metadata-container) .metadata-input-longtext {
 body:not(.is-mobile) :where(.workspace, .workspace-split.mod-root) {
   background: var(--background-secondary);
 }
+body:not(.is-mobile) :where(.workspace:not(.is-left-sidedock-open)) > .mod-root {
+  padding-inline-start: var(--tasogare-inset);
+}
 body:not(.is-mobile)
   :where(
     .workspace-split,
@@ -1741,7 +1745,8 @@ body:not(.is-mobile)
   align-items: stretch;
   height: auto;
   margin-block: var(--tasogare-hauteur-barre) 0;
-  padding: var(--tasogare-espace-4) var(--tasogare-gouttiere-sidebar);
+  padding-block: var(--tasogare-espace-4);
+  padding-inline: var(--tasogare-gouttiere-sidebar-debut) var(--tasogare-gouttiere-sidebar);
 }
 body:not(.is-mobile)
   .workspace-split.mod-left-split
@@ -1787,7 +1792,8 @@ body:not(.is-mobile) .workspace-split.mod-primary-split .workspace-sidedock-vaul
   --vault-profile-font-size: var(--font-ui-large);
   --vault-profile-font-weight: var(--font-semibold);
   order: 0;
-  padding: var(--header-height) var(--tasogare-gouttiere-sidebar) var(--tasogare-inset);
+  padding-block: var(--header-height) var(--tasogare-inset);
+  padding-inline: var(--tasogare-gouttiere-sidebar-debut) var(--tasogare-gouttiere-sidebar);
 }
 body:not(.is-mobile)
   .workspace-split.mod-primary-split
@@ -1809,7 +1815,7 @@ body:not(.is-mobile) :where(.nav-file-title, .nav-folder-title).is-active {
 }
 body:not(.is-mobile) :where(.mod-left-split [data-type="file-explorer"])
   .nav-files-container {
-  padding-inline: var(--tasogare-gouttiere-sidebar);
+  padding-inline: var(--tasogare-gouttiere-sidebar-debut) var(--tasogare-gouttiere-sidebar);
 }
 
 /* Options d'affichage : aucun plugin nécessaire aux valeurs par défaut. */
