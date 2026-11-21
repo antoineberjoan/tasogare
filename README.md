@@ -2,8 +2,6 @@
 
 Un thème Obsidian calme : une carte de note dans un cadre de 10 px, neuf palettes et une typographie Inter commune au clair et au sombre.
 
-La version 1.9.0 est une **version candidate**. La publication d’une release reste distincte de la préparation du code.
-
 ![Tasogare en Crépuscule japonais sombre, avec une note, un Kanban et le graphe local](screenshot.png)
 
 ## Installer
@@ -63,6 +61,10 @@ python3 outils/verifier-interface.py \
 Le test crée ses trois fiches et sa Base, puis les supprime. Il vérifie les palettes, seize dispositions, l’ouverture et le placement natifs du menu du coffre, les rétroliens dans le volet actif, les propriétés longues et leur édition, la largeur des pages et la parité des interactions des Bases avec Minimal. Les fichiers Markdown préexistants doivent rester identiques. L’option `--reference /chemin/avant.css` compare aussi les couleurs et la typographie au thème précédent.
 
 [AGENTS.md](AGENTS.md) porte le contrat de revue. Les tests sous Linux ne valident pas une installation sur Mac ni un appareil mobile réel.
+
+## Publier
+
+Le tag doit correspondre à la version du manifeste. Un tag ordinaire crée un brouillon. Un tag annoté dont le sujet est `Publier Tasogare <version>` publie la release après validation du thème et ajout de `manifest.json` et `theme.css`.
 
 ## Crédits et licence
 

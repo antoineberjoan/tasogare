@@ -1,4 +1,5 @@
-# Crée un brouillon de release quand on pousse un tag (par exemple 1.7.0).
+# Un tag ordinaire crée un brouillon. Le sujet « Publier Tasogare <version> »
+# sur un tag annoté rend la release publique après les vérifications.
 # Le tag doit être identique à la version de manifest.json.
 # Les notes de release viennent de la section du même nom dans CHANGELOG.md.
 name: Release Obsidian theme
@@ -16,6 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
 
       - name: Vérifier que le tag correspond au manifeste
         run: |
@@ -24,7 +27,9 @@ jobs:
           test "$tag" = "$version" || { echo "Le tag $tag ne correspond pas à la version $version du manifeste."; exit 1; }
 
       - name: Vérifier le thème
-        run: python3 outils/verifier.py
+        run: |
+          python3 outils/verifier.py
+          python3 -m unittest discover -s outils -p 'test_*.py'
 
       - name: Extraire les notes de CHANGELOG.md
         run: |
@@ -32,13 +37,19 @@ jobs:
           awk -v v="## $tag" '$0 == v {dedans=1; next} /^## / {dedans=0} dedans' CHANGELOG.md > notes.md
           test -s notes.md || { echo "CHANGELOG.md n'a pas de section ## $tag."; exit 1; }
 
-      - name: Créer le brouillon de release
+      - name: Créer la release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           tag="${GITHUB_REF#refs/tags/}"
+          mode=(--draft)
+          subject="$(git for-each-ref --format='%(contents:subject)' "refs/tags/$tag")"
+          if [[ "$(git cat-file -t "refs/tags/$tag")" == tag && "$subject" == "Publier Tasogare $tag" ]]; then
+            mode=()
+          fi
           gh release create "$tag" \
             --title="$tag" \
             --notes-file notes.md \
-            --draft \
+            --verify-tag \
+            "${mode[@]}" \
             manifest.json theme.css
