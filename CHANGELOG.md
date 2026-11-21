@@ -4,6 +4,8 @@
 
 ### Refonte
 
+- Crépuscule japonais, une palette claire et sombre inspirée du lac Ashi et de son torii.
+
 - Grille fine entre les colonnes des Bases et des tableaux Markdown. Propriétés alignées sur une colonne commune et bouton d’ajout visible.
 
 - Tableaux de Bases séparés du panneau par une marge intérieure ; en-têtes teintés, libellés contrastés et filets de tableau de la palette. Contrôles natifs conservés.

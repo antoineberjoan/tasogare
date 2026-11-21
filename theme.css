@@ -22,6 +22,9 @@ settings:
         label: Crépuscule alpin
         value: tasogare-crepuscule
       -
+        label: Crépuscule japonais
+        value: tasogare-japon
+      -
         label: Grès rosé
         value: tasogare-gres
       -
@@ -451,6 +454,25 @@ body {
   --tasogare-galet-bleu-sombre: #a5b6cb; /* bleu, sombre */
   --tasogare-galet-violet-sombre: #bdb0cf; /* violet, sombre */
   --tasogare-galet-rose-sombre: #d6a7b3; /* rose, sombre */
+  /* Crépuscule japonais · lac Ashi */
+  --tasogare-japon-nuit: #111c27;
+  --tasogare-japon-lac: #1d2d3b;
+  --tasogare-japon-profondeur: #152330;
+  --tasogare-japon-washi: #f7f2e9;
+  --tasogare-japon-brume-clair: #e9e1d5;
+  --tasogare-japon-brume-sombre: #c1ccd2;
+  --tasogare-japon-gris-lac: #8497a6;
+  --tasogare-japon-encre-clair: #283239;
+  --tasogare-japon-encre-moyenne-clair: #526168;
+  --tasogare-japon-encre-pale-clair: #777c7b;
+  --tasogare-japon-filet-tableau-clair: #d9d2c7;
+  --tasogare-japon-filet-fort-clair: #beb8ae;
+  --tasogare-japon-torii: #983f31;
+  --tasogare-japon-torii-ombre: #7d3025;
+  --tasogare-japon-cuivre: #e49478;
+  --tasogare-japon-cuivre-clair: #f5ad93;
+  --tasogare-japon-lueur: #edbe86;
+  --tasogare-japon-bleu-clair: #496c83;
 }
 
 /* ---------- Parts de transparence, communes à toutes les palettes ----------
@@ -1122,6 +1144,66 @@ body {
 
   --tasogare-part-selection: 45%;
   --tasogare-part-recherche: 15%;
+}
+
+/* ---------- Palette Crépuscule japonais ---------- */
+.theme-light.tasogare-japon {
+  --tasogare-accent-h: 8;
+  --tasogare-accent-s: 51%;
+  --tasogare-accent-l: 39%;
+
+  --tasogare-cadre: var(--tasogare-japon-brume-clair);
+  --tasogare-carte: var(--tasogare-japon-washi);
+  --tasogare-creux: var(--tasogare-japon-brume-clair);
+  --tasogare-filet-tableau: var(--tasogare-japon-filet-tableau-clair);
+  --tasogare-filet-fort: var(--tasogare-japon-filet-fort-clair);
+  --tasogare-voile: var(--tasogare-japon-encre-clair);
+  --tasogare-ombre: var(--tasogare-japon-encre-clair);
+  --tasogare-encre: var(--tasogare-japon-encre-clair);
+  --tasogare-encre-moyenne: var(--tasogare-japon-encre-moyenne-clair);
+  --tasogare-encre-pale: var(--tasogare-japon-encre-pale-clair);
+  --tasogare-accent: var(--tasogare-japon-torii);
+  --tasogare-accent-survol: var(--tasogare-japon-torii-ombre);
+  --tasogare-action: var(--tasogare-japon-torii);
+  --tasogare-action-survol: var(--tasogare-japon-torii-ombre);
+  --tasogare-sur-action: var(--tasogare-japon-washi);
+  --tasogare-coche: var(--tasogare-japon-torii);
+  --tasogare-coche-marque: var(--tasogare-japon-washi);
+  --tasogare-surlignage: var(--tasogare-japon-lueur);
+  --tasogare-selection: var(--tasogare-japon-gris-lac);
+  --tasogare-recherche: var(--tasogare-japon-lueur);
+  --tasogare-defilement: var(--tasogare-japon-encre-moyenne-clair);
+  --tasogare-defilement-actif: var(--tasogare-japon-torii);
+  --tasogare-rouge: var(--tasogare-japon-torii);
+  --tasogare-bleu: var(--tasogare-japon-bleu-clair);
+}
+
+.theme-dark.tasogare-japon {
+  --tasogare-accent-h: 16;
+  --tasogare-accent-s: 67%;
+  --tasogare-accent-l: 68%;
+
+  --tasogare-cadre: var(--tasogare-japon-nuit);
+  --tasogare-carte: var(--tasogare-japon-lac);
+  --tasogare-creux: var(--tasogare-japon-profondeur);
+  --tasogare-voile: var(--tasogare-japon-brume-sombre);
+  --tasogare-ombre: var(--tasogare-japon-nuit);
+  --tasogare-encre: var(--tasogare-japon-washi);
+  --tasogare-encre-moyenne: var(--tasogare-japon-brume-sombre);
+  --tasogare-encre-pale: var(--tasogare-japon-gris-lac);
+  --tasogare-accent: var(--tasogare-japon-cuivre);
+  --tasogare-accent-survol: var(--tasogare-japon-cuivre-clair);
+  --tasogare-action: var(--tasogare-japon-cuivre);
+  --tasogare-action-survol: var(--tasogare-japon-cuivre-clair);
+  --tasogare-sur-action: var(--tasogare-japon-nuit);
+  --tasogare-coche: var(--tasogare-japon-cuivre);
+  --tasogare-coche-marque: var(--tasogare-japon-nuit);
+  --tasogare-surlignage: var(--tasogare-japon-lueur);
+  --tasogare-selection: var(--tasogare-japon-gris-lac);
+  --tasogare-recherche: var(--tasogare-japon-lueur);
+  --tasogare-defilement: var(--tasogare-japon-gris-lac);
+  --tasogare-defilement-actif: var(--tasogare-japon-cuivre);
+  --tasogare-bleu: var(--tasogare-japon-gris-lac);
 }
 
 /* ==========================================================

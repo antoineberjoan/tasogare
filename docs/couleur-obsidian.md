@@ -36,7 +36,9 @@ Chaque couleur d'une palette s'écrit une seule fois, dans le bloc « Couleurs s
 
 ## Choisir une palette
 
-Le plugin communautaire **Style Settings** ajoute une liste « Palette » dans Réglages → Style Settings → Tasogare. Il pose une classe sur la page : `tasogare-graphite`, `tasogare-crepuscule`, `tasogare-gres`, `tasogare-the`, `tasogare-lac`, `tasogare-porte` ou `tasogare-galet`. Sans le plugin, aucune classe n'est posée et Graphite s'applique : ses blocs n'ont pas de classe, et les autres palettes en héritent.
+Le plugin communautaire **Style Settings** ajoute une liste « Palette » dans Réglages → Style Settings → Tasogare. Il pose la classe correspondant à l’option définie dans `theme.css`. Graphite s’applique par défaut et fournit les rôles que les autres palettes partagent.
+
+Crépuscule japonais prend ses couleurs dans une interprétation du lac Ashi à l’heure bleue. Le papier washi inspire la carte claire, le lac la carte sombre et le torii l’accent.
 
 ## Vérifier les contrastes
 
@@ -107,6 +109,35 @@ L'outil lit les palettes dans `theme.css`, applique les seuils de la spécificat
 | `bleu` | `#4a6096` | `#8ca0dc` |
 | `violet` | `#6e6ba8` | `#b9b3d6` |
 | `rose` | `#be627c` | `#e8a3b4` |
+
+### Crépuscule japonais
+
+| Emplacement | Clair | Sombre |
+| --- | --- | --- |
+| `cadre` | `#e9e1d5` | `#111c27` |
+| `carte` | `#f7f2e9` | `#1d2d3b` |
+| `creux` | `#e9e1d5` | `#152330` |
+| `encre` | `#283239` | `#f7f2e9` |
+| `encre-moyenne` | `#526168` | `#c1ccd2` |
+| `encre-pale` | `#777c7b` | `#8497a6` |
+| `accent` | `#983f31` | `#e49478` |
+| `accent-survol` | `#7d3025` | `#f5ad93` |
+| `action` | `#983f31` | `#e49478` |
+| `action-survol` | `#7d3025` | `#f5ad93` |
+| `sur-action` | `#f7f2e9` | `#111c27` |
+| `coche` | `#983f31` | `#e49478` |
+| `coche-marque` | `#f7f2e9` | `#111c27` |
+| `surlignage` | `#edbe86` | `#edbe86` |
+| `selection` | `#8497a6` | `#8497a6` |
+| `recherche` | `#edbe86` | `#edbe86` |
+| `rouge` | `#983f31` | `#ff6961` |
+| `orange` | `#c93400` | `#ff9f0a` |
+| `jaune` | `#946c00` | `#ffd60a` |
+| `vert` | `#248a3d` | `#32d74b` |
+| `cyan` | `#0a7ea4` | `#64d2ff` |
+| `bleu` | `#496c83` | `#8497a6` |
+| `violet` | `#8944ab` | `#bf5af2` |
+| `rose` | `#d30f45` | `#ff6482` |
 
 ### Grès rosé
 
