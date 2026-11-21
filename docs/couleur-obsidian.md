@@ -36,7 +36,9 @@ Chaque couleur d'une palette s'écrit une seule fois, dans le bloc « Couleurs s
 
 ## Choisir une palette
 
-Le plugin communautaire **Style Settings** ajoute une liste « Palette » dans Réglages → Style Settings → Tasogare. Il pose une classe sur la page : `tasogare-graphite`, `tasogare-crepuscule`, `tasogare-gres`, `tasogare-the`, `tasogare-lac`, `tasogare-porte` ou `tasogare-galet`. Sans le plugin, aucune classe n'est posée et Graphite s'applique : ses blocs n'ont pas de classe, et les autres palettes en héritent.
+Le plugin communautaire **Style Settings** ajoute une liste « Palette » dans Réglages → Style Settings → Tasogare. Il pose la classe correspondant à l’option définie dans `theme.css`. Crépuscule japonais s’applique par défaut, y compris sans Style Settings. Graphite fournit les rôles communs que les autres palettes reprennent.
+
+Graphite, Larch et Crépuscule japonais partagent des cartes blanches et un cadre gris neutre en mode clair. Larch utilise l’or du mélèze comme accent. Crépuscule japonais prend son accent du torii et son fond sombre du lac Ashi à l’heure bleue.
 
 ## Vérifier les contrastes
 
@@ -50,16 +52,74 @@ L'outil lit les palettes dans `theme.css`, applique les seuils de la spécificat
 
 <!-- Généré par `python3 outils/palettes.py --markdown`. Ne pas modifier à la main. -->
 
+### Crépuscule japonais
+
+| Emplacement | Clair | Sombre |
+| --- | --- | --- |
+| `cadre` | `#f2f2f2` | `#111c27` |
+| `carte` | `#ffffff` | `#1d2d3b` |
+| `creux` | `#f2f2f2` | `#152330` |
+| `encre` | `#1c1c1c` | `#f7f2e9` |
+| `encre-moyenne` | `#636363` | `#c1ccd2` |
+| `encre-pale` | `#8e8e8e` | `#8497a6` |
+| `accent` | `#983f31` | `#e49478` |
+| `accent-survol` | `#7d3025` | `#f5ad93` |
+| `action` | `#983f31` | `#e49478` |
+| `action-survol` | `#7d3025` | `#f5ad93` |
+| `sur-action` | `#ffffff` | `#111c27` |
+| `coche` | `#983f31` | `#e49478` |
+| `coche-marque` | `#ffffff` | `#111c27` |
+| `surlignage` | `#edbe86` | `#edbe86` |
+| `selection` | `#8497a6` | `#8497a6` |
+| `recherche` | `#edbe86` | `#edbe86` |
+| `rouge` | `#983f31` | `#ff6961` |
+| `orange` | `#c93400` | `#ff9f0a` |
+| `jaune` | `#946c00` | `#ffd60a` |
+| `vert` | `#248a3d` | `#32d74b` |
+| `cyan` | `#0a7ea4` | `#64d2ff` |
+| `bleu` | `#496c83` | `#8497a6` |
+| `violet` | `#8944ab` | `#bf5af2` |
+| `rose` | `#d30f45` | `#ff6482` |
+
+### Larch
+
+| Emplacement | Clair | Sombre |
+| --- | --- | --- |
+| `cadre` | `#f2f2f2` | `#14181b` |
+| `carte` | `#ffffff` | `#2a3236` |
+| `creux` | `#f2f2f2` | `#14181b` |
+| `encre` | `#1c1c1c` | `#f7f4ee` |
+| `encre-moyenne` | `#636363` | `#b7bebb` |
+| `encre-pale` | `#8e8e8e` | `#929a98` |
+| `accent` | `#80540a` | `#e39b12` |
+| `accent-survol` | `#654007` | `#f1b24b` |
+| `action` | `#80540a` | `#e39b12` |
+| `action-survol` | `#654007` | `#f1b24b` |
+| `sur-action` | `#ffffff` | `#14181b` |
+| `coche` | `#80540a` | `#e39b12` |
+| `coche-marque` | `#ffffff` | `#14181b` |
+| `surlignage` | `#f1b24b` | `#f1b24b` |
+| `selection` | `#f1b24b` | `#f1b24b` |
+| `recherche` | `#e39b12` | `#e39b12` |
+| `rouge` | `#d70015` | `#ff6961` |
+| `orange` | `#c93400` | `#ff9f0a` |
+| `jaune` | `#80540a` | `#e39b12` |
+| `vert` | `#248a3d` | `#32d74b` |
+| `cyan` | `#0a7ea4` | `#64d2ff` |
+| `bleu` | `#0066cc` | `#4da3ff` |
+| `violet` | `#8944ab` | `#bf5af2` |
+| `rose` | `#d30f45` | `#ff6482` |
+
 ### Graphite
 
 | Emplacement | Clair | Sombre |
 | --- | --- | --- |
-| `cadre` | `#f2f2f7` | `#1c1c1e` |
+| `cadre` | `#f2f2f2` | `#1c1c1e` |
 | `carte` | `#ffffff` | `#2c2c2e` |
-| `creux` | `#f2f2f7` | `#242426` |
-| `encre` | `#1c1c1e` | `#f5f5f7` |
-| `encre-moyenne` | `#636366` | `#aeaeb2` |
-| `encre-pale` | `#8e8e93` | `#8e8e93` |
+| `creux` | `#f2f2f2` | `#242426` |
+| `encre` | `#1c1c1c` | `#f5f5f7` |
+| `encre-moyenne` | `#636363` | `#aeaeb2` |
+| `encre-pale` | `#8e8e8e` | `#8e8e93` |
 | `accent` | `#0066cc` | `#4da3ff` |
 | `accent-survol` | `#0050a8` | `#7bbcff` |
 | `action` | `#0071e3` | `#0071e3` |

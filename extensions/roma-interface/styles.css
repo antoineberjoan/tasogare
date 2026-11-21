@@ -1,0 +1,67 @@
+.roma-note-sheet {
+  --roma-note-sheet-inset: var(--tasogare-espace-6, var(--size-2-3));
+  position: absolute;
+  inset-block: var(--roma-note-sheet-inset);
+  inset-inline-end: var(--roma-note-sheet-inset);
+  z-index: 1;
+  inline-size: clamp(min(100%, 22rem), 45%, 36rem);
+  max-inline-size: calc(100% - 2 * var(--roma-note-sheet-inset));
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: var(--size-4-4);
+  border: var(--tasogare-filet, var(--border-width)) solid var(--color-accent);
+  border-radius: max(0px, calc(var(--tasogare-rayon-carte, var(--radius-l)) - var(--roma-note-sheet-inset)));
+  background: var(--background-primary);
+  box-shadow: var(--shadow-s);
+}
+
+.roma-note-sheet-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--size-4-2);
+  margin-block-end: var(--size-4-3);
+}
+
+.roma-note-sheet-title {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-size: var(--h2-size);
+  font-weight: var(--h2-weight);
+}
+
+.roma-note-sheet-header button {
+  flex-shrink: 0;
+}
+
+.roma-note-sheet-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--size-4-2);
+  margin-block-end: var(--size-4-4);
+}
+
+.roma-note-sheet-toolbar button {
+  margin-inline-start: auto;
+}
+
+.roma-note-sheet-badge {
+  padding: var(--size-2-1) var(--size-4-2);
+  border-radius: var(--radius-s);
+  background: var(--background-modifier-hover);
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+}
+
+.roma-visibility-field summary {
+  cursor: pointer;
+  padding: var(--size-4-2);
+}
+
+.roma-visibility-field label {
+  display: flex;
+  align-items: center;
+  gap: var(--size-4-2);
+  padding: var(--size-4-2);
+}

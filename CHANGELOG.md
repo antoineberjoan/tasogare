@@ -1,5 +1,31 @@
 # Journal des versions
 
+## 1.9.0
+
+### Refonte
+
+- Crépuscule japonais devient la palette par défaut, avec deux modes inspirés du lac Ashi et de son torii. Les palettes choisies dans Style Settings restent disponibles.
+- Larch associe l’or du mélèze aux tons de calcaire et d’épicéa. Graphite, Larch et Crépuscule japonais partagent le blanc et les gris neutres en mode clair.
+
+- Grille fine entre les colonnes des Bases et des tableaux Markdown. Propriétés alignées sur une colonne commune et bouton d’ajout visible.
+
+- Tableaux de Bases séparés du panneau par une marge intérieure ; en-têtes teintés, libellés contrastés et filets de tableau de la palette. Contrôles natifs conservés.
+
+- Règles de composants réécrites à partir des variables et contrôles natifs d’Obsidian. Palettes et échelle typographique conservées.
+- Une seule source CSS, sans compilation, JavaScript d’affichage ni fragment supplémentaire. Sélecteurs limités à leur composant et règles distinctes pour le bureau.
+- Cadre et panneau droit avec le même inset ; rôle de hauteur commun aux barres d’onglets, séparé des contrôles de note. Onglets empilés conservés.
+- Placement natif du menu du coffre. Badge des rétroliens translucide au survol, avec un fond opaque lorsque la transparence est réduite. La barre d’état suit le volet actif dans une vue scindée.
+- Aide, réglages et repli sur la ligne du sélecteur de coffre. L’extension facultative Interface romā ajoute le tiroir de lecture et une sélection multiple des éléments visibles.
+- Marges latérales élargies dans la navigation gauche. Le tiroir d’Interface romā s’insère dans la carte active et laisse le panneau du graphe local accessible à côté.
+- Quand la navigation est repliée, l’inset gauche du cadre principal reprend le même fond que les autres bords. La navigation ouverte a davantage de marge au bord gauche.
+- Les icônes d’Obsidian dans les barres d’onglets utilisent la même surface de survol. Le tiroir de lecture reçoit un léger retrait et reprend la couleur d’accent sur ses quatre bords.
+- Les libellés d’onglet, les dossiers et les notes à la racine de la navigation gauche partagent le même alignement. Les sous-dossiers gardent leur retrait.
+- En mode clair, le fond commun du cadre et des panneaux latéraux se distingue davantage des cartes. Les onglets de navigation ont des zones de survol plus amples.
+- Propriétés natives éditables et repliables, avec ajout accessible au clavier. Les autres actions d’édition restent visibles.
+- Pages larges via `cssclasses: [wide]`, sans calcul de translation des Bases. Tableaux et cartes conservent les contrôles natifs.
+- Suppression des survols artificiels des icônes, des remplacements SVG des fichiers et des réglages géométriques des fenêtres.
+- Contrôles de source renforcés et un test d’interface autonome : données temporaires, parité Minimal, préservation des notes, palettes et dispositions.
+
 ## 1.8.0
 
 ### Nouveautés
