@@ -38,7 +38,7 @@ Chaque couleur d'une palette s'écrit une seule fois, dans le bloc « Couleurs s
 
 Le plugin communautaire **Style Settings** ajoute une liste « Palette » dans Réglages → Style Settings → Tasogare. Il pose la classe correspondant à l’option définie dans `theme.css`. Graphite s’applique par défaut et fournit les rôles que les autres palettes partagent.
 
-Crépuscule japonais prend ses couleurs dans une interprétation du lac Ashi à l’heure bleue. Le papier washi inspire la carte claire, le lac la carte sombre et le torii l’accent.
+Graphite, Larch et Crépuscule japonais partagent le blanc pur des cartes en mode clair. Larch associe un cadre de papier chaud à l’or du mélèze. Crépuscule japonais reprend la brume du lac Ashi en clair et son bleu nuit en sombre. Le torii donne son accent à la palette.
 
 ## Vérifier les contrastes
 
@@ -81,6 +81,35 @@ L'outil lit les palettes dans `theme.css`, applique les seuils de la spécificat
 | `violet` | `#8944ab` | `#bf5af2` |
 | `rose` | `#d30f45` | `#ff6482` |
 
+### Larch
+
+| Emplacement | Clair | Sombre |
+| --- | --- | --- |
+| `cadre` | `#e7e1d6` | `#14181b` |
+| `carte` | `#ffffff` | `#2a3236` |
+| `creux` | `#f7f4ee` | `#14181b` |
+| `encre` | `#14181b` | `#f7f4ee` |
+| `encre-moyenne` | `#535b59` | `#b7bebb` |
+| `encre-pale` | `#7f827e` | `#929a98` |
+| `accent` | `#80540a` | `#e39b12` |
+| `accent-survol` | `#654007` | `#f1b24b` |
+| `action` | `#80540a` | `#e39b12` |
+| `action-survol` | `#654007` | `#f1b24b` |
+| `sur-action` | `#ffffff` | `#14181b` |
+| `coche` | `#80540a` | `#e39b12` |
+| `coche-marque` | `#ffffff` | `#14181b` |
+| `surlignage` | `#f1b24b` | `#f1b24b` |
+| `selection` | `#f1b24b` | `#f1b24b` |
+| `recherche` | `#e39b12` | `#e39b12` |
+| `rouge` | `#d70015` | `#ff6961` |
+| `orange` | `#c93400` | `#ff9f0a` |
+| `jaune` | `#80540a` | `#e39b12` |
+| `vert` | `#248a3d` | `#32d74b` |
+| `cyan` | `#0a7ea4` | `#64d2ff` |
+| `bleu` | `#0066cc` | `#4da3ff` |
+| `violet` | `#8944ab` | `#bf5af2` |
+| `rose` | `#d30f45` | `#ff6482` |
+
 ### Crépuscule alpin
 
 | Emplacement | Clair | Sombre |
@@ -115,7 +144,7 @@ L'outil lit les palettes dans `theme.css`, applique les seuils de la spécificat
 | Emplacement | Clair | Sombre |
 | --- | --- | --- |
 | `cadre` | `#e9e1d5` | `#111c27` |
-| `carte` | `#f7f2e9` | `#1d2d3b` |
+| `carte` | `#ffffff` | `#1d2d3b` |
 | `creux` | `#e9e1d5` | `#152330` |
 | `encre` | `#283239` | `#f7f2e9` |
 | `encre-moyenne` | `#526168` | `#c1ccd2` |

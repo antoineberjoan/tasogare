@@ -19,6 +19,9 @@ settings:
         label: Graphite
         value: tasogare-graphite
       -
+        label: Larch
+        value: tasogare-larch
+      -
         label: Crépuscule alpin
         value: tasogare-crepuscule
       -
@@ -473,6 +476,20 @@ body {
   --tasogare-japon-cuivre-clair: #f5ad93;
   --tasogare-japon-lueur: #edbe86;
   --tasogare-japon-bleu-clair: #496c83;
+  /* Larch · calcaire, épicéa, or de mélèze */
+  --tasogare-larch-nuit: #14181b;
+  --tasogare-larch-epicea: #2a3236;
+  --tasogare-larch-papier: #e7e1d6;
+  --tasogare-larch-neige: #f7f4ee;
+  --tasogare-larch-or: #e39b12;
+  --tasogare-larch-or-clair: #f1b24b;
+  --tasogare-larch-or-bruni: #80540a;
+  --tasogare-larch-or-ombre: #654007;
+  --tasogare-larch-encre-moyenne-clair: #535b59;
+  --tasogare-larch-encre-pale-clair: #7f827e;
+  --tasogare-larch-encre-moyenne-sombre: #b7bebb;
+  --tasogare-larch-encre-pale-sombre: #929a98;
+  --tasogare-larch-filet-fort-clair: #beb9ab;
 }
 
 /* ---------- Parts de transparence, communes à toutes les palettes ----------
@@ -1153,7 +1170,7 @@ body {
   --tasogare-accent-l: 39%;
 
   --tasogare-cadre: var(--tasogare-japon-brume-clair);
-  --tasogare-carte: var(--tasogare-japon-washi);
+  --tasogare-carte: var(--tasogare-blanc);
   --tasogare-creux: var(--tasogare-japon-brume-clair);
   --tasogare-filet-tableau: var(--tasogare-japon-filet-tableau-clair);
   --tasogare-filet-fort: var(--tasogare-japon-filet-fort-clair);
@@ -1204,6 +1221,65 @@ body {
   --tasogare-defilement: var(--tasogare-japon-gris-lac);
   --tasogare-defilement-actif: var(--tasogare-japon-cuivre);
   --tasogare-bleu: var(--tasogare-japon-gris-lac);
+}
+
+/* ---------- Palette Larch ---------- */
+.theme-light.tasogare-larch {
+  --tasogare-accent-h: 38;
+  --tasogare-accent-s: 86%;
+  --tasogare-accent-l: 27%;
+
+  --tasogare-cadre: var(--tasogare-larch-papier);
+  --tasogare-carte: var(--tasogare-blanc);
+  --tasogare-creux: var(--tasogare-larch-neige);
+  --tasogare-filet-tableau: var(--tasogare-larch-papier);
+  --tasogare-filet-fort: var(--tasogare-larch-filet-fort-clair);
+  --tasogare-voile: var(--tasogare-larch-nuit);
+  --tasogare-ombre: var(--tasogare-larch-nuit);
+  --tasogare-encre: var(--tasogare-larch-nuit);
+  --tasogare-encre-moyenne: var(--tasogare-larch-encre-moyenne-clair);
+  --tasogare-encre-pale: var(--tasogare-larch-encre-pale-clair);
+  --tasogare-accent: var(--tasogare-larch-or-bruni);
+  --tasogare-accent-survol: var(--tasogare-larch-or-ombre);
+  --tasogare-action: var(--tasogare-larch-or-bruni);
+  --tasogare-action-survol: var(--tasogare-larch-or-ombre);
+  --tasogare-sur-action: var(--tasogare-blanc);
+  --tasogare-coche: var(--tasogare-larch-or-bruni);
+  --tasogare-coche-marque: var(--tasogare-blanc);
+  --tasogare-surlignage: var(--tasogare-larch-or-clair);
+  --tasogare-selection: var(--tasogare-larch-or-clair);
+  --tasogare-recherche: var(--tasogare-larch-or);
+  --tasogare-defilement: var(--tasogare-larch-encre-moyenne-clair);
+  --tasogare-defilement-actif: var(--tasogare-larch-or-bruni);
+  --tasogare-jaune: var(--tasogare-larch-or-bruni);
+}
+
+.theme-dark.tasogare-larch {
+  --tasogare-accent-h: 39;
+  --tasogare-accent-s: 85%;
+  --tasogare-accent-l: 48%;
+
+  --tasogare-cadre: var(--tasogare-larch-nuit);
+  --tasogare-carte: var(--tasogare-larch-epicea);
+  --tasogare-creux: var(--tasogare-larch-nuit);
+  --tasogare-voile: var(--tasogare-larch-neige);
+  --tasogare-ombre: var(--tasogare-larch-nuit);
+  --tasogare-encre: var(--tasogare-larch-neige);
+  --tasogare-encre-moyenne: var(--tasogare-larch-encre-moyenne-sombre);
+  --tasogare-encre-pale: var(--tasogare-larch-encre-pale-sombre);
+  --tasogare-accent: var(--tasogare-larch-or);
+  --tasogare-accent-survol: var(--tasogare-larch-or-clair);
+  --tasogare-action: var(--tasogare-larch-or);
+  --tasogare-action-survol: var(--tasogare-larch-or-clair);
+  --tasogare-sur-action: var(--tasogare-larch-nuit);
+  --tasogare-coche: var(--tasogare-larch-or);
+  --tasogare-coche-marque: var(--tasogare-larch-nuit);
+  --tasogare-surlignage: var(--tasogare-larch-or-clair);
+  --tasogare-selection: var(--tasogare-larch-or-clair);
+  --tasogare-recherche: var(--tasogare-larch-or);
+  --tasogare-defilement: var(--tasogare-larch-encre-pale-sombre);
+  --tasogare-defilement-actif: var(--tasogare-larch-or);
+  --tasogare-jaune: var(--tasogare-larch-or);
 }
 
 /* ==========================================================
