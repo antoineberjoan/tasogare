@@ -1,5 +1,10 @@
 # Journal des versions
 
+## 1.9.1
+
+- Le thème s’appuie sur les volets, menus et propriétés natifs d’Obsidian.
+- La documentation et l’aperçu utilisent un exemple de démonstration.
+
 ## 1.9.0
 
 ### Refonte
@@ -15,10 +20,10 @@
 - Une seule source CSS, sans compilation, JavaScript d’affichage ni fragment supplémentaire. Sélecteurs limités à leur composant et règles distinctes pour le bureau.
 - Cadre et panneau droit avec le même inset ; rôle de hauteur commun aux barres d’onglets, séparé des contrôles de note. Onglets empilés conservés.
 - Placement natif du menu du coffre. Badge des rétroliens translucide au survol, avec un fond opaque lorsque la transparence est réduite. La barre d’état suit le volet actif dans une vue scindée.
-- Aide, réglages et repli sur la ligne du sélecteur de coffre. L’extension facultative Interface romā ajoute le tiroir de lecture et une sélection multiple des éléments visibles.
-- Marges latérales élargies dans la navigation gauche. Le tiroir d’Interface romā s’insère dans la carte active et laisse le panneau du graphe local accessible à côté.
+- Aide, réglages et repli sur la ligne du sélecteur de coffre.
+- Marges latérales élargies dans la navigation gauche.
 - Quand la navigation est repliée, l’inset gauche du cadre principal reprend le même fond que les autres bords. La navigation ouverte a davantage de marge au bord gauche.
-- Les icônes d’Obsidian dans les barres d’onglets utilisent la même surface de survol. Le tiroir de lecture reçoit un léger retrait et reprend la couleur d’accent sur ses quatre bords.
+- Les icônes d’Obsidian dans les barres d’onglets utilisent la même surface de survol.
 - Les libellés d’onglet, les dossiers et les notes à la racine de la navigation gauche partagent le même alignement. Les sous-dossiers gardent leur retrait.
 - En mode clair, le fond commun du cadre et des panneaux latéraux se distingue davantage des cartes. Les onglets de navigation ont des zones de survol plus amples.
 - Propriétés natives éditables et repliables, avec ajout accessible au clavier. Les autres actions d’édition restent visibles.

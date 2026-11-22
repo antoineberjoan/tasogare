@@ -2,15 +2,13 @@
 
 Un thème Obsidian calme : une carte de note dans un cadre de 10 px, neuf palettes et une typographie Inter commune au clair et au sombre.
 
-![Tasogare en Crépuscule japonais sombre, avec une note, un Kanban et le graphe local](screenshot.png)
+![Tasogare en Crépuscule japonais sombre, avec une note et ses propriétés](screenshot.png)
 
 ## Installer
 
 La version publiée s’installe dans **Apparence → Thèmes → Gérer**. Pour un essai local, placer le dossier contenant `theme.css` et `manifest.json` dans `.obsidian/themes/Tasogare`, puis sélectionner Tasogare.
 
-Le thème fonctionne sans plugin communautaire. **Style Settings**, facultatif, permet de choisir une palette et d’afficher la barre d’état complète, les commandes du navigateur de fichiers ou les icônes de propriétés. Par défaut, le thème utilise Crépuscule japonais et affiche les rétroliens au survol ou au focus de leur badge sur ordinateur.
-
-[Interface romā](extensions/roma-interface/README.md) est une extension séparée et facultative. Elle ouvre les fiches de Bases dans un tiroir de lecture à l’intérieur du volet et regroupe les éléments visibles dans un menu à choix multiples.
+Le thème s’applique directement dans Obsidian. Crépuscule japonais est la palette par défaut. Sur ordinateur, le badge des rétroliens apparaît au survol ou au focus.
 
 ## Utiliser
 
@@ -18,6 +16,7 @@ Le thème fonctionne sans plugin communautaire. **Style Settings**, facultatif, 
 - **Bases** : les fichiers `.base` gardent leurs vues et leurs contrôles natifs. Le ratio des images se règle dans chaque vue. Les tableaux disposent d’une marge intérieure, d’un en-tête teinté et de séparations entre les lignes et les colonnes, issus des rôles du thème.
 - **Pages de collection** : ajouter `wide` à la propriété native `cssclasses` pour une note large, y compris sa Base intégrée.
 - **Propriétés** : champs natifs éditables, valeurs alignées sur une colonne et bouton d’ajout visible. Obsidian empile les libellés et les valeurs quand la note devient étroite.
+- **Ouvrir une fiche à côté** : utiliser **Ouvrir dans un nouveau volet** dans le menu du lien. Le thème applique les mêmes surfaces et espacements aux volets natifs.
 - **Panneaux** : aide, réglages et repli partagent la ligne du sélecteur de coffre. Leur largeur, leur contenu et l’ordre des onglets appartiennent au coffre. Le panneau reste redimensionnable dans Obsidian.
 
 ```yaml
@@ -25,8 +24,6 @@ cssclasses: [wide]
 ```
 
 Crépuscule japonais reprend les tons du lac Ashi à l’heure bleue. Larch emprunte l’or du mélèze. Les deux palettes et Graphite utilisent des cartes blanches et un cadre gris neutre en mode clair. Les neuf palettes et leurs contrastes sont détaillés dans [les couleurs](docs/couleur-obsidian.md).
-
-[Voir Crépuscule japonais, Larch et Graphite dans Obsidian](docs/apercu-palettes.png). La planche montre le tiroir de l’extension facultative Interface romā.
 
 ## Construire
 

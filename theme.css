@@ -1648,7 +1648,7 @@ body {
   text-transform: capitalize;
   color: var(--text-muted);
 }
-body:is([data-roma-visibilite]:not([data-roma-visibilite~="proprietes"]), :not([data-roma-visibilite], .tasogare-icones-proprietes))
+body:not(.tasogare-icones-proprietes)
   :where(.metadata-container)
   .metadata-property-icon {
   display: none;
@@ -2049,15 +2049,15 @@ body:not(.is-mobile) :where(.mod-left-split [data-type="file-explorer"])
 }
 
 /* Options d'affichage : aucun plugin nécessaire aux valeurs par défaut. */
-body:not(.is-mobile):is([data-roma-visibilite]:not([data-roma-visibilite~="fichiers"]), :not([data-roma-visibilite], .tasogare-actions-fichiers))
+body:not(.is-mobile):not(.tasogare-actions-fichiers)
   :where(.workspace-leaf-content[data-type="file-explorer"])
   .nav-header {
   display: none;
 }
-body:not(.is-mobile):is([data-roma-visibilite]:not([data-roma-visibilite~="etat"]), :not([data-roma-visibilite], .tasogare-barre-etat)) .status-bar {
+body:not(.is-mobile):not(.tasogare-barre-etat) .status-bar {
   --status-bar-background: transparent;
 }
-body:not(.is-mobile):is([data-roma-visibilite]:not([data-roma-visibilite~="etat"]), :not([data-roma-visibilite], .tasogare-barre-etat))
+body:not(.is-mobile):not(.tasogare-barre-etat)
   .status-bar > .status-bar-item:not(.plugin-backlink) {
   display: none;
 }
@@ -2077,7 +2077,7 @@ body:not(.is-mobile) .status-bar > .plugin-backlink {
   }
 }
 @media (hover: hover) and (pointer: fine) {
-  body:not(.is-mobile):is([data-roma-visibilite]:not([data-roma-visibilite~="etat"]), :not([data-roma-visibilite], .tasogare-barre-etat))
+  body:not(.is-mobile):not(.tasogare-barre-etat)
     .status-bar:not(:hover):not(:focus-within) > .plugin-backlink {
     opacity: 0;
   }
