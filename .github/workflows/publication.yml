@@ -53,13 +53,3 @@ jobs:
             --verify-tag \
             "${mode[@]}" \
             manifest.json theme.css
-
-      - name: Actualiser les fichiers et notes de la version précédente
-        if: github.ref == 'refs/tags/1.9.1'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          awk '$0 == "## 1.9.0" {dedans=1; next} /^## / {dedans=0} dedans' CHANGELOG.md > notes-precedentes.md
-          test -s notes-precedentes.md
-          gh release edit 1.9.0 --notes-file notes-precedentes.md
-          gh release upload 1.9.0 theme.css --clobber
