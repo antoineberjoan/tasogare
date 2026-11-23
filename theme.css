@@ -1893,6 +1893,10 @@ body:not(.is-mobile)
   align-items: center;
   padding-block: 0;
 }
+body:not(.is-mobile) .workspace-ribbon.mod-primary > .sidebar-toggle-button.mod-left {
+  align-items: center;
+  block-size: var(--tasogare-hauteur-barre);
+}
 body:not(.is-mobile)
   :where(.workspace-tab-header-container, .workspace-sidedock-vault-profile)
   :is(
@@ -2085,24 +2089,15 @@ body:not(.is-mobile) .status-bar > .plugin-backlink {
 @supports (anchor-name: --tasogare-note) {
   body:not(.is-mobile) .mod-left-split:not(.is-sidedock-collapsed)
     .workspace-sidedock-vault-profile {
-    padding-inline-end: calc(
-      var(--tasogare-gouttiere-sidebar) + var(--tasogare-taille-bouton-icone) +
-        var(--tasogare-ecart-commandes)
-    );
-  }
-  body:not(.is-mobile) .mod-left-split:not(.is-sidedock-collapsed)
-    .workspace-drawer-vault-actions {
-    anchor-name: --tasogare-actions-coffre;
+    anchor-name: --tasogare-profil-coffre;
   }
   body:not(.is-mobile) .mod-left-split:not(.is-sidedock-collapsed)
     :where(.workspace-tabs.mod-top) .sidebar-toggle-button {
     position: fixed;
-    position-anchor: --tasogare-actions-coffre;
-    inset-block-start: anchor(center);
-    inset-inline-start: calc(anchor(end) + var(--tasogare-ecart-commandes));
-    inset-inline-end: auto;
-    height: var(--tasogare-taille-bouton-icone);
-    translate: 0 -50%;
+    position-anchor: --tasogare-profil-coffre;
+    inset-block-start: anchor(top);
+    inset-inline-start: auto;
+    inset-inline-end: calc(anchor(end) + var(--tasogare-gouttiere-sidebar));
   }
   body:not(.is-mobile) .mod-left-split:not(.is-sidedock-collapsed)
     :where(.workspace-tabs.mod-top) .workspace-tab-header-container-inner {
