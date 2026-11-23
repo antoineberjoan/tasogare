@@ -25,6 +25,10 @@ cssclasses: [wide]
 
 Crépuscule japonais reprend les tons du lac Ashi à l’heure bleue. Larch emprunte l’or du mélèze. Les deux palettes et Graphite utilisent des cartes blanches et un cadre gris neutre en mode clair. Les neuf palettes et leurs contrastes sont détaillés dans [les couleurs](docs/couleur-obsidian.md).
 
+## Extension facultative Yoi
+
+Yoi ouvre les fiches des Bases dans un tiroir éditable, dans le même onglet. C’est une extension pour Obsidian de bureau 1.15 ou ultérieur, compatible avec Tasogare et le thème par défaut. Elle s’installe manuellement. [Télécharger Yoi 0.4.0](https://github.com/antoineberjoan/tasogare/raw/refs/heads/main/extras/yoi/Yoi-0.4.0.zip) · [Installation et code](extras/yoi)
+
 ## Construire
 
 `theme.css` est la seule source de style et le fichier directement lu par Obsidian. Il comporte trois couches :
