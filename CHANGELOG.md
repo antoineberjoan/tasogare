@@ -1,5 +1,9 @@
 # Journal des versions
 
+## 1.9.2
+
+- Le bouton de repli de la navigation gauche s’aligne sur les onglets. L’aide et les réglages restent avec le sélecteur de coffre.
+
 ## 1.9.1
 
 - Le thème s’appuie sur les volets, menus et propriétés natifs d’Obsidian.

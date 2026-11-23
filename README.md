@@ -17,7 +17,7 @@ Le thème s’applique directement dans Obsidian. Crépuscule japonais est la pa
 - **Pages de collection** : ajouter `wide` à la propriété native `cssclasses` pour une note large, y compris sa Base intégrée.
 - **Propriétés** : champs natifs éditables, valeurs alignées sur une colonne et bouton d’ajout visible. Obsidian empile les libellés et les valeurs quand la note devient étroite.
 - **Ouvrir une fiche à côté** : utiliser **Ouvrir dans un nouveau volet** dans le menu du lien. Le thème applique les mêmes surfaces et espacements aux volets natifs.
-- **Panneaux** : aide, réglages et repli partagent la ligne du sélecteur de coffre. Leur largeur, leur contenu et l’ordre des onglets appartiennent au coffre. Le panneau reste redimensionnable dans Obsidian.
+- **Panneaux** : le bouton de repli se trouve sur la ligne des onglets. L’aide et les réglages restent sur la ligne du sélecteur de coffre. Le panneau reste redimensionnable dans Obsidian.
 
 ```yaml
 cssclasses: [wide]

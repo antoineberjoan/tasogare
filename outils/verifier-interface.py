@@ -440,7 +440,7 @@ def vault_chrome(app):
     app.sides(True, False)
     switcher = page.locator('.workspace-sidedock-vault-profile .workspace-drawer-vault-switcher')
     actions = page.locator('.mod-left-split .workspace-drawer-vault-actions')
-    toggle = page.locator('.mod-left-split .sidebar-toggle-button')
+    toggle = page.locator('.sidebar-toggle-button.mod-left:visible')
     sidebar = page.locator('.mod-left-split')
     sidebar.locator('.workspace-tab-header[data-type="file-explorer"]').click()
     for width in [1136, 850]:
@@ -451,11 +451,16 @@ def vault_chrome(app):
         panel = sidebar.bounding_box()
         button_center = button["y"] + button["height"] / 2
         assert abs(button_center - tools["y"] - tools["height"] / 2) < 1
-        assert abs(button_center - collapse["y"] - collapse["height"] / 2) < 1
-        assert abs(collapse["x"] - tools["x"] - tools["width"] - 4) < 1
+        tab = page.locator('.mod-root .workspace-tab-header.is-active:visible').first.bounding_box()
+        collapse_center = collapse["y"] + collapse["height"] / 2
+        assert abs(collapse_center - tab["y"] - tab["height"] / 2) < 1
+        assert collapse_center < button["y"]
         left_margin = button["x"] - panel["x"]
-        right_margin = panel["x"] + panel["width"] - collapse["x"] - collapse["width"]
-        assert right_margin > 10 and left_margin > right_margin
+        if toggle.evaluate("element => Boolean(element.closest('.mod-left-split'))"):
+            right_margin = panel["x"] + panel["width"] - collapse["x"] - collapse["width"]
+            assert right_margin > 10 and left_margin > right_margin
+        else:
+            assert collapse["x"] + collapse["width"] <= panel["x"] + 1
         tab_label = sidebar.locator('.workspace-tab-header-inner-title').first.bounding_box()
         folder_label = sidebar.locator('.nav-folder-title-content').first.bounding_box()
         assert abs(tab_label["x"] - folder_label["x"]) < 1, (tab_label, folder_label)
@@ -527,7 +532,7 @@ def vault_chrome(app):
             app.workspace.getLeavesOfType('markdown').find(item => item.view.file?.path === file)?.detach();
         }""", DATA + "/Alpha.md")
         page.set_viewport_size({"width": 1136, "height": 812})
-    return {"menu_natif": True, "commandes_sur_une_ligne": True, "commandes_uniformes": True, "retroliens_au_survol": True, "ancrage_volet_actif": True}
+    return {"menu_natif": True, "repli_sur_la_ligne_des_onglets": True, "commandes_uniformes": True, "retroliens_au_survol": True, "ancrage_volet_actif": True}
 
 
 def interactions(app):
